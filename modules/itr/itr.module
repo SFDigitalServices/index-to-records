@@ -1,0 +1,147 @@
+<?php
+
+  use Drupal\taxonomy\Entity\Term;
+  use Drupal\user\Entity\User;
+  use Drupal\Core\Form\FormStateInterface;
+  use Drupal\Core\Ajax\AjaxResponse;
+  use Drupal\Core\Ajax\ReplaceCommand;
+  use Drupal\Core\Ajax\HtmlCommand;
+  use Drupal\Core\Ajax\InsertCommand;
+
+  use Drupal\itr\Ajax\DemoTestJsCommand;
+
+  /*
+  * get categories for a specific department for the current user
+  */
+  function getCategoriesForUser() {
+    $user = User::load(\Drupal::currentUser()->id());
+    $depts = $user->get('field_department')->getValue();
+
+    $deptCount = count($depts);
+    $vid = Term::load($depts[0]['target_id'])->getVocabularyId();
+
+    echo 'form_id: ' . $form_id . '<br/>';
+    echo 'depts count: ' . count($depts) . '<br/>';
+    echo 'vocab id: ' . $vid;
+
+    $categories = array();
+    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
+    $categoryData['_none'] = '- None - ';
+    for($i = 0; $i < $deptCount; $i++) {
+      $tid = $depts[$i]['target_id'];
+      $parentTerm = Term::load($tid)->getName();
+
+      foreach($terms as $term) {
+        if($term->parents[0] == $tid) {
+          print_r($terms->$children, 1);
+          // $categoryData[] = array(
+          //   'id' => $term->tid,
+          //   'name' => $term->name,
+          // );
+
+          $categoryTermId = $term->tid;
+          $categoryChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $categoryTermId);
+          if($deptCount > 1) {
+            $categoryData[$tid] = 'Categories for ' . $parentTerm;
+          }
+          foreach($categoryChildren as $categoryChildTerm) {
+            $indicator = $deptCount > 1 ? '-' : '';
+            $categoryData[$categoryChildTerm->tid] = $indicator . $categoryChildTerm->name;
+          }
+        }
+      }
+    }
+
+    // $categoryChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, 13);
+
+    error_log(print_r($categoryData,1));
+
+    // error_log(print_r($categoryChildren,1));
+
+    
+    // error_log(print_r($terms, 1));
+    // foreach($terms as $term) {
+    //   $term_data[] = array(
+    //     'id' => $term->tid,
+    //     'name' => $term->name,
+    //     'parent_id' => $term->parents[0],
+    //   );
+    // }
+
+    // error_log(print_r($term_data, 1));
+
+    // $term = Term::load($depts[0]['target_id']);
+    // $name = $term->getName();
+
+    // error_log(print_r($depts,1));
+
+    return $categoryData;
+  }
+
+  function selectDepartmentForUser() {
+    $user = User::load(\Drupal::currentUser()->id());
+    $depts = $user->get('field_department')->getValue();
+    return $depts[0]['target_id'];
+  }
+
+  function itr_form_node_record_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    $deptId = selectDepartmentForUser();
+    // error_log('deptId: ' . $deptId);
+    // error_log(print_r($form['field_category'], 1));
+    // error_log(print_r($form['field_department']['widget'], 1));
+    // $form['field_department']['widget']['#default_value'] = $deptId;
+    // $form['field_category']['widget']['#options'] = getCategoriesForUser();
+    // $form['field_category']['widget']['#options'] = array();
+    $form['#attached']['library'][] = 'itr/add-record';
+    $form['#attached']['drupalSettings']['itr']['addRecord']['foo'] = 'bar';
+    $form['#attached']['drupalSettings']['itr']['path'] = base_path();
+    // error_log(base_path());
+
+
+
+    $form['field_department']['widget']['#ajax'] = array(
+      'callback' => 'itrDepartmentChangeAjax',
+      'event' => 'change',
+      'progress' => array(
+        'type' => 'throbber',
+        'message' => NULL,
+      ),
+    );
+
+  }
+  function getDepartmentCategories($deptId) {
+    if(!isset($deptId)) return array();
+    $vid = 'department';
+    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $deptId);
+    $categories = array();
+    foreach($terms as $term) {
+      if(strtolower($term->name) != 'category') {
+        $categories[] = array(
+          'id' => $term->tid,
+          'name' => $term->name
+        );
+      }
+    }
+    return $categories;
+  }
+
+  function itrDepartmentChangeAjax(array $form, FormStateInterface $form_state) {
+    $deptId = $form['field_department']['widget']['#value'];
+    $terms = getDepartmentCategories($deptId);
+    $optionHtml = '<option value="_none">- None -</option>';
+    foreach($terms as $term) {
+      $optionHtml .= '<option value="' . $term['id'] . '">' . $term['name'] . '</option>';
+    }
+    error_log($optionHtml);
+    $response = new AjaxResponse();
+    $response->addCommand(new HtmlCommand('#edit-field-category', $optionHtml));
+    $response->addCommand(new DemoTestJsCommand());
+    return $response;
+  }
+
+  // function itr_page_attachments_alter(&$build) {
+  //   $build['#attached']['library'][] = 'itr/add-record';
+  //   $build['#attached']['drupalSettings']['itr']['addRecord']['foo'] = 'bar';
+  // }
+
+?>

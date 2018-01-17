@@ -1,0 +1,8 @@
+hello_world.content:
+  path: '/itr'
+  defaults:
+    _controller:
+      '\Drupal\itr\Controller\HelloController::content'
+    _title: 'Hello World'
+  requirements:
+    _permission: 'access content'

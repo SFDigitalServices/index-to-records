@@ -1,0 +1,11 @@
+add-record:
+  version: 1.x
+  css:
+    layout:
+      css/add-record-layout.css: {}
+    theme:
+      css/add-record-theme.css: {}
+  js:
+    js/add-record.js: {}
+  dependencies:
+    - core/jquery
