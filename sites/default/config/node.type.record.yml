@@ -1,0 +1,18 @@
+uuid: 21c3870b-27e4-4e41-979d-fa638c42a9bd
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Record
+type: record
+description: 'A record currently in retention'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

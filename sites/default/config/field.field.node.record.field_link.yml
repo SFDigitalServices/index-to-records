@@ -1,0 +1,19 @@
+uuid: ac15bc71-7284-4c1d-b984-12eebef61287
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_link
+    - node.type.record
+id: node.record.field_link
+field_name: field_link
+entity_type: node
+bundle: record
+label: Link
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

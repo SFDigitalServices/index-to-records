@@ -1,0 +1,9 @@
+uuid: 828905a8-eca3-4bc6-bc01-01a3c6bd7cfc
+langcode: en
+status: true
+dependencies: {  }
+name: Retention
+vid: retention
+description: 'Record retention options'
+hierarchy: 0
+weight: 0

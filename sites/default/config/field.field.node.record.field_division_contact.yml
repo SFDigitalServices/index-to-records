@@ -1,0 +1,19 @@
+uuid: 90ea87cc-f556-4c32-8820-8655b8658877
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_division_contact
+    - node.type.record
+id: node.record.field_division_contact
+field_name: field_division_contact
+entity_type: node
+bundle: record
+label: 'Division Contact'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
