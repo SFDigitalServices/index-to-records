@@ -84,6 +84,7 @@
     return $depts[0]['target_id'];
   }
 
+  // alter add record form
   function itr_form_node_record_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     $deptId = selectDepartmentForUser();
     // error_log('deptId: ' . $deptId);
@@ -109,6 +110,33 @@
     );
 
   }
+
+  function itr_form_node_record_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    $form['#attached']['library'][] = 'itr/add-record';
+    $form['#attached']['drupalSettings']['itr']['addRecord']['foo'] = 'bar';
+    $deptId = $form['field_department']['widget']['#default_value'][0];
+
+    $terms = getDepartmentCategories($deptId);
+    foreach($terms as $term) {
+      $newOptions[$term['id']] = $term['name'];
+    }
+    // error_log(print_r($newOptions, 1));
+    $form['field_category']['widget']['#options'] = $newOptions;
+    $form['field_department']['widget']['#attributes']['disabled'] = 'disabled';
+
+    error_log(print_r($form['field_department'], 1));
+    error_log($deptId);
+
+    // $form['field_department']['widget']['#ajax'] = array(
+    //   'callback' => 'itrDepartmentChangeAjax',
+    //   'event' => 'change',
+    //   'progress' => array(
+    //     'type' => 'throbber',
+    //     'message' => NULL,
+    //   ),
+    // );
+  }
+
   function getDepartmentCategories($deptId) {
     if(!isset($deptId)) return array();
     $vid = 'department';
@@ -126,7 +154,9 @@
   }
 
   function itrDepartmentChangeAjax(array $form, FormStateInterface $form_state) {
+    // error_log(print_r($form['field_department'], 1));
     $deptId = $form['field_department']['widget']['#value'];
+    error_log($deptId);
     $terms = getDepartmentCategories($deptId);
     $optionHtml = '<option value="_none">- None -</option>';
     foreach($terms as $term) {
