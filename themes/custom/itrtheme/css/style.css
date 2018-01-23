@@ -1,3 +1,43 @@
-body {
-  background: lightblue;
+header #block-itrtheme-branding {
+  background: url(../images/header-image.jpg) no-repeat;
+  background-size: cover;
+  padding: 20px;
+}
+
+header #block-itrtheme-branding .site-slogan {
+  color: #fff;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1.2em;
+  line-height: 1.5em;
+}
+
+header .region-header {
+  position: relative;
+}
+
+nav.menu--account {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+
+nav.menu--account .menu {
+  list-style-type: none;
+}
+
+nav.menu--account .menu .menu-item {
+  display: inline-block;
+  margin-right: -4px;
+  border-right: 2px solid #fff;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+nav.menu--account .menu .menu-item:last-of-type {
+  border-right: none;
+}
+
+nav.menu--account .menu .menu-item a {
+  color: #fff;
 }

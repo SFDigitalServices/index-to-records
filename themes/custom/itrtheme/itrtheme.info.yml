@@ -6,3 +6,7 @@ base theme: classy
 libraries:
   - itrtheme/global-css
   - itrtheme/global-js
+regions:
+  header: 'Header'
+  content: 'Content'
+  footer: 'Footer'
