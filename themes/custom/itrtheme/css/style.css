@@ -4,6 +4,13 @@ header #block-itrtheme-branding {
   padding: 20px;
 }
 
+header #block-itrtheme-branding .site-logo {
+  background: url(../images/logo-main.png) no-repeat;
+  display: block;
+  width: 320px;
+  height: 128px;
+}
+
 header #block-itrtheme-branding .site-slogan {
   color: #fff;
   text-align: center;
