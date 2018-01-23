@@ -22,6 +22,7 @@ console.log(drupalSettings.itr.addRecord.foo);
 //   });
 // });
 
+// drupal ajax adds a container div to html command
 $('#edit-field-department').on('change', function() {
   Drupal.AjaxCommands.prototype.demoTestJsCommand = function(ajax, response) {
     $('#edit-field-category').html($('#edit-field-category > div').contents());
