@@ -175,4 +175,9 @@
   //   $build['#attached']['drupalSettings']['itr']['addRecord']['foo'] = 'bar';
   // }
 
+  // increase the length of the site slogan
+  function itr_form_system_site_information_settings_alter(&$form, FormStateInterface $form_state, $form_id) {
+    $form['site_information']['site_slogan']['#maxlength'] = 500;
+  }
+
 ?>

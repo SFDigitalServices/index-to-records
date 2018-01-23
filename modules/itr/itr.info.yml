@@ -1,5 +1,5 @@
 name: Index to Records
 type: module
-description: Say Hello World
+description: A custom Index to Records module
 package: Custom
 core: 8.x
