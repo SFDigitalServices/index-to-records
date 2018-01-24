@@ -1,0 +1,15 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+
+function itrtheme_form_search_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+}
+
+function itrtheme_preprocess_block(&$variables) {
+  if($variables['attributes']['id'] == 'block-itrtheme-search') {
+    $variables['title_suffix'] = 'Use agency names, record titles, keywords';
+  }
+}
+
+?>
