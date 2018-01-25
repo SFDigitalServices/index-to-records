@@ -1,7 +1,5 @@
 header #block-itrtheme-branding {
-  background: url(../images/header-image.jpg) no-repeat;
-  background-size: cover;
-  padding: 20px;
+
 }
 
 header #block-itrtheme-branding .site-logo {
@@ -11,7 +9,7 @@ header #block-itrtheme-branding .site-logo {
   height: 128px;
 }
 
-header #block-itrtheme-branding .site-slogan {
+header #block-frontpageheadersubtext {
   color: #fff;
   text-align: center;
   margin-top: 10px;
@@ -21,6 +19,9 @@ header #block-itrtheme-branding .site-slogan {
 
 header .region-header {
   position: relative;
+  background: url(../images/header-image.jpg) no-repeat;
+  background-size: cover;
+  padding: 20px;
 }
 
 nav.menu--account {
