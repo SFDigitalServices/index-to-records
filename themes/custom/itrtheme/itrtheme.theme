@@ -12,4 +12,8 @@ function itrtheme_preprocess_block(&$variables) {
   }
 }
 
+function itrtheme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  // error_log(print_r($variables, 1));
+}
+
 ?>

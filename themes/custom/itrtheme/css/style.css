@@ -1,6 +1,11 @@
-header #block-itrtheme-branding {
+/* layout */
 
+header {}
+main {
+  padding: 10px;
 }
+
+/* end layout */
 
 header #block-itrtheme-branding .site-logo {
   background: url(../images/logo-main.png) no-repeat;
@@ -85,3 +90,42 @@ nav.menu--account .menu .menu-item a {
   padding: 15px;
   color: #fff;
 }
+
+
+/* login page */
+.user-login-page .page-title {
+  text-align: center;
+}
+
+#user-login-form {
+  max-width: 500px;
+  margin: 0px auto;
+}
+
+#user-login-form #edit-name--description, 
+#user-login-form #edit-pass--description {
+  display: none;
+}
+
+#user-login-form label[for="edit-name"],
+#user-login-form label[for="edit-pass"] {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#user-login-form #edit-name,
+#user-login-form #edit-pass {
+  padding: 10px;
+  border: 1px solid #999;
+  width: 95%;
+}
+
+#user-login-form #edit-submit {
+  background: #09aee6;
+  border: 1px solid #0a8bea;
+  padding: 10px;
+  color: #fff;
+  width: 99%;
+  display: block;
+}
+/* end login form */
