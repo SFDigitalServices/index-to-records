@@ -84,6 +84,29 @@
     return $depts[0]['target_id'];
   }
 
+  function getDepartmentsForUser() {
+    $user = User::load(\Drupal::currentUser()->id());
+    $assignedDepts = $user->get('field_department')->getValue();
+    $count = count($assignedDepts);
+    $vid = Term::load($assignedDepts[0]['target_id'])->getVocabularyId();
+    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
+    $depts = array();
+    for($i = 0; $i < $count; $i++) {
+      $tid = $assignedDepts[$i]['target_id'];
+      $deptName = Term::load($tid)->getName();
+      $depts[] = array(
+        'id' => $tid,
+        'name' => $deptName
+      );
+    }
+    foreach($depts as $key => $row) {
+      $id[$key] = $row['id'];
+      $name[$key] = $row['name'];
+    }
+    array_multisort($name, SORT_ASC, $depts);
+    return $depts;
+  }
+
   function getDepartmentCategories($deptId) {
     if(!isset($deptId)) return array();
     $vid = 'department';
@@ -102,13 +125,25 @@
 
   // alter add record form
   function itr_form_node_record_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-    $deptId = selectDepartmentForUser();
+    $depts = getDepartmentsForUser();
+    // error_log(print_r($depts, 1));
+    // $deptId = selectDepartmentForUser();
     // error_log('deptId: ' . $deptId);
     // error_log(print_r($form['field_category'], 1));
     // error_log(print_r($form['field_department']['widget'], 1));
     // $form['field_department']['widget']['#default_value'] = $deptId;
     // $form['field_category']['widget']['#options'] = getCategoriesForUser();
     // $form['field_category']['widget']['#options'] = array();
+
+    $deptOptions = array();
+    $deptOptions['_none'] = '- None -';
+    foreach($depts as $dept) {
+      $deptOptions[$dept['id']] = $dept['name'];
+    }
+
+    // error_log(print_r($deptOptions, 1));
+
+    $form['field_department']['widget']['#options'] = $deptOptions;
     $form['#attached']['library'][] = 'itr/add-record';
     $form['#attached']['drupalSettings']['itr']['addRecord']['foo'] = 'bar';
     $form['#attached']['drupalSettings']['itr']['path'] = base_path();
