@@ -6,3 +6,7 @@ hello_world.content:
     _title: 'Hello World'
   requirements:
     _permission: 'access content'
+admin.content:
+  path: '/admin/content'
+  requirements:
+    _permission: 'access content'

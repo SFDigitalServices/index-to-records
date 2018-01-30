@@ -10,6 +10,10 @@
 
   use Drupal\itr\Ajax\DemoTestJsCommand;
 
+  // for views alter
+  use Drupal\views\ViewExecutable;
+  use Drupal\views\Plugin\views\query\QueryPluginBase;
+
   /*
   * get categories for a specific department for the current user
   */
@@ -213,6 +217,31 @@
   // increase the length of the site slogan
   function itr_form_system_site_information_settings_alter(&$form, FormStateInterface $form_state, $form_id) {
     $form['site_information']['site_slogan']['#maxlength'] = 500;
+  }
+
+  // alter the view for admin vs. non-admin
+  function itr_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+    $user = User::load(\Drupal::currentUser()->id());
+    $viewId = $view->id();
+    error_log('view alter');
+    error_log($viewId);
+    error_log(print_r($user->getRoles(), 1));
+    $isAdmin = in_array('administrator', $user->getRoles());
+    error_log($isAdmin);
+    // error_log(print_r($query, 1));
+  }
+
+  // redirect user to content edit view part 1
+  function itr_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    if($form_id == 'user_login_form') {
+      error_log('this is the login form');
+      $form['#submit'][] = '_itr_user_login_submit';
+    }
+  }
+
+  // redirect user to content edit view part 2
+  function _itr_user_login_submit($form, FormStateInterface $form_state) {
+    $form_state->setRedirect('admin.content');
   }
 
 ?>
