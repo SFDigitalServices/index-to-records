@@ -8,5 +8,8 @@ libraries:
   - itrtheme/global-js
 regions:
   header: 'Header'
+  pre_content: 'Pre-content'
+  breadcrumb: 'Breadcrumb'
+  highlighted: 'Highlighted'
+  help: 'Help'
   content: 'Content'
-  footer: 'Footer'

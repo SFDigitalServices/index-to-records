@@ -1,0 +1,14 @@
+itr.add_record_admin:
+  route_name: node.add
+  title: 'Add Record'
+  route_parameters:
+    node_type: 'record'
+  appears_on:
+    - admin.content
+itr.add_record:
+  route_name: node.add
+  title: 'Add Record'
+  route_parameters:
+    node_type: 'record'
+  appears_on:
+    - admin.content.user

@@ -1,0 +1,6 @@
+# itr.admin.menu:
+#   title: 'hello'
+#   description: 'hello page'
+#   parent: account
+#   menu_name: account
+#   route_name: admin.unpublished_schedule

@@ -8,5 +8,9 @@ hello_world.content:
     _permission: 'access content'
 admin.content:
   path: '/admin/content'
-  requirements:
-    _permission: 'access content'
+admin.content.user:
+  path: '/admin/content/user'
+# admin.unpublished_schedule:
+#   path: '/unpublished/schedule/10'
+#   requirements:
+#     _role: 'administrator'

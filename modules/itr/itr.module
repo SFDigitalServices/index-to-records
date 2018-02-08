@@ -14,6 +14,10 @@
   use Drupal\views\ViewExecutable;
   use Drupal\views\Plugin\views\query\QueryPluginBase;
 
+  require_once('modules/devel/kint/kint/Kint.class.php');
+  Kint::$maxLevels = 6;
+
+
   /*
   * get categories for a specific department for the current user
   */
@@ -165,6 +169,7 @@
     );
   }
 
+  // alter edit record form
   function itr_form_node_record_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     $form['#attached']['library'][] = 'itr/add-record';
     $form['#attached']['drupalSettings']['itr']['addRecord']['foo'] = 'bar';
@@ -190,6 +195,8 @@
     //     'message' => NULL,
     //   ),
     // );
+    // Kint::dump($form);
+    
   }
 
   // ajax callback when department is changed (only used for adding a record)
@@ -220,28 +227,69 @@
   }
 
   // alter the view for admin vs. non-admin
-  function itr_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
-    $user = User::load(\Drupal::currentUser()->id());
-    $viewId = $view->id();
-    error_log('view alter');
-    error_log($viewId);
-    error_log(print_r($user->getRoles(), 1));
-    $isAdmin = in_array('administrator', $user->getRoles());
-    error_log($isAdmin);
-    // error_log(print_r($query, 1));
-  }
+  // function itr_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+  //   $user = User::load(\Drupal::currentUser()->id());
+  //   $viewId = $view->id();
+  //   error_log('view alter');
+  //   error_log($viewId);
+  //   error_log(print_r($user->getRoles(), 1));
+  //   $isAdmin = in_array('administrator', $user->getRoles());
+  //   // error_log(print_r($query, 1));
+  //   if($viewId == 'content') {
+  //     error_log('this is the content view');
+  //     if(!$isAdmin) {
+  //       error_log('this is not an admin');
+  //       //INNER JOIN {users} users_field_data_node_field_data__users ON users_field_data_node_field_data.uid = users_field_data_node_field_data__users.uid
+  //       $configuration = [
+  //         'type' => 'INNER',
+  //         'table' => 'users',
+  //         'field' => 'uid',
+  //         'left_table' => 'users_field_data',
+  //         'left_field' => 'uid',
+  //         'operator' => '=',
+  //       ];
+  //       $join = \Drupal::service('plugin.manager.views.join')->createInstance('standard', $configuration);
+  //       // $query->addRelationship()
+  //     } else {
+  //       error_log('this is an admin');
+  //     }
+  //   }
+  // }
 
   // redirect user to content edit view part 1
-  function itr_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  function itr_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     if($form_id == 'user_login_form') {
-      error_log('this is the login form');
+      error_log('this is the login form blah');
       $form['#submit'][] = '_itr_user_login_submit';
     }
   }
 
   // redirect user to content edit view part 2
   function _itr_user_login_submit($form, FormStateInterface $form_state) {
-    $form_state->setRedirect('admin.content');
+    $user = User::load(\Drupal::currentUser()->id());
+    $isAdmin = in_array('administrator', $user->getRoles());
+    if(!$isAdmin) {
+      $form_state->setRedirect('admin.content.user'); // this route defined in itr.routing.yml
+    } else {
+      $form_state->setRedirect('admin.content'); // this route defined in itr.routing.yml
+    }
+  }
+
+  // alter user (non-admin) view form
+  function itr_form_views_form_content_page_user_view_alter(&$form, FormStateInterface $form_state, $form_id) {
+    if($form_id == 'views_form_content_page_user_view') {
+      error_log($form_id);
+      error_log('this is the views_form_content_page_user_view_alter form hook');
+      // Kint::dump($form);
+      // error_log(print_r($form['header']['node_bulk_form']['action']['#options'], 1));
+      $theOptions = $form['header']['node_bulk_form']['action']['#options'];
+      foreach($theOptions as $key => $value) {
+        if($key == 'node_delete_action') {
+          $newOptions[$key] = $value;
+        }
+      }
+      $form['header']['node_bulk_form']['action']['#options'] = $newOptions;
+    }
   }
 
 ?>

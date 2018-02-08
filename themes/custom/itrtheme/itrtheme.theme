@@ -2,6 +2,8 @@
 
 use Drupal\Core\Form\FormStateInterface;
 
+require_once('modules/devel/kint/kint/Kint.class.php');
+
 function itrtheme_form_search_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
 }
@@ -15,5 +17,30 @@ function itrtheme_preprocess_block(&$variables) {
 function itrtheme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   // error_log(print_r($variables, 1));
 }
+
+// function itrtheme_preprocess_form(&$variables) {
+//   error_log('preprocess form');
+//   $node = \Drupal::request()->get('bundle');
+//   // error_log($node);
+//   if($variables['attributes']['id'] == 'node-record-form' || $variables['attributes']['id'] == 'node-record-edit-form') {
+//     error_log('this is a add/edit record form');
+//     $variables['content_type'] = 'record';
+//   }
+//   Kint::dump($variables);
+// }
+
+// function itrtheme_preprocess_vertical_tabs(&$variables) {
+//   error_log('preprocess vertical tabs');
+//   Kint::dump($variables);
+//   // $variables['node']->getType();
+//   // error_log(print_r($variables['node'], 1));
+
+//   $node = \Drupal::request()->get('node');
+//   if(isset($node)) {
+//     error_log($node->getType());
+//     $variables['content_type'] = $node->getType();
+//     error_log($variables['content_type']);
+//   }
+// }
 
 ?>
