@@ -15,7 +15,7 @@
   use Drupal\views\Plugin\views\query\QueryPluginBase;
 
   require_once('modules/devel/kint/kint/Kint.class.php');
-  Kint::$maxLevels = 6;
+  Kint::$maxLevels = 4;
 
 
   /*
@@ -115,6 +115,19 @@
     return $depts;
   }
 
+  // get top level department terms from department vocab
+  function getDepartments() {
+    $vid = 'department';
+    $depts = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, 0, 1);
+    foreach($depts as $key => $row) {
+      $id[$key] = $row->id;
+      $name[$key] = $row->name;
+    }
+    array_multisort($name, SORT_ASC, $depts);
+    return $depts;
+  }
+
+  // get categories for a specific department
   function getDepartmentCategories($deptId) {
     if(!isset($deptId)) return array();
     $vid = 'department';
@@ -129,6 +142,25 @@
       }
     }
     return $categories;
+  }
+
+  // check if the current user has a specific dept id
+  function userHasDept($deptId) {
+    $user = User::load(\Drupal::currentUser()->id());
+    $userDepts = getDepartmentsForUser();
+    $c = count($userDepts);
+    // error_log(print_r($userDepts, 1));
+    for($i=0; $i<$c; $i++) {
+      if($userDepts[$i]['id'] == $deptId)
+        return true;
+    }
+    return false;
+  }
+
+  // check if the current user has the admin role
+  function userIsAdmin() {
+    $user = User::load(\Drupal::currentUser()->id());
+    return in_array('administrator', $user->getRoles());
   }
 
   // alter add record form
@@ -267,9 +299,13 @@
   // redirect user to content edit view part 2
   function _itr_user_login_submit($form, FormStateInterface $form_state) {
     $user = User::load(\Drupal::currentUser()->id());
+    $userDepts = getDepartmentsForUser();
+    error_log(print_r($userDepts, 1));
     $isAdmin = in_array('administrator', $user->getRoles());
     if(!$isAdmin) {
-      $form_state->setRedirect('admin.content.user'); // this route defined in itr.routing.yml
+      $form_state->setRedirect('view.schedules.page_1', [
+        'dept_id' => $userDepts[0]['id']
+      ]); // this route defined in itr.routing.yml
     } else {
       $form_state->setRedirect('admin.content'); // this route defined in itr.routing.yml
     }
@@ -289,6 +325,69 @@
         }
       }
       $form['header']['node_bulk_form']['action']['#options'] = $newOptions;
+    }
+  }
+
+  // alter the form for the views exposed filters
+  function itr_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    // alter the form for the unpublished schedule view filter
+    if($form['#id'] == 'views-exposed-form-schedules-page-1') {
+      $requestDeptId = \Drupal::routeMatch()->getParameter('dept_id'); // the requested dept_id from the route
+      // if the requested deptId (a contextual filter defined in drupal ui view "schedules") is a dept belonging to this user
+      // or the user is admin, display this view and alter the filter options to only show the user's departments (done through user settings via drupal ui)
+      if(userHasDept($requestDeptId) || userIsAdmin()) {
+        $currentOptions = $form['field_department_target_id']['#options']; // get current options
+        $newOptions = array(
+          'All' => $currentOptions['All']
+        ); // grab All key from current options and assign to new options
+        $depts = getDepartmentsForUser(); // get departments only (no child terms)
+        // error_log(print_r($depts, 1));
+        $deptCount = count($depts);
+        for($i=0; $i<$deptCount; $i++) { // loop through depts and create new stdClass object for use in new options
+          $obj = new stdClass();
+          $obj->option = array(
+            $depts[$i]['id'] => $depts[$i]['name']
+          );
+          $newOptions[] = $obj; // append
+        }
+        $form['field_department_target_id']['#options'] = $newOptions; // set new options
+        $firstKey = current(array_keys($newOptions[0]->option));
+        $form['field_department_target_id']['#default_value'] = '10';
+      } else { // requested dept does not belong to this user, throw access denied exception
+        throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+      }
+      // Kint::dump($form);
+    } 
+  }
+
+  // do some stuff with views before render
+  function itr_views_pre_render(\Drupal\views\ViewExecutable $view) {
+    // error_log($view->id());
+    // Kint::dump($view->field['node_bulk_form']);
+    // Kint::dump($view);
+    // error_log(print_r($view->field['node_bulk_form']->options['selected_actions'], 1));
+    $viewId = $view->id();
+
+    if($viewId == 'schedules') { // the schedules view
+      if(!userIsAdmin()) { // if user is not admin, only allow delete action
+        $view->field['node_bulk_form']->options['selected_actions'] = ['node_delete_action'];
+      }
+    }
+  }
+
+  function itr_link_alter(&$variables) {
+    // Kint::dump($variables);
+    // error_log(print_r($variables, 1));
+    $url = $variables['url'];
+    if($url->isRouted() && $url->getRouteName() == 'view.schedules.page_1') {
+      if(!userIsAdmin()) {
+        $depts = getDepartmentsForUser();
+        if(count($depts) > 0) {
+          $url->setRouteParameter('dept_id', $depts[0]['id']);
+        }  
+      }
+      
+      // Kint::dump($variables);
     }
   }
 

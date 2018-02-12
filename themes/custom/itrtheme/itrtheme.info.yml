@@ -6,6 +6,8 @@ base theme: classy
 libraries:
   - itrtheme/global-css
   - itrtheme/global-js
+libraries-override:
+  system/admin: false
 regions:
   header: 'Header'
   pre_content: 'Pre-content'

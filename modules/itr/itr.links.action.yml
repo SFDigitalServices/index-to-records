@@ -1,14 +1,15 @@
-itr.add_record_admin:
-  route_name: node.add
+itr.add_record:
+  route_name: node.add # this route comes from core/modules/node/node.routing.yml - had to dig a bit to find it
   title: 'Add Record'
   route_parameters:
     node_type: 'record'
   appears_on:
     - admin.content
-itr.add_record:
-  route_name: node.add
-  title: 'Add Record'
-  route_parameters:
-    node_type: 'record'
-  appears_on:
     - admin.content.user
+# itr.add_record:
+#   route_name: node.add
+#   title: 'Add Record'
+#   route_parameters:
+#     node_type: 'record'
+#   appears_on:
+#     - admin.content.user

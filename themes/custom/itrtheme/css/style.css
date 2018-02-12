@@ -5,7 +5,11 @@ main {
   
 }
 
-.layout-container {
+main {
+  margin: 0 10px;
+}
+
+.path-frontpage main {
   margin: 0;
 }
 

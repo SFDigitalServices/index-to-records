@@ -1,6 +1,25 @@
-# itr.admin.menu:
-#   title: 'hello'
-#   description: 'hello page'
+# by default, users are allowed to see all and edit all schedules (this is configured through drupal ui)
+# restrictions are implemented through code in itr.module
+itr.admin.menu:
+  title: 'Schedules'
+  description: 'View schedules'
+  parent: account
+  menu_name: account
+  route_name: view.schedules.page_1 # this is a view defined through the drupal ui: admin/structure/views/view/schedules
+  route_parameters:
+    dept_id: 'all'
+itr.add_record:
+  title: 'Add Record'
+  description: 'Add a record to a department schedule'
+  parent: account
+  menu_name: account
+  route_name: node.add
+  route_parameters:
+    node_type: 'record'
+# user schedule
+# itr.user_schedule:
+#   title: 'Schedule'
+#   description: 'View the schedule for the logged in user'
 #   parent: account
 #   menu_name: account
-#   route_name: admin.unpublished_schedule
+#   route_name: admin.content.user # defined in itr.routing.yml
