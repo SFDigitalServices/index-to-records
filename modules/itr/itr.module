@@ -127,21 +127,61 @@
     return $depts;
   }
 
+  function getTermId(string $idStr, $parentId = 0) {
+    $vid = 'department';
+    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $parentId);
+    $tid = -1;
+    error_log($parentId);
+    foreach($terms as $term) {
+      if(strtolower($term->name) == $idStr) {
+        $tid = $term->tid;
+        break;
+      }
+    }
+    return $tid;
+  }
+
   // get categories for a specific department
   function getDepartmentCategories($deptId) {
     if(!isset($deptId)) return array();
     $vid = 'department';
     $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $deptId);
     $categories = array();
-    foreach($terms as $term) {
-      if(strtolower($term->name) != 'category') {
-        $categories[] = array(
-          'id' => $term->tid,
-          'name' => $term->name
-        );
+    $categoryTermId = getTermId('category', $deptId);
+    error_log('getDepartmentCategories: ' . $categoryTermId);
+    if($categoryTermId >= 0) {
+      foreach($terms as $term) {
+        $parents = $term->parents;
+        if(in_array($categoryTermId, $parents)) {
+          $categories[] = array(
+            'id' => $term->tid,
+            'name' => $term->name
+          );
+        }
       }
     }
     return $categories;
+  }
+
+  function getDepartmentDivisions($deptId) {
+    if(!isset($deptId)) return array();
+    $vid = 'department';
+    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $deptId);
+    $divisions = array();
+    $divisionTermId = getTermId('division', $deptId);
+    error_log('getDepartmentDivisions: ' . $divisionTermId);
+    if($divisionTermId >= 0) {
+      foreach($terms as $term) {
+        $parents = $term->parents;
+        if(in_array($divisionTermId, $parents)) {
+          $divisions[] = array(
+            'id' => $term->tid,
+            'name' => $term->name
+          );
+        }
+      }
+    }
+    return $divisions;
   }
 
   // check if the current user has a specific dept id
@@ -165,6 +205,11 @@
 
   // alter add record form
   function itr_form_node_record_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    error_log('add record form alter');
+
+    // error_log(print_r(getDepartmentCategories('25'), 1));
+
+
     $depts = getDepartmentsForUser();
     // error_log(print_r($depts, 1));
     // $deptId = selectDepartmentForUser();
@@ -174,6 +219,12 @@
     // $form['field_department']['widget']['#default_value'] = $deptId;
     // $form['field_category']['widget']['#options'] = getCategoriesForUser();
     // $form['field_category']['widget']['#options'] = array();
+    // error_log(print_r($form['field_category']['widget']['#options'], 1));
+
+    // $form['field_category']['#validated'] = TRUE;
+    // $form_state->setRebuild(TRUE);
+
+    // error_log(print_r($form['field_category']['widget']['#options'], 1));
 
     $deptOptions = array();
     $deptOptions['_none'] = '- None -';
@@ -183,12 +234,12 @@
 
     // error_log(print_r($deptOptions, 1));
 
+    // $form['field_category']['widget']['#options'] = $deptOptions;
+
     $form['field_department']['widget']['#options'] = $deptOptions;
     $form['#attached']['library'][] = 'itr/add-record';
     $form['#attached']['drupalSettings']['itr']['addRecord']['foo'] = 'bar';
     $form['#attached']['drupalSettings']['itr']['path'] = base_path();
-    // error_log(base_path());
-
 
     // attach ajax behavior to department drop down
     $form['field_department']['widget']['#ajax'] = array(
@@ -199,6 +250,10 @@
         'message' => NULL,
       ),
     );
+  }
+
+  function _itrDepartmentChangeAjax(array $form, FormStateInterface $form_state) {
+    return $form['field_department'];
   }
 
   // alter edit record form
@@ -213,6 +268,15 @@
     }
     // replace the existing options with the current record's department's options (defined in taxonomy)
     $form['field_category']['widget']['#options'] = $newOptions;
+
+
+    $divisions = getDepartmentDivisions($deptId);
+    foreach($divisions as $division) {
+      $divisionOptions[$division['id']] = $division['name'];
+    }
+
+    $form['field_division']['widget']['#options'] = $divisionOptions;
+
     // disable to the department
     $form['field_department']['widget']['#attributes']['disabled'] = 'disabled';
 
@@ -231,19 +295,26 @@
     
   }
 
-  // ajax callback when department is changed (only used for adding a record)
-  function itrDepartmentChangeAjax(array $form, FormStateInterface $form_state) {
+  // ajax callback when department is changed to update category and division options
+  function itrDepartmentChangeAjax(array &$form, FormStateInterface $form_state) {
     // error_log(print_r($form['field_department'], 1));
     $deptId = $form['field_department']['widget']['#value'];
-    error_log($deptId);
-    $terms = getDepartmentCategories($deptId);
-    $optionHtml = '<option value="_none">- None -</option>';
-    foreach($terms as $term) {
-      $optionHtml .= '<option value="' . $term['id'] . '">' . $term['name'] . '</option>';
+
+    $categories = getDepartmentCategories($deptId);
+    $categoryOptionHtml = '<option value="_none">- None -</option>';
+    foreach($categories as $category) {
+      $categoryOptionHtml .= '<option value="' . $category['id'] . '">' . $category['name'] . '</option>';
     }
-    error_log($optionHtml);
+
+    $divisions = getDepartmentDivisions($deptId);
+    $divisionOptionHtml = '<option value="_none">- None -</option>';
+    foreach($divisions as $division) {
+      $divisionOptionHtml .= '<option value="' . $division['id'] . '">' . $division['name'] . '</option>';
+    }
+
     $response = new AjaxResponse();
-    $response->addCommand(new HtmlCommand('#edit-field-category', $optionHtml));
+    $response->addCommand(new HtmlCommand('#edit-field-category', $categoryOptionHtml));
+    $response->addCommand(new HtmlCommand('#edit-field-division', $divisionOptionHtml));
     $response->addCommand(new DemoTestJsCommand());
     return $response;
   }
