@@ -40,3 +40,5 @@ class GetDepartmentCategoryResource extends ResourceBase {
     return new ResourceResponse($categories);
   }
 }
+
+?>
