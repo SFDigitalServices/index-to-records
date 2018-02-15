@@ -143,42 +143,36 @@
 
   // get categories for a specific department
   function getDepartmentCategories($deptId) {
+    error_log('whut getDepartmentCategories: ' . $categoryTermId);
     if(!isset($deptId)) return array();
     $vid = 'department';
-    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $deptId);
     $categories = array();
     $categoryTermId = getTermId('category', $deptId);
-    error_log('getDepartmentCategories: ' . $categoryTermId);
     if($categoryTermId >= 0) {
+      $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $categoryTermId);
       foreach($terms as $term) {
-        $parents = $term->parents;
-        if(in_array($categoryTermId, $parents)) {
-          $categories[] = array(
-            'id' => $term->tid,
-            'name' => $term->name
-          );
-        }
+        $categories[] = array(
+          'id' => $term->tid,
+          'name' => $term->name
+        );
       }
     }
     return $categories;
   }
 
   function getDepartmentDivisions($deptId) {
+    error_log('whut getDepartmentDivisions: ' . $divisionTermId);
     if(!isset($deptId)) return array();
     $vid = 'department';
-    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $deptId);
     $divisions = array();
     $divisionTermId = getTermId('division', $deptId);
-    error_log('getDepartmentDivisions: ' . $divisionTermId);
     if($divisionTermId >= 0) {
+      $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $divisionTermId);
       foreach($terms as $term) {
-        $parents = $term->parents;
-        if(in_array($divisionTermId, $parents)) {
-          $divisions[] = array(
-            'id' => $term->tid,
-            'name' => $term->name
-          );
-        }
+        $divisions[] = array(
+          'id' => $term->tid,
+          'name' => $term->name
+        );
       }
     }
     return $divisions;
