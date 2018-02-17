@@ -10,7 +10,10 @@ admin.content:
   path: '/admin/content'
 admin.content.user:
   path: '/admin/content/user'
-# admin.unpublished_schedule:
-#   path: '/unpublished/schedule/10'
-#   requirements:
-#     _role: 'administrator'
+import.form:
+  path: '/schedule/import'
+  defaults:
+    _title: 'Import Schedule'
+    _form: '\Drupal\itr\Form\ImportScheduleForm'
+  requirements:
+    _permission: 'administer content'

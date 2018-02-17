@@ -128,12 +128,14 @@
   }
 
   function getTermId(string $idStr, $parentId = 0) {
+    // error_log('get term id for [' . $idStr . '] with parentId: [' . $parentId . ']');
     $vid = 'department';
     $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $parentId);
     $tid = -1;
-    error_log($parentId);
+    // error_log($parentId);
     foreach($terms as $term) {
-      if(strtolower($term->name) == $idStr) {
+      // error_log(strtolower($term->name) . '==?' . $idStr);
+      if(strtolower($term->name) == strtolower($idStr)) {
         $tid = $term->tid;
         break;
       }

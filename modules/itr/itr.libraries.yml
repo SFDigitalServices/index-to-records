@@ -9,3 +9,13 @@ add-record:
     js/add-record.js: {}
   dependencies:
     - core/jquery
+
+import-schedule:
+  version: 1.x
+  css:
+    layout:
+      css/import-schedule.css: {}
+  js:
+    js/import-schedule.js: {}
+  dependencies:
+    - core/jquery

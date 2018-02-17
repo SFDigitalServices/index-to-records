@@ -1,3 +1,6 @@
+@import url("input-styles.css");
+@import url("import-schedule.css");
+
 /* layout */
 
 header {}
@@ -240,7 +243,7 @@ table.views-table td.views-field-operations .dropbutton-widget .dropbutton-toggl
   display: none;
 }
 
-/* dept list */
+/* dept list / front page */
 #dept-list-header {
   width: 100%;
   text-align: center;

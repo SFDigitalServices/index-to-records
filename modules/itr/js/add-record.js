@@ -1,6 +1,6 @@
 $ = jQuery;
 console.log(Drupal.AjaxCommands);
-console.log('hello');
+console.log('add-record');
 console.log(drupalSettings.itr.addRecord.foo);
 // var path = drupalSettings.itr.path;
 

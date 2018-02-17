@@ -1,0 +1,23 @@
+/* import schedule */
+#import-schedule-form .import-schedule-fields {
+  border: 1px solid #999;
+  padding: 10px;
+  margin: 0;
+}
+
+#import-schedule-form .import-schedule-fields label {
+  display: inline-block;
+  width: 150px;
+}
+
+#import-schedule-form #edit-schedule-file-upload {
+  display: inline-block;
+}
+
+.form-item-schedule-file .form-file {
+
+}
+
+#import-schedule-form #ajax-wrapper {
+
+}
