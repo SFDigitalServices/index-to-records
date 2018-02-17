@@ -6,7 +6,7 @@ use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 
 /**
-* Provides the categories for a specific department
+* Provides the department names
 *
 * @RestResource(
 *   id = "departments",

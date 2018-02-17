@@ -7,19 +7,19 @@ use Drupal\rest\ResourceResponse;
 use Drupal\taxonomy\Entity\Term;
 
 /**
-* Provides a rest resource to get or add department categories
+* Provides a rest resource to get or add department divisions
 *
 * @RestResource(
-*   id = "department_category_by_id",
-*   label = @Translation("Department Category"),
+*   id = "department_division_by_id",
+*   label = @Translation("Department Division"),
 *   uri_paths = {
-*     "canonical" = "/itr_rest/department/{deptId}/category",
-*     "https://www.drupal.org/link-relations/create" = "/itr_rest/department/category/add"
+*     "canonical" = "/itr_rest/department/{deptId}/division",
+*     "https://www.drupal.org/link-relations/create" = "/itr_rest/department/division/add"
 *   }
 * )
 */
 
-class DepartmentCategoryResource extends ResourceBase {
+class DepartmentDivisionResource extends ResourceBase {
   /**
   * Responds to entity GET requests.
   * @return \Drupal\rest\ResourceResponse
@@ -30,15 +30,15 @@ class DepartmentCategoryResource extends ResourceBase {
       $response = ['message' => 'dept id is required'];
     } else {
       $vid = 'department';
-      $categoryId = $this->getCategoryTermId($deptId);
-      $categoryTerms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $categoryId);
-      foreach($categoryTerms as $term) {
-        $categories[] = array(
+      $divisionId = $this->getDivisionTermId($deptId);
+      $divisionTerms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $divisionId);
+      foreach($divisionTerms as $term) {
+        $divisions[] = array(
           'id' => $term->tid,
           'name' => $term->name,
         );
       }
-      $response = $categories;
+      $response = $divisions;
     }
     return new ResourceResponse($response);
   }
@@ -48,28 +48,28 @@ class DepartmentCategoryResource extends ResourceBase {
   * expected data format:
   * {
   *   deptId: deptId,
-  *   categories: array containing category strings
+  *   division: array containing division strings
   * }
   * @return \Drupal\rest\ResourceResponse
   */
   public function post($data) {
     try {
-      $categoryId = $this->getCategoryTermId($data['deptId']);
-      $categories = $data['categories'];
-      if(isset($categories) && isset($categoryId)) {
-        $catCount = count($categories);
-        for($i = 0; $i < $catCount; $i++) {
+      $divisionId = $this->getDivisionTermId($data['deptId']);
+      $divisions = $data['divisions'];
+      if(isset($divisions) && isset($divisionId)) {
+        $divCount = count($divisions);
+        for($i = 0; $i < $divCount; $i++) {
           $term = Term::create([
             'vid' => 'department',
-            'name' => $categories[$i],
-            'parent' => $categoryId
+            'name' => $divisions[$i],
+            'parent' => $divisionId
           ]);
           $term->save();
         }
       }
       $response = ['message' => 'save success'];
     } catch (Exception $e) {
-      error_log('Exception in DepartmentCategoryResource POST: ');
+      error_log('Exception in DepartmentDivisionResource POST: ');
       error_log($e->getMessage());
       $response = ['message' => 'save fail.  check logs'];
     }
@@ -77,10 +77,10 @@ class DepartmentCategoryResource extends ResourceBase {
     return new ResourceResponse($response);
   }
 
-  private function getCategoryTermId($deptId) {
+  private function getDivisionTermId($deptId) {
     $deptTermChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('department', $deptId);
     foreach($deptTermChildren as $deptTermChild) {
-      if(strtolower($deptTermChild->name) == 'category') {
+      if(strtolower($deptTermChild->name) == 'division') {
         return $deptTermChild->tid;
       }
     }
