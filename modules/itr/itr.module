@@ -14,6 +14,8 @@
   use Drupal\views\ViewExecutable;
   use Drupal\views\Plugin\views\query\QueryPluginBase;
 
+  use Drupal\itr\Utility\Utility;
+
   require_once('modules/devel/kint/kint/Kint.class.php');
   Kint::$maxLevels = 4;
 
@@ -92,29 +94,6 @@
     return $depts[0]['target_id'];
   }
 
-  function getDepartmentsForUser() {
-    $user = User::load(\Drupal::currentUser()->id());
-    $assignedDepts = $user->get('field_department')->getValue();
-    $count = count($assignedDepts);
-    $vid = Term::load($assignedDepts[0]['target_id'])->getVocabularyId();
-    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
-    $depts = array();
-    for($i = 0; $i < $count; $i++) {
-      $tid = $assignedDepts[$i]['target_id'];
-      $deptName = Term::load($tid)->getName();
-      $depts[] = array(
-        'id' => $tid,
-        'name' => $deptName
-      );
-    }
-    foreach($depts as $key => $row) {
-      $id[$key] = $row['id'];
-      $name[$key] = $row['name'];
-    }
-    array_multisort($name, SORT_ASC, $depts);
-    return $depts;
-  }
-
   // get top level department terms from department vocab
   function getDepartments() {
     $vid = 'department';
@@ -183,7 +162,7 @@
   // check if the current user has a specific dept id
   function userHasDept($deptId) {
     $user = User::load(\Drupal::currentUser()->id());
-    $userDepts = getDepartmentsForUser();
+    $userDepts = Utility::getDepartmentsForUser();
     $c = count($userDepts);
     // error_log(print_r($userDepts, 1));
     for($i=0; $i<$c; $i++) {
@@ -206,7 +185,7 @@
     // error_log(print_r(getDepartmentCategories('25'), 1));
 
 
-    $depts = getDepartmentsForUser();
+    $depts = Utility::getDepartmentsForUser();
     // error_log(print_r($depts, 1));
     // $deptId = selectDepartmentForUser();
     // error_log('deptId: ' . $deptId);
@@ -366,7 +345,7 @@
   // redirect user to content edit view part 2
   function _itr_user_login_submit($form, FormStateInterface $form_state) {
     $user = User::load(\Drupal::currentUser()->id());
-    $userDepts = getDepartmentsForUser();
+    $userDepts = Utility::getDepartmentsForUser();
     error_log(print_r($userDepts, 1));
     $isAdmin = in_array('administrator', $user->getRoles());
     if(!$isAdmin) {
@@ -407,7 +386,7 @@
         $newOptions = array(
           'All' => $currentOptions['All']
         ); // grab All key from current options and assign to new options
-        $depts = getDepartmentsForUser(); // get departments only (no child terms)
+        $depts = Utility::getDepartmentsForUser(); // get departments only (no child terms)
         // error_log(print_r($depts, 1));
         $deptCount = count($depts);
         for($i=0; $i<$deptCount; $i++) { // loop through depts and create new stdClass object for use in new options
@@ -448,7 +427,7 @@
     $url = $variables['url'];
     if($url->isRouted() && $url->getRouteName() == 'view.schedules.page_1') {
       if(!userIsAdmin()) {
-        $depts = getDepartmentsForUser();
+        $depts = Utility::getDepartmentsForUser();
         if(count($depts) > 0) {
           $url->setRouteParameter('dept_id', $depts[0]['id']);
         }  

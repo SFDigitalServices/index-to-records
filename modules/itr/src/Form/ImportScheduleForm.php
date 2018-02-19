@@ -11,6 +11,8 @@
   use Drupal\Core\Ajax\AjaxResponse;
   use Drupal\itr\Ajax\ImportScheduleCommand;
 
+  use Drupal\itr\Utility\Utility;
+
   require_once('modules/devel/kint/kint/Kint.class.php');
   \Kint::$maxLevels = 4;  
 
@@ -27,9 +29,7 @@
     public function buildForm(array $form, FormStateInterface $form_state) {
 
       // get departments from taxonomy
-      $depts = getDepartmentsForUser(); // this method is defined in .module file.  
-                                        // yes, it should maybe be a static utility class or service.
-                                        // no, i will not
+      $depts = Utility::getDepartmentsForUser();
       $deptOptions = array();
       $deptOptions['_none'] = '- None -';
       foreach($depts as $dept) {
@@ -134,34 +134,83 @@
         // if the term id does not exist, it should be created programmatically
 
         $deptId = $form_state->getValue('schedule_department');
-
-        for($i = 0; $i < $count; $i++) {
-          $rec = $d[$i];
-          
-          $division = $rec['division'];
-
-          // replace the category
-          if(isset($rec['category']) && $rec['category'] !== 'null' && strlen($rec['category']) > 0) {
-            $category = $rec['category'];
-            $categoryTermId = getTermId('category', $deptId); // the term id of the actual string 'category' as defined in vocab department
-            $categoryId = getTermId($category, $categoryTermId);
-            if($categoryId > 0) {
-              error_log('term id found for category ' . $category . ': ' . $categoryId);
-              $d[$i]['category'] = $categoryId; // replace category string with id in dataset
-            } else {
-              error_log('term id not found for category ' . $category . ', create');
-            }
-          }
-        }
-
+        $finalData = $this->modifyData($d, $deptId);
 
         // $form['#attached']['drupalSettings']['itr']['importSchedule']['data'] = json_encode($d);
-        $response->addCommand(new ImportScheduleCommand($d)); // execute custom ajax command which renders json array with data $d
+        $response->addCommand(new ImportScheduleCommand($finalData)); // execute custom ajax command which renders json array with data $d
       } else {
         $response->addCommand(new ImportScheduleCommand(['message' => 'no file uploaded']));
       }
 
       return $response;
+    }
+
+    // modify data specifically for record content type with a given associative array or records
+    // essentially replaces category, division, and retention with the appropriate term id's
+    // in order to prepare it for import via drupal's in-built content rest api
+    function modifyData(array $d, $deptId) {
+      $count = count($d);
+      $entityRefKeys = ['category','division','retention']; // these are the keys that use entity references for record content type
+      for($i = 0; $i < $count; $i++) {
+        $rec = $d[$i];
+        // error_log(print_r($rec, 1));
+
+        // replace the category
+        // if(isset($rec['category']) && $rec['category'] !== 'null' && strlen($rec['category']) > 0) {
+        //   $category = $rec['category'];
+        //   $categoryTermId = Utility::getTermId('category', $deptId); // the term id of the actual string 'category' as defined in vocab department
+        //   $categoryId = Utility::getTermId($category, $categoryTermId);
+        //   if($categoryId > 0) {
+        //     error_log('term id found for category ' . $category . ': ' . $categoryId);
+        //     $d[$i]['category'] = $categoryId; // replace category string with id in dataset
+        //   } else {
+        //     error_log('term id not found for category ' . $category . ', create');
+        //   }
+        // } else {
+        //   error_log('category is null or empty');
+        // }
+
+        // // replace the division
+        // if(isset($rec['division']) && $rec['division'] !== 'null' && strlen($rec['division']) > 0) {
+        //   $division = $rec['division'];
+        //   $divisionTermId = Utility::getTermId('division', $deptId);
+        //   $divisionId = Utility::getTermId($division, $divisionTermId);
+        //   if($divisionId > 0) {
+        //     error_log('term id found for division ' . $division . ': ' . $divisionId);
+        //     $d[$i]['division'] = $divisionId;
+        //   } else {
+        //     error_log('term id not found for division ' . $division . ', create');
+        //   }
+        // } else {
+        //   error_log('division is null or empty');
+        //   $d[$i]['division'] = '';
+        // }
+
+        // // replace the retention
+        // if(isset())
+        foreach($rec as $key => $value) {
+          // error_log($value);
+          if(in_array($key, $entityRefKeys)) {
+            $vocab = $key == 'retention' ? 'retention' : 'department';
+            error_log('find term id for ' . $key . ': ' . $value);
+            if(isset($value) && $value !== 'null' && strlen($value) > 0) {
+              $keyTermId = Utility::getTermId(strtolower($key), $vocab, $deptId);
+              if($vocab == 'retention') $keyTermId = 0;
+              $valueTermId = Utility::getTermId(strtolower($value), $vocab, $keyTermId);
+              if($valueTermId > 0) {
+                error_log($key . ' term id found for [' . $value . '] in [' . $vocab . ']: [' . $valueTermId . ']');
+                $d[$i][$key] = $valueTermId;
+              } else {
+                error_log($key . ' term id not found for [' . $value . '] in [' . $vocab . '], create');
+              }
+            } else {
+              $d[$i][$key] = '';
+            }
+          }
+        }
+
+      }
+      return ['department' => $deptId, 'schedule' => $d];
     }
 
     public function validateForm(array &$form, FormStateInterface $form_state) {
