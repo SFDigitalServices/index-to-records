@@ -73,6 +73,8 @@ Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, s
                       // TODO: handle division (most depts don't have it, how to enter this using drupal's in-built rest ui to post new content)
                     };
                     return postNode(recordNode, token);
+                  }).done(function() {
+                    console.log('Import complete');
                   })
                 });
               },

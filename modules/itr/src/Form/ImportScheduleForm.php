@@ -89,7 +89,7 @@
       $form['actions']['#type'] = 'actions';
       $form['actions']['submit'] = array(
         '#type' => 'submit',
-        '#value' => $this->t('Save'),
+        '#value' => $this->t('Import Schedule'),
         '#button_type' => 'primary',
         '#attributes' => array(
           'class' => array('blue-btn', 'btn-md'),

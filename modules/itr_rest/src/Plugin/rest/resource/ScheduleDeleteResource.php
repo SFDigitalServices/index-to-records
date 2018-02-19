@@ -25,7 +25,7 @@ class ScheduleDeleteResource extends ResourceBase {
     error_log(print_r($data, 1));
 
     $controller = \Drupal::entityTypeManager()->getStorage('node');
-    $entities = $controller->loadMultiple($data['ids']);
+    $entities = $controller->loadMultiple($data);
     $controller->delete($entities);
 
     return new ResourceResponse($data);
