@@ -40,7 +40,7 @@
         '#attributes' => array('enctype' => 'multipart/form-data'),
       );
 
-      $form['#prefix'] = '<div id="my-form-prefix">';
+      $form['#prefix'] = '<div id="import-form-wrapper">';
       $form['#suffix'] = '</div>';
 
       $str = '<p>The following requirements should be met before importing a schedule:</p>';

@@ -14,10 +14,61 @@
   display: inline-block;
 }
 
-.form-item-schedule-file .form-file {
-
+.form-item-schedule-file .form-managed-file {
+  display: inline-block;
 }
 
 #import-schedule-form #ajax-wrapper {
 
+}
+
+#import-schedule-form input:disabled {
+  opacity: 0.5;
+}
+
+#edit-import-schedule-fields.disabled {
+  opacity: 0.5;
+}
+
+#import-progress-wrap {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 2px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  height: 25px;
+}
+
+#import-progress {
+/*  background: repeating-linear-gradient(
+    45deg,
+    #0a8aea,
+    #0a8aea 10px,
+    #465298 10px,
+    #465298 20px
+  );*/
+  background: #00cc66;
+  width: 0px;
+  height: inherit;
+  border-radius: inherit;
+  text-align: center;
+  -webkit-transition: width 0.8s;
+}
+
+#import-progress-log {
+  display: none;
+}
+
+#view-log-link {
+/*  font-family: 'verdana';
+  font-size: 0.8em;
+  margin-left: 5px;*/
+  display: block;
+}
+
+#import-progress-log {
+  margin-left: 10px;
+  line-height: 1.5em;
+  font-family: 'verdana';
+  font-size: 0.8em;
 }

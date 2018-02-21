@@ -16,6 +16,12 @@ itr.add_record:
   route_name: node.add
   route_parameters:
     node_type: 'record'
+itr.import_export:
+  title: 'Import/Export'
+  description: 'Import/export a schedule from/to CSV'
+  parent: account
+  menu_name: account
+  route_name: import.form
 # user schedule
 # itr.user_schedule:
 #   title: 'Schedule'
