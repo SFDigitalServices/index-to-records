@@ -1,5 +1,6 @@
 @import url("input-styles.css");
 @import url("import-schedule.css");
+@import url("menu.css");
 
 /* layout */
 
@@ -38,32 +39,6 @@ header .region-header {
   background: url(../images/header-image.jpg) no-repeat;
   background-size: cover;
   padding: 20px;
-}
-
-nav.menu--account {
-  position: absolute;
-  top: 0;
-  right: 10px;
-}
-
-nav.menu--account .menu {
-  list-style-type: none;
-}
-
-nav.menu--account .menu .menu-item {
-  display: inline-block;
-  margin-right: -4px;
-  border-right: 2px solid #fff;
-  padding-right: 10px;
-  padding-left: 10px;
-}
-
-nav.menu--account .menu .menu-item:last-of-type {
-  border-right: none;
-}
-
-nav.menu--account .menu .menu-item a {
-  color: #fff;
 }
 
 #block-itrtheme-search {
@@ -297,4 +272,11 @@ table.views-table td.views-field-operations .dropbutton-widget .dropbutton-toggl
 
 .path-frontpage .view-id-departments .dept-list-row .views-field-name {
   padding: 0 10% 20px 0;
+}
+
+/* kint debug menu */
+#block-itrtheme-account-menu .kint {
+  position: absolute;
+  left: -700px;
+  z-index: 1000;
 }
