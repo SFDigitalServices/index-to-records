@@ -8,20 +8,44 @@ itr.admin.menu:
   route_name: view.schedules.page_1 # this is a view defined through the drupal ui: admin/structure/views/view/schedules
   route_parameters:
     dept_id: 'all'
+itr.view_edit_schedule:
+  title: 'View/Edit'
+  description: 'View or edit an existing schedule'
+  parent: itr.admin.menu
+  menu_name: account
+  route_name: view.schedules.page_1
+  route_parameters:
+    dept_id: 'all'
+  weight: 0
 itr.add_record:
   title: 'Add Record'
   description: 'Add a record to a department schedule'
-  parent: account
+  parent: itr.admin.menu
   menu_name: account
   route_name: node.add
   route_parameters:
     node_type: 'record'
-itr.import_export:
-  title: 'Import/Export'
-  description: 'Import/export a schedule from/to CSV'
-  parent: account
+  weight: 2
+# itr.import_export:
+#   title: 'Import/Export'
+#   description: 'Import/export a schedule from/to CSV'
+#   parent: account
+#   menu_name: account
+#   route_name: import.form
+itr.import:
+  title: 'Import'
+  description: 'Import a CSV schedule for a department'
+  parent: itr.admin.menu
   menu_name: account
   route_name: import.form
+  weight: 5
+itr.export:
+  title: 'Export'
+  description: 'Export an existing schedule to CSV for a department'
+  parent: itr.admin.menu
+  menu_name: account
+  route_name: import.form
+  weight: 10
 # user schedule
 # itr.user_schedule:
 #   title: 'Schedule'

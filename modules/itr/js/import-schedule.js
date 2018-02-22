@@ -26,9 +26,12 @@ Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, s
   
   $('#import-form-wrapper').after(progressHtml);
 
-  var updateProgressLog = function(msg) {
-    $('#import-progress-log').html($('#import-progress-log').html() + msg + '<br/>');
-    $('#import-progress-msg').html(msg);
+  var updateProgressLog = function(msg, flag) {
+    if(flag) $('#import-progress-msg').html(msg);
+    if(!flag) {
+      $('#import-progress-log').html($('#import-progress-log').html() + msg + '<br/>');
+      $('#import-progress-msg').html(msg);
+    }
   };
 
   var updateProgressBar = function(increment, msg) {
@@ -109,8 +112,11 @@ Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, s
                     updateProgressLog('Imported: ' + resp.title[0].value);
                     var increment = (start++)/recCount;
                     if(increment == 1) {
-                      updateProgressLog('<p>Imported ' + recCount + ' records successfully.</p><a href="' + drupalSettings.path.baseUrl + 'schedules/' + dept + '">View imported schedule</a><a href="#" id="view-log-link">View log</a>');
-                      updateProgressBar(increment, 'Import complete');
+                      var finishedMsg = '<p>Imported ' + recCount + ' records successfully.</p>';
+                      var finishedLinks = '<a href="' + drupalSettings.path.baseUrl + 'schedules/' + dept + '">View imported schedule</a><a href="#" id="view-log-link">View log</a>';
+                      updateProgressLog(finishedMsg);
+                      updateProgressLog(finishedLinks, true);
+                      updateProgressBar(increment);
                       $('#view-log-link').click(function() {
                         $('#import-progress-log').toggle();
                         var display = $('#import-progress-log').css('display');
