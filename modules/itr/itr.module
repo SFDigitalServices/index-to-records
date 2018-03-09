@@ -180,7 +180,8 @@
 
   // alter add record form
   function itr_form_node_record_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-    error_log('add record form alter');
+    error_log('itr.module: itr_form_node_record_form_alter: $form_id: ' . $form_id);
+    // Kint::dump($form);
 
     // error_log(print_r(getDepartmentCategories('25'), 1));
 
@@ -225,6 +226,12 @@
         'message' => NULL,
       ),
     );
+
+    foreach(array_keys($form['actions']) as $action) {
+      if($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type']==='submit') {
+        $form['actions'][$action]['#submit'][] = '_itr_form_redirect_callback';
+      }  
+    }
   }
 
   function _itrDepartmentChangeAjax(array $form, FormStateInterface $form_state) {
@@ -336,24 +343,43 @@
 
   // redirect user to content edit view part 1
   function itr_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    error_log('form_id: ' . $form_id);
     if($form_id == 'user_login_form') {
       error_log('this is the login form blah');
-      $form['#submit'][] = '_itr_user_login_submit';
+      $form['#submit'][] = '_itr_form_redirect_callback';
     }
   }
 
   // redirect user to content edit view part 2
-  function _itr_user_login_submit($form, FormStateInterface $form_state) {
+  // also used after adding a record
+  function _itr_form_redirect_callback($form, FormStateInterface $form_state) {
     $user = User::load(\Drupal::currentUser()->id());
     $userDepts = Utility::getDepartmentsForUser();
-    error_log(print_r($userDepts, 1));
-    $isAdmin = in_array('administrator', $user->getRoles());
-    if(!$isAdmin) {
-      $form_state->setRedirect('view.schedules.page_1', [
-        'dept_id' => $userDepts[0]['id']
-      ]); // this route defined in itr.routing.yml
-    } else {
-      $form_state->setRedirect('admin.content'); // this route defined in itr.routing.yml
+    // error_log(print_r($userDepts, 1));
+    $formId = $form['#form_id'];
+    
+    error_log('itr.module: _itr_form_redirect_callback: $formId: ' . $formId);
+
+    if($formId == 'node_record_form') {
+      if(isset($form['field_department'])) {
+        $deptId = $form['field_department']['widget']['#value'];
+        error_log('itr.module: _itr_form_redirect_callback: $deptId: ' . $deptId);
+        $form_state->setRedirect('view.schedules.page_1', [
+          'dept_id' => $deptId
+        ]);
+      }
+    } else if($formId == 'user_login_form') {
+      $isAdmin = in_array('administrator', $user->getRoles());
+      if(!$isAdmin) {
+        $form_state->setRedirect('view.schedules.page_1', [
+          'dept_id' => $userDepts[0]['id']
+        ]); // this route defined in itr.routing.yml
+      } else {
+        // $form_state->setRedirect('admin.content'); // this route defined in itr.routing.yml
+        $form_state->setRedirect('view.schedules.page_1', [
+          'dept_id' => 'all'
+        ]); // this route defined in itr.routing.yml
+      }
     }
   }
 
@@ -427,16 +453,16 @@
     // error_log(print_r($variables, 1));
     $url = $variables['url'];
     if($url->isRouted() && $url->getRouteName() == 'view.schedules.page_1') {
-      $menuTree = \Drupal::menuTree()->load('account', new \Drupal\Core\Menu\MenuTreeParameters());
-      foreach($menuTree as $item) {
-        error_log($item->link->getTitle());
-        if($item->hasChildren) {
-          $subtree = $item->subtree;
-          foreach($subtree as $subtreeItem) {
-            error_log('-' . $subtreeItem->link->getTitle());
-          }
-        }
-      }
+      // $menuTree = \Drupal::menuTree()->load('account', new \Drupal\Core\Menu\MenuTreeParameters());
+      // foreach($menuTree as $item) {
+      //   error_log($item->link->getTitle());
+      //   if($item->hasChildren) {
+      //     $subtree = $item->subtree;
+      //     foreach($subtree as $subtreeItem) {
+      //       error_log('-' . $subtreeItem->link->getTitle());
+      //     }
+      //   }
+      // }
       if(!userIsAdmin()) {
         $depts = Utility::getDepartmentsForUser();
         if(count($depts) > 0) {
