@@ -122,43 +122,6 @@
     return $tid;
   }
 
-  // get categories for a specific department
-  function getDepartmentCategories($deptId) {
-    error_log('whut getDepartmentCategories: ' . $categoryTermId);
-    if(!isset($deptId)) return array();
-    $vid = 'department';
-    $categories = array();
-    $categoryTermId = getTermId('category', $deptId);
-    if($categoryTermId >= 0) {
-      $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $categoryTermId);
-      foreach($terms as $term) {
-        $categories[] = array(
-          'id' => $term->tid,
-          'name' => $term->name
-        );
-      }
-    }
-    return $categories;
-  }
-
-  function getDepartmentDivisions($deptId) {
-    error_log('whut getDepartmentDivisions: ' . $divisionTermId);
-    if(!isset($deptId)) return array();
-    $vid = 'department';
-    $divisions = array();
-    $divisionTermId = getTermId('division', $deptId);
-    if($divisionTermId >= 0) {
-      $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $divisionTermId);
-      foreach($terms as $term) {
-        $divisions[] = array(
-          'id' => $term->tid,
-          'name' => $term->name
-        );
-      }
-    }
-    return $divisions;
-  }
-
   // check if the current user has a specific dept id
   function userHasDept($deptId) {
     $user = User::load(\Drupal::currentUser()->id());
@@ -244,7 +207,7 @@
     $form['#attached']['drupalSettings']['itr']['addRecord']['foo'] = 'bar';
     $deptId = $form['field_department']['widget']['#default_value'][0];
 
-    $terms = getDepartmentCategories($deptId);
+    $terms = Utility::getDepartmentCategories($deptId);
     foreach($terms as $term) {
       $newOptions[$term['id']] = $term['name'];
     }
@@ -252,7 +215,7 @@
     $form['field_category']['widget']['#options'] = $newOptions;
 
 
-    $divisions = getDepartmentDivisions($deptId);
+    $divisions = Utility::getDepartmentDivisions($deptId);
     foreach($divisions as $division) {
       $divisionOptions[$division['id']] = $division['name'];
     }
@@ -282,13 +245,13 @@
     // error_log(print_r($form['field_department'], 1));
     $deptId = $form['field_department']['widget']['#value'];
 
-    $categories = getDepartmentCategories($deptId);
+    $categories = Utility::getDepartmentCategories($deptId);
     $categoryOptionHtml = '<option value="_none">- None -</option>';
     foreach($categories as $category) {
       $categoryOptionHtml .= '<option value="' . $category['id'] . '">' . $category['name'] . '</option>';
     }
 
-    $divisions = getDepartmentDivisions($deptId);
+    $divisions = Utility::getDepartmentDivisions($deptId);
     $divisionOptionHtml = '<option value="_none">- None -</option>';
     foreach($divisions as $division) {
       $divisionOptionHtml .= '<option value="' . $division['id'] . '">' . $division['name'] . '</option>';
