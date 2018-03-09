@@ -17,3 +17,11 @@ import.form:
     _form: '\Drupal\itr\Form\ImportScheduleForm'
   requirements:
     _permission: 'administer content'
+export.form:
+  path: '/schedule/export'
+  defaults:
+    _title: 'Export Schedule'
+    _controller:
+      '\Drupal\itr\Controller\ExportFormController'
+  requirements:
+    _permission: 'administer content'
