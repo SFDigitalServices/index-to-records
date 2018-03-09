@@ -62,7 +62,7 @@
 
     // get categories for a specific department
     public static function getDepartmentCategories($deptId) {
-      error_log('whut getDepartmentCategories: ' . $categoryTermId);
+      error_log('Utility: getDepartmentCategories: whut getDepartmentCategories: ' . $categoryTermId);
       if(!isset($deptId)) return array();
       $vid = 'department';
       $categories = array();
@@ -80,7 +80,7 @@
     }
 
     public static function getDepartmentDivisions($deptId) {
-      error_log('whut getDepartmentDivisions: ' . $divisionTermId);
+      error_log('Utility: getDepartmentDivisions: whut getDepartmentDivisions: ' . $divisionTermId);
       if(!isset($deptId)) return array();
       $vid = 'department';
       $divisions = array();
