@@ -134,6 +134,10 @@
         // if the term id does not exist, it should be created programmatically
 
         $deptId = $form_state->getValue('schedule_department');
+
+        // test
+        // Utility::addCategoriesToDepartment($deptId, ['some category 1', 'some category 2']);
+
         $finalData = $this->modifyData($d, $deptId);
 
         // $form['#attached']['drupalSettings']['itr']['importSchedule']['data'] = json_encode($d);
@@ -151,7 +155,9 @@
     function modifyData(array $d, $deptId) {
       $count = count($d);
       $entityRefKeys = ['category','division','retention']; // these are the keys that use entity references for record content type
+      $recNum = 0;
       for($i = 0; $i < $count; $i++) {
+        error_log('-----ImportScheduleForm: recNum: ' . $recNum . '-----');
         $rec = $d[$i];
         // error_log(print_r($rec, 1));
 
@@ -190,25 +196,49 @@
         // if(isset())
         foreach($rec as $key => $value) {
           // error_log($value);
+          
           if(in_array($key, $entityRefKeys)) {
             $vocab = $key == 'retention' ? 'retention' : 'department';
-            error_log('find term id for ' . $key . ': ' . $value);
+            error_log('ImportScheduleForm: modifyData: find term id for ' . $key . ': ' . $value);
             if(isset($value) && $value !== 'null' && strlen($value) > 0) {
               $keyTermId = Utility::getTermId(strtolower($key), $vocab, $deptId);
-              if($vocab == 'retention') $keyTermId = 0;
-              $valueTermId = Utility::getTermId(strtolower($value), $vocab, $keyTermId);
-              if($valueTermId > 0) {
-                error_log($key . ' term id found for [' . $value . '] in [' . $vocab . ']: [' . $valueTermId . ']');
-                $d[$i][$key] = $valueTermId;
+              $values = array();
+              if($vocab == 'retention') {
+                $keyTermId = 0;
+                $retentionArray = preg_split("/,(\s+)/", $value);
+                // error_log('ImportScheduleForm: modifyData: retention array: ' . print_r($retentionArray, 1));
+                $values = $retentionArray;
               } else {
-                error_log($key . ' term id not found for [' . $value . '] in [' . $vocab . '], create');
+                $values = [$value];
+              }
+              error_log('ImportScheduleForm: modifyData: $values: ' . print_r($values, 1));
+              $valuesCount = count($values);
+              for($j=0; $j<$valuesCount; $j++) {
+                $someValue = $values[$j];
+                $valueTermId = Utility::getTermId(strtolower($someValue), $vocab, $keyTermId);
+                if($valueTermId > 0) {
+                  error_log('ImportScheduleForm: modifyData: ' . $key . ' term id found for [' . $someValue . '] in [' . $vocab . ']: [' . $valueTermId . ']');
+                  if(is_array($d[$i][$key])) {
+                    array_push($d[$i][$key], $valueTermId);
+                  } else {
+                    $d[$i][$key] = [$valueTermId];
+                  }
+                } else {
+                  error_log('ImportScheduleForm: modifyData: ' . $key . ' term id not found for [' . $someValue . '] in [' . $vocab . '], create');
+                  if($key == 'category') {
+                    $newCategoryId = Utility::addCategoriesToDepartment($deptId, [$someValue]);
+                    $d[$i][$key] = $newCategoryId;
+                  }
+                  // TODO: handle retention and division
+                }
               }
             } else {
               $d[$i][$key] = '';
             }
           }
         }
-
+        error_log('-----ImportScheduleForm: recNum: ' . $recNum . '-----');
+        $recNum++;
       }
       return ['department' => $deptId, 'schedule' => $d];
     }

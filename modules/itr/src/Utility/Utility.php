@@ -45,7 +45,7 @@
     }
 
     public static function getTermId(string $idStr, $vocab = 'department', $parentId = 0) {
-      error_log('get term id for [' . $idStr . '] with parentId: [' . $parentId . '] in vocab [' . $vocab . ']');
+      error_log('Utility: getTermId: get term id for [' . $idStr . '] with parentId: [' . $parentId . '] in vocab [' . $vocab . ']');
       $vid = $vocab;
       $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $parentId);
       $tid = -1;
@@ -116,6 +116,46 @@
       return in_array('administrator', $user->getRoles());
     }
 
+    // @param deptId - the id of the dept to add these categories to
+    // @param categories - an array of strings representing categories to add
+    public static function addCategoriesToDepartment($deptId, $categories) {
+      $categoryId = self::getCategoryTermId($deptId);
+      error_log('Utility: addCategoriesToDepartment: deptId: ' . $deptId . ': categories: ' . print_r($categories, 1));
+      $createdIds = [];
+      if(!isset($categoryId)) { // no Category term exists (literally, the term 'Category'), create it
+        $categoryTerm = Term::create([
+          'vid' => 'department',
+          'name' => 'Category',
+          'parent' => $deptId
+        ]);
+        $categoryTerm->save();
+        $categoryId = $categoryTerm->id();
+      }
+      if(isset($categories) && isset($categoryId)) {
+        // error_log('Utility: addCategoriesToDepartment: deptId: ' . $deptId . ': categories: ' . print_r($categories, 1));
+        $catCount = count($categories);
+        for($i = 0; $i < $catCount; $i++) {
+          $term = Term::create([
+            'vid' => 'department',
+            'name' => $categories[$i],
+            'parent' => $categoryId
+          ]);
+          $term->save();
+          array_push($createdIds, $term->id());
+        }
+      }
+      return $createdIds;
+    }
+
+    public static function getCategoryTermId($deptId) {
+      $deptTermChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('department', $deptId);
+      foreach($deptTermChildren as $deptTermChild) {
+        if(strtolower($deptTermChild->name) == 'category') {
+          return $deptTermChild->tid;
+        }
+      }
+      return null;
+    }
 
   }
 

@@ -54,6 +54,7 @@ Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, s
         url: scheduleRetrieveUrl,
         success: function(resp) {
           updateProgressLog('Records for deletion retrieved');
+          console.log(resp);
           var deptRecords = resp;
           var deleteIds = [];
           for(var i=0; i<deptRecords.length; i++) {
@@ -68,11 +69,23 @@ Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, s
               },
               data: JSON.stringify(deleteIds),
               success: function(resp) {
+                console.log('records for delete:', resp);
                 updateProgressLog('Records for ' + $('#edit-schedule-department')[0].options[$('#edit-schedule-department')[0].selectedIndex].innerHTML + ' deleted');
+
+                var getEntityRefTargets = function(entityRefIds) {
+                  var a = [];
+                  for(var i=0; i<entityRefIds.length; i++) {
+                    a.push({target_id: entityRefIds[i]});
+                  }
+                  return a;
+                };
+
                 var p = $.when();
                 $.each(schedule, function(idx) {
                   p = p.then(function() {
                     var rec = schedule[idx];
+                    console.log(rec);
+                    // handle category, retention, and division
                     var recordNode = {
                       type: [{ target_id: 'record'}],
                       title: [{
@@ -99,12 +112,8 @@ Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, s
                       field_department: [{
                         target_id: dept
                       }],
-                      field_category: [{ 
-                        target_id: rec.category
-                      }],
-                      field_retention: [{ // TODO: some depts may have multiple retention values - this is probably going to an array of id's
-                        target_id: rec.retention
-                      }]
+                      field_category: getEntityRefTargets(rec.category),
+                      field_retention: getEntityRefTargets(rec.retention)
                       // TODO: handle division (most depts don't have it, how to enter this using drupal's in-built rest ui to post new content)
                     };
                     return postNode(recordNode, token); 
@@ -150,10 +159,10 @@ Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, s
         console.log('success: ' + nodeJson.title[0].value);
       },
       error: function(resp) {
-        console.log('error: ' + nodeJson.title[0].value);
+        console.log('error: ', nodeJson);
       },
       fail: function(resp) {
-        console.log('fail: ' + nodeJson.title[0].value);
+        console.log('fail: ', nodeJson);
       }
     })
   }

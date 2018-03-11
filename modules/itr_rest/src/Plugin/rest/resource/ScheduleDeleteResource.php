@@ -21,14 +21,15 @@ use Drupal\rest\ResourceResponse;
 class ScheduleDeleteResource extends ResourceBase {
 
   public function post($data) {
-    $response = ['message' => 'what what what'];
-    error_log(print_r($data, 1));
-
-    $controller = \Drupal::entityTypeManager()->getStorage('node');
-    $entities = $controller->loadMultiple($data);
-    $controller->delete($entities);
-
-    return new ResourceResponse($data);
+    $response = ['exists' => false, 'delete_ids' => []];
+    error_log('ScheduleDeleteResource: ' . print_r($data, 1));
+    if(isset($data) && count($data) > 0) {
+      $controller = \Drupal::entityTypeManager()->getStorage('node');
+      $entities = $controller->loadMultiple($data);
+      $controller->delete($entities);
+      $response = ['exists' => true, 'delete_ids' => $data];
+    }
+    return new ResourceResponse($response);
   }
 
 }
