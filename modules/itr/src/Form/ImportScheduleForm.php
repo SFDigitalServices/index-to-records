@@ -221,17 +221,21 @@
                   }
                 } else {
                   error_log('ImportScheduleForm: modifyData: ' . $key . ' term id not found for [' . $someValue . '] in [' . $vocab . '], create');
-                  $newTermId = -1;
+                  $newTermId = null;
                   if($key == 'category') {
                     $newTermId = Utility::addTermToDeptChildTerm($deptId, 'category', [$someValue]);
                   }
                   if($key == 'division') {
                     $newTermId = Utility::addTermToDeptChildTerm($deptId, 'division', [$someValue]);
                   }
-                  // TODO: handle retention
-                  if($newTermId >= 0) {
+                  if($key == 'retention') {
+                    $newTermId = Utility::addRetention($someValue);
+                  }
+                  if(isset($newTermId)) {
                     error_log('ImportScheduleForm: modifyData: ' . $key . ' created: ' . print_r($someValue, 1) . ' with newTermId: ' . $newTermId);
-                    $d[$i][$key] = $newTermId;
+                    error_log('pre: ' . print_r($d[$i][$key], 1));
+                    is_array($d[$i][$key]) ? array_push($d[$i][$key], $newTermId) : $d[$i][$key] = [$newTermId];
+                    error_log('post: ' . print_r($d[$i][$key], 1));
                   }
                 }
               }
