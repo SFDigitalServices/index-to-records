@@ -234,7 +234,7 @@
                   if(isset($newTermId)) {
                     error_log('ImportScheduleForm: modifyData: ' . $key . ' created: ' . print_r($someValue, 1) . ' with newTermId: ' . $newTermId);
                     error_log('pre: ' . print_r($d[$i][$key], 1));
-                    is_array($d[$i][$key]) ? array_push($d[$i][$key], $newTermId) : $d[$i][$key] = [$newTermId];
+                    is_array($d[$i][$key]) ? array_push($d[$i][$key], $newTermId) : $d[$i][$key] = $newTermId;
                     error_log('post: ' . print_r($d[$i][$key], 1));
                   }
                 }
