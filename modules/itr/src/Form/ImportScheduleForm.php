@@ -134,10 +134,6 @@
         // if the term id does not exist, it should be created programmatically
 
         $deptId = $form_state->getValue('schedule_department');
-
-        // test
-        // Utility::addCategoriesToDepartment($deptId, ['some category 1', 'some category 2']);
-
         $finalData = $this->modifyData($d, $deptId);
 
         // $form['#attached']['drupalSettings']['itr']['importSchedule']['data'] = json_encode($d);
@@ -225,11 +221,18 @@
                   }
                 } else {
                   error_log('ImportScheduleForm: modifyData: ' . $key . ' term id not found for [' . $someValue . '] in [' . $vocab . '], create');
+                  $newTermId = -1;
                   if($key == 'category') {
-                    $newCategoryId = Utility::addCategoriesToDepartment($deptId, [$someValue]);
-                    $d[$i][$key] = $newCategoryId;
+                    $newTermId = Utility::addTermToDeptChildTerm($deptId, 'category', [$someValue]);
                   }
-                  // TODO: handle retention and division
+                  if($key == 'division') {
+                    $newTermId = Utility::addTermToDeptChildTerm($deptId, 'division', [$someValue]);
+                  }
+                  // TODO: handle retention
+                  if($newTermId >= 0) {
+                    error_log('ImportScheduleForm: modifyData: ' . $key . ' created: ' . print_r($someValue, 1) . ' with newTermId: ' . $newTermId);
+                    $d[$i][$key] = $newTermId;
+                  }
                 }
               }
             } else {

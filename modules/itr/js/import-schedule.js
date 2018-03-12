@@ -112,9 +112,9 @@ Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, s
                       field_department: [{
                         target_id: dept
                       }],
+                      field_division: getEntityRefTargets(rec.division),
                       field_category: getEntityRefTargets(rec.category),
                       field_retention: getEntityRefTargets(rec.retention)
-                      // TODO: handle division (most depts don't have it, how to enter this using drupal's in-built rest ui to post new content)
                     };
                     return postNode(recordNode, token); 
                   }).done(function(resp) {

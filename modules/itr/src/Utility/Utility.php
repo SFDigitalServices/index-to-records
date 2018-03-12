@@ -118,27 +118,87 @@
 
     // @param deptId - the id of the dept to add these categories to
     // @param categories - an array of strings representing categories to add
-    public static function addCategoriesToDepartment($deptId, $categories) {
-      $categoryId = self::getCategoryTermId($deptId);
-      error_log('Utility: addCategoriesToDepartment: deptId: ' . $deptId . ': categories: ' . print_r($categories, 1));
+    // public static function addCategoriesToDepartment($deptId, $categories) {
+    //   $categoryId = self::getCategoryTermId($deptId);
+    //   error_log('Utility: addCategoriesToDepartment: deptId: ' . $deptId . ': categories: ' . print_r($categories, 1));
+    //   $createdIds = [];
+    //   if(!isset($categoryId)) { // no Category term exists (literally, the term 'Category'), create it
+    //     $categoryTerm = Term::create([
+    //       'vid' => 'department',
+    //       'name' => 'Category',
+    //       'parent' => $deptId
+    //     ]);
+    //     $categoryTerm->save();
+    //     $categoryId = $categoryTerm->id();
+    //   }
+    //   if(isset($categories) && isset($categoryId)) {
+    //     // error_log('Utility: addCategoriesToDepartment: deptId: ' . $deptId . ': categories: ' . print_r($categories, 1));
+    //     $catCount = count($categories);
+    //     for($i = 0; $i < $catCount; $i++) {
+    //       $term = Term::create([
+    //         'vid' => 'department',
+    //         'name' => $categories[$i],
+    //         'parent' => $categoryId
+    //       ]);
+    //       $term->save();
+    //       array_push($createdIds, $term->id());
+    //     }
+    //   }
+    //   return $createdIds;
+    // }
+
+    public static function getCategoryTermId($deptId) {
+      $deptTermChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('department', $deptId);
+      foreach($deptTermChildren as $deptTermChild) {
+        if(strtolower($deptTermChild->name) == 'category') {
+          return $deptTermChild->tid;
+        }
+      }
+      return null;
+    }
+
+    /*
+    * method addTermToDeptChildTerm will add a child term to a specified term in department taxonomy
+    * @param $deptId - the id of the department to add child terms to
+    * @param $deptChildTerm - the child term of the department to add child terms to (first level child)
+    * @param $termToAdd - an array of term(s) to add to the department
+    * Basically, dept taxonomy looks like this: 
+    * - department
+    * -- a department name (with id 10, for example)
+    * ---- category
+    * ------ category 1
+    * ------ category 2
+    *
+    * use this method to add a term to category like this addTermToDeptChildTerm(10, 'category', ['category 3'])
+    * will add 'category 3' to dept category so that output is this:
+    *
+    * - department
+    * -- a department name
+    * ---- category
+    * ------ category 1
+    * ------ category 2
+    * ------ category 3
+    */
+    public static function addTermToDeptChildTerm($deptId, $deptChildTermName, array $termsToAdd) {
+      $deptChildTermId = self::getDeptChildTerm($deptId, $deptChildTermName);
+      error_log('Utility: addTermToDeptChildTerm: deptId: ' . $deptId . ', deptChildTermName: ' . $deptChildTermName . ', termsToAdd: ' . print_r($termsToAdd, 1));
       $createdIds = [];
-      if(!isset($categoryId)) { // no Category term exists (literally, the term 'Category'), create it
-        $categoryTerm = Term::create([
+      if(!isset($deptChildTermId)) { // this term does not exist
+        $deptChildTerm = Term::create([
           'vid' => 'department',
-          'name' => 'Category',
+          'name' => $deptChildTermName,
           'parent' => $deptId
         ]);
-        $categoryTerm->save();
-        $categoryId = $categoryTerm->id();
+        $deptChildTerm->save();
+        $deptChildTermId = $deptChildTerm->id();
       }
-      if(isset($categories) && isset($categoryId)) {
-        // error_log('Utility: addCategoriesToDepartment: deptId: ' . $deptId . ': categories: ' . print_r($categories, 1));
-        $catCount = count($categories);
-        for($i = 0; $i < $catCount; $i++) {
+      if(isset($deptChildTermId) && isset($termsToAdd)) {
+        $termCount = count($termsToAdd);
+        for($i=0; $i<$termCount; $i++) {
           $term = Term::create([
             'vid' => 'department',
-            'name' => $categories[$i],
-            'parent' => $categoryId
+            'name' => $termsToAdd[$i],
+            'parent' => $deptChildTermId
           ]);
           $term->save();
           array_push($createdIds, $term->id());
@@ -147,11 +207,18 @@
       return $createdIds;
     }
 
-    public static function getCategoryTermId($deptId) {
-      $deptTermChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('department', $deptId);
-      foreach($deptTermChildren as $deptTermChild) {
-        if(strtolower($deptTermChild->name) == 'category') {
-          return $deptTermChild->tid;
+    /*
+    * method getTermIdByDepartment will return a term id for a given string (if it exists)
+    * @param $deptId - the id of the department to search
+    * @param $termName - the string name of the term to find
+    */
+    public static function getDeptChildTerm($deptId, $termName) {
+      if(isset($deptId) && isset($termName)) {
+        $deptTermChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('department', $deptId); // get the terms for this department (all levels)
+        foreach($deptTermChildren as $deptTermChild) {
+          if(strtolower($deptTermChild->name) == strtolower($termName)) {
+            return $deptTermChild->tid;
+          }
         }
       }
       return null;
