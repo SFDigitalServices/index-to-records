@@ -80,6 +80,13 @@ Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, s
                   return a;
                 };
 
+                var checkValues = function(value) {
+                  if(value === null || value === 'null' || value === 'undefined' || value === undefined) {
+                    value = '';
+                  }
+                  return value;
+                }
+
                 var p = $.when();
                 $.each(schedule, function(idx) {
                   p = p.then(function() {
@@ -89,25 +96,25 @@ Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, s
                     var recordNode = {
                       type: [{ target_id: 'record'}],
                       title: [{
-                        value: rec.title
+                        value: checkValues(rec.title)
                       }],
                       field_division_contact: [{
-                        value: rec.division_contact
+                        value: checkValues(rec.division_contact)
                       }],
                       field_link: [{
-                        value: rec.link
+                        value: checkValues(rec.link)
                       }],
                       field_off_site: [{
-                        value: rec.off_site
+                        value: checkValues(rec.off_site)
                       }],
                       field_on_site: [{
-                        value: rec.on_site
+                        value: checkValues(rec.on_site)
                       }],
                       field_remarks: [{
-                        value: rec.remarks
+                        value: checkValues(rec.remarks)
                       }],
                       field_total: [{
-                        value: rec.total
+                        value: checkValues(rec.total)
                       }],
                       field_department: [{
                         target_id: dept
