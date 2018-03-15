@@ -23,6 +23,10 @@ console.log(drupalSettings.itr.addRecord.foo);
 // });
 
 $('#node-record-form #edit-field-category, #node-record-form #edit-field-division').html('<option value="_none"> - Select Department First - </option>');
+$('#edit-field-record-title-0-value').on('keyup', function() {
+  var val = $(this).val().length <= 255 ? $(this).val() : $(this).val().substring(0, 255);
+  $('#edit-title-0-value').val(val);
+}); 
 
 // drupal ajax adds a container div to html command
 $('#edit-field-department').on('change', function() {

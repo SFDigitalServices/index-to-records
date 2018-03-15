@@ -98,6 +98,9 @@ Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, s
                       title: [{
                         value: checkValues(rec.title)
                       }],
+                      field_record_title: [{
+                        value: checkValues(rec.title)
+                      }],
                       field_division_contact: [{
                         value: checkValues(rec.division_contact)
                       }],
