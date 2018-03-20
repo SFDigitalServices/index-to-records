@@ -16,7 +16,10 @@ import.form:
     _title: 'Import Schedule'
     _form: '\Drupal\itr\Form\ImportScheduleForm'
   requirements:
-    _permission: 'administer content'
+    # _permission: 'administer content'
+    _role: 'authenticated'
+    # _csrf_token: 'TRUE'
+    # _permission: 'administer schedules'
 export.form:
   path: '/schedule/export'
   defaults:
@@ -24,4 +27,5 @@ export.form:
     _controller:
       '\Drupal\itr\Controller\ExportFormController'
   requirements:
-    _permission: 'administer content'
+    # _permission: 'administer content'
+    _role: 'authenticated user'

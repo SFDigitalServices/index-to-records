@@ -19,6 +19,16 @@ main {
 
 /* end layout */
 
+.link {
+  text-decoration: none;
+  font-weight: normal;
+  color: #428bca;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
 header #block-itrtheme-branding .site-logo {
   background: url(../images/logo-main.png) no-repeat;
   display: block;

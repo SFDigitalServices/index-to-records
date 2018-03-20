@@ -5,6 +5,7 @@ namespace Drupal\itr_rest\Plugin\rest\resource;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\itr\Utility\Utility;
 
 /**
 * Provides a rest resource to get or add department categories
@@ -52,40 +53,53 @@ class DepartmentCategoryResource extends ResourceBase {
   * }
   * @return \Drupal\rest\ResourceResponse
   */
-  public function post($data) {
-    try {
-      $categoryId = $this->getCategoryTermId($data['deptId']);
-      $categories = $data['categories'];
-      if(isset($categories) && isset($categoryId)) {
-        $catCount = count($categories);
-        for($i = 0; $i < $catCount; $i++) {
-          $term = Term::create([
-            'vid' => 'department',
-            'name' => $categories[$i],
-            'parent' => $categoryId
-          ]);
-          $term->save();
-        }
-      }
-      $response = ['message' => 'save success'];
-    } catch (Exception $e) {
-      error_log('Exception in DepartmentCategoryResource POST: ');
-      error_log($e->getMessage());
-      $response = ['message' => 'save fail.  check logs'];
-    }
 
+  public function post($data) {
+    error_log('itr_rest:DepartmentCategoryResource:post:data:' . print_r($data, 1));
+    $response = ['message' => 'category create failed'];
+    $deptId = $data['deptId'];
+    $categories = $data['categories'];
+    $createdIds = Utility::addTermToDeptChildTerm($deptId, 'category', $categories);
+    if(count($createdIds) > 0) {
+      $response = ['message' => 'save success', 'categories' => $createdIds];
+    }
     return new ResourceResponse($response);
   }
 
-  private function getCategoryTermId($deptId) {
-    $deptTermChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('department', $deptId);
-    foreach($deptTermChildren as $deptTermChild) {
-      if(strtolower($deptTermChild->name) == 'category') {
-        return $deptTermChild->tid;
-      }
-    }
-    return null;
-  }
+  // public function post($data) {
+  //   try {
+  //     $categoryId = $this->getCategoryTermId($data['deptId']);
+  //     $categories = $data['categories'];
+  //     if(isset($categories) && isset($categoryId)) {
+  //       $catCount = count($categories);
+  //       for($i = 0; $i < $catCount; $i++) {
+  //         $term = Term::create([
+  //           'vid' => 'department',
+  //           'name' => $categories[$i],
+  //           'parent' => $categoryId
+  //         ]);
+  //         $term->save();
+  //       }
+  //     }
+  //     $response = ['message' => 'save success'];
+  //   } catch (Exception $e) {
+  //     error_log('Exception in DepartmentCategoryResource POST: ');
+  //     error_log($e->getMessage());
+  //     $response = ['message' => 'save fail.  check logs'];
+  //   }
+
+  //   return new ResourceResponse($response);
+  // }
+
+  // private function getCategoryTermId($deptId) {
+  //   $deptTermChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('department', $deptId);
+  //   foreach($deptTermChildren as $deptTermChild) {
+  //     if(strtolower($deptTermChild->name) == 'category') {
+  //       return $deptTermChild->tid;
+  //     }
+  //   }
+  //   return null;
+  // }
 }
 
 ?>

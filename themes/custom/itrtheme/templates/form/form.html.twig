@@ -10,6 +10,16 @@
  * @see template_preprocess_form()
  */
 #}
+{# Content type: {{ content_type }} #}
+{% if content_type == 'record' %}
+  <div id="overlay"></div>
+  <div id="record-template-browser">
+    <h4>Select a template to use for this record<a href="#" id="close" class="link">close</a></h4>
+    <div id="record-template-browser-content"></div>
+  </div>
+{% endif %}
+
+
 <form{{ attributes }}>
   {{ children }}
 </form>

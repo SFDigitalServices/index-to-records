@@ -17,7 +17,7 @@
   use Drupal\itr\Utility\Utility;
 
   require_once('modules/devel/kint/kint/Kint.class.php');
-  // Kint::$maxLevels = 4;
+  Kint::$maxLevels = 4;
 
 
   /*
@@ -203,6 +203,8 @@
 
   // alter edit record form
   function itr_form_node_record_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    // Kint::dump($form);
+    $form['#attributes']['class'][] = 'node-record-form';
     $form['#attached']['library'][] = 'itr/add-record';
     $form['#attached']['drupalSettings']['itr']['addRecord']['foo'] = 'bar';
     $deptId = $form['field_department']['widget']['#default_value'][0];
@@ -367,6 +369,9 @@
   function itr_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     // alter the form for the unpublished schedule view filter
     if($form['#id'] == 'views-exposed-form-schedules-page-1') {
+      $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+      error_log('itr.module:itr_form_views_exposed_form_alter:$user->getRoles():' . print_r($user->getRoles(), 1));
+      // Kint::dump($user);
       $requestDeptId = \Drupal::routeMatch()->getParameter('dept_id'); // the requested dept_id from the route
       // if the requested deptId (a contextual filter defined in drupal ui view "schedules") is a dept belonging to this user
       // or the user is admin, display this view and alter the filter options to only show the user's departments (done through user settings via drupal ui)
@@ -389,6 +394,7 @@
         $firstKey = current(array_keys($newOptions[0]->option));
         $form['field_department_target_id']['#default_value'] = '10';
       } else { // requested dept does not belong to this user, throw access denied exception
+        error_log('itr.module:itr_form_views_exposed_form_alter:access denied');
         throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
       }
       // Kint::dump($form);
@@ -435,6 +441,10 @@
       
       // Kint::dump($variables);
     }
+  }
+
+  function itr_form_node_record_template_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    $form['#attached']['library'][] = 'itr/add-record-template';
   }
 
 ?>

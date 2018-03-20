@@ -26,6 +26,15 @@ itr.add_record:
   route_parameters:
     node_type: 'record'
   weight: 2
+itr.add_template:
+  title: 'Add Template'
+  description: 'Add a template for quick recording'
+  parent: itr.admin.menu
+  menu_name: account
+  route_name: node.add
+  route_parameters:
+    node_type: 'record_template'
+  weight: 3
 # itr.import_export:
 #   title: 'Import/Export'
 #   description: 'Import/export a schedule from/to CSV'
@@ -39,6 +48,8 @@ itr.import:
   menu_name: account
   route_name: import.form
   weight: 5
+  requirements:
+    _permission: 'administer content'
 itr.export:
   title: 'Export'
   description: 'Export an existing schedule to CSV for a department'

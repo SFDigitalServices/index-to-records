@@ -166,7 +166,7 @@
       $deptChildTermId = self::getDeptChildTerm($deptId, $deptChildTermName);
       error_log('Utility: addTermToDeptChildTerm: deptId: ' . $deptId . ', deptChildTermName: ' . $deptChildTermName . ', termsToAdd: ' . print_r($termsToAdd, 1));
       $createdIds = [];
-      if(!isset($deptChildTermId)) { // this term does not exist
+      if(!isset($deptChildTermId)) { // this term does not exist, create it
         $deptChildTerm = Term::create([
           'vid' => 'department',
           'name' => $deptChildTermName,

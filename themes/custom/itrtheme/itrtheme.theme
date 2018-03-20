@@ -18,16 +18,24 @@ function itrtheme_theme_suggestions_page_alter(array &$suggestions, array $varia
   // error_log(print_r($variables, 1));
 }
 
-// function itrtheme_preprocess_form(&$variables) {
-//   error_log('preprocess form');
-//   $node = \Drupal::request()->get('bundle');
-//   // error_log($node);
-//   if($variables['attributes']['id'] == 'node-record-form' || $variables['attributes']['id'] == 'node-record-edit-form') {
-//     error_log('this is a add/edit record form');
-//     $variables['content_type'] = 'record';
-//   }
-//   Kint::dump($variables);
-// }
+function itrtheme_preprocess_form(&$variables) {
+  error_log('itrtheme.theme:itrtheme_preprocess_form:preprocess form');
+  // $node = \Drupal::request()->get('bundle');
+  // // error_log($node);
+  if($variables['attributes']['id'] == 'node-record-form' || $variables['attributes']['id'] == 'node-record-edit-form') {
+    error_log('itrtheme.theme:itrtheme_preprocess_form:this is a add/edit record form');
+    $variables['content_type'] = 'record';
+  }
+  // $variable['content_type'] = 'record';
+  // Kint::dump($variables);
+}
+
+function itrtheme_preprocess_page(&$variables) {
+  error_log('itrtheme.theme:itrtheme_preprocess_page: preprocess page');
+  // Kint::dump($variables['page']['content']['itrtheme_content']);
+  // $block = $variables['page']['content']['itrtheme_content']['#block'];
+  // error_log('itrtheme.theme.itrtheme_preprocess_page: $block->getEntityType()' . print_r($block->getEntityType(), 1));
+}
 
 // function itrtheme_preprocess_vertical_tabs(&$variables) {
 //   error_log('preprocess vertical tabs');
