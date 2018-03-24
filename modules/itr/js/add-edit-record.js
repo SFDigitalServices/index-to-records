@@ -151,7 +151,7 @@ var getRetentionValues = function(retentions) {
 // get retention values and populate templates.retention prop
 $.ajax({
   type: 'GET',
-  url: drupalSettings.path.baseUrl + 'itr_rest_view/retention_terms',
+  url: drupalSettings.path.baseUrl + 'itr_rest_view/retention_terms?_format=json',
   success: function(data) {
     for(var i=0; i<data.length; i++) {
       templates.retention[data[i].tid[0].value] = data[i].name[0].value;
@@ -165,7 +165,7 @@ $(addRecTemplateLink).click(function(e) {
   if(templates.data.length <= 0) {
     $.ajax({
       type: 'GET',
-      url: drupalSettings.path.baseUrl + 'itr_rest_view/record_templates',
+      url: drupalSettings.path.baseUrl + 'itr_rest_view/record_templates?_format=json',
       success: function(data) {
         templates.data = data;
         console.log('data', data);

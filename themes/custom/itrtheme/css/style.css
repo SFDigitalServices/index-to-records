@@ -1,6 +1,7 @@
 @import url("input-styles.css");
 @import url("import-schedule.css");
 @import url("menu.css");
+@import url("schedule.css");
 
 /* layout */
 
@@ -127,6 +128,10 @@ header .region-header {
   display: block;
 }
 /* end login form */
+
+.itrtheme-schedules-view-form table.views-table tr th {
+  font-size: 80%;
+}
 
 /* content view admin styles */
 table.views-table .views-field {

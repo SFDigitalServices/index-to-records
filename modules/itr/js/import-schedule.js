@@ -6,7 +6,7 @@ $(window).on('load', function() {
     var dept = response.data.department; // dept taxonomy id
     var sessionUrl = drupalSettings.path.baseUrl + 'session/token';
     var entityCreateUrl = drupalSettings.path.baseUrl + 'entity/node';
-    var scheduleRetrieveUrl = drupalSettings.path.baseUrl + 'itr_rest_view/schedules/' + dept;
+    var scheduleRetrieveUrl = drupalSettings.path.baseUrl + 'itr_rest_view/schedules/' + dept + '?_format=json';
     var deleteUrl = drupalSettings.path.baseUrl + 'itr_rest/schedule/delete?_format=json';
     // console.log('record count: ' + schedule.length);
     var recCount = schedule.length;

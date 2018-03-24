@@ -19,7 +19,14 @@
   </div>
 {% endif %}
 
+{%
+  set classes = [
+    'views_form_schedules' in element['#form_id'] == 1 ? 'itrtheme-schedules-view-form'
+  ]
+%}
 
-<form{{ attributes }}>
+<form{{ attributes.addClass(classes) }}>
   {{ children }}
 </form>
+
+{# {{ kint() }} #}
