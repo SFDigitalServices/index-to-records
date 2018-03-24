@@ -1,0 +1,78 @@
+#block-departmentscheduleviewheadercontentappearsbeforetitle p {
+  margin: 0;
+}
+
+.dept-schedule-records {
+  /*border: 1px solid #d7d7d7;*/
+  margin-bottom: 10px;
+}
+
+.dept-schedule-records .view-header {
+  margin-bottom: 10px;
+}
+
+.dept-schedule-record {
+  border-bottom: 1px solid #d7d7d7;
+  border-left: 1px solid #d7d7d7;
+  border-right: 1px solid #d7d7d7;
+  padding: 20px 15px;
+}
+
+.dept-schedule-record:first-of-type {
+  border-top: 1px solid #d7d7d7;
+}
+
+.dept-schedule-record article h2 a {
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.dept-schedule-record article footer,
+.dept-schedule-record article .field--name-field-department {
+  display: none;
+}
+
+.dept-schedule-record .views-field .views-label,
+.dept-schedule-record .views-field .field-content {
+  display: inline-block;
+}
+
+.dept-schedule-record .views-field .views-label {
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.dept-schedule-record .views-field .field-content {
+  color: #333;
+}
+
+.dept-schedule-record .views-field .field-content a {
+  text-decoration: none;
+  color: #333;
+}
+
+.dept-schedule-record .views-field {
+  line-height: 2em;
+}
+
+.dept-schedule-record .views-field-field-record-title {
+  font-size: 1.75em;
+  color: #4f4e4e;
+  line-height: 1.2em;
+}
+
+.dept-schedule-record .views-field-field-retention,
+.dept-schedule-record .views-field-field-off-site,
+.dept-schedule-record .views-field-field-on-site,
+.dept-schedule-record .views-field-field-total {
+  display: inline-block;
+  margin-right: 20px;
+  font-size: 80%;
+}
+
+.dept-schedule-record .views-field-field-retention .views-label,
+.dept-schedule-record .views-field-field-off-site .views-label,
+.dept-schedule-record .views-field-field-on-site .views-label,
+.dept-schedule-record .views-field-field-total .views-label {
+  margin-right: 5px;
+}
