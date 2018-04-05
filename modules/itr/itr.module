@@ -144,6 +144,7 @@
   // alter add record form
   function itr_form_node_record_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     error_log('itr.module: itr_form_node_record_form_alter: $form_id: ' . $form_id);
+    $form['#attributes']['class'][] = 'itr-form';
     // Kint::dump($form);
 
     // error_log(print_r(getDepartmentCategories('25'), 1));
@@ -205,6 +206,7 @@
   function itr_form_node_record_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     // Kint::dump($form);
     $form['#attributes']['class'][] = 'node-record-form';
+    $form['#attributes']['class'][] = 'itr-form';
     $form['#attached']['library'][] = 'itr/add-record';
     $form['#attached']['drupalSettings']['itr']['addRecord']['foo'] = 'bar';
     $deptId = $form['field_department']['widget']['#default_value'][0];
@@ -368,7 +370,7 @@
   // alter the form for the views exposed filters
   function itr_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     // alter the form for the unpublished schedule view filter
-    if($form['#id'] == 'views-exposed-form-schedules-page-1') {
+    if($form['#id'] == 'views-exposed-form-schedules-page-1' || $form['#id'] == 'views-exposed-form-schedules-page-2') {
       $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
       error_log('itr.module:itr_form_views_exposed_form_alter:$user->getRoles():' . print_r($user->getRoles(), 1));
       // Kint::dump($user);
@@ -411,7 +413,9 @@
 
     if($viewId == 'schedules') { // the schedules view
       if(!userIsAdmin()) { // if user is not admin, only allow delete action
-        $view->field['node_bulk_form']->options['selected_actions'] = ['node_delete_action'];
+        if($view->field['node_bulk_form']) {
+          $view->field['node_bulk_form']->options['selected_actions'] = ['node_delete_action'];
+        }
       }
     }
   }
@@ -421,7 +425,7 @@
     // Kint::dump($variables);
     // error_log(print_r($variables, 1));
     $url = $variables['url'];
-    if($url->isRouted() && $url->getRouteName() == 'view.schedules.page_1') {
+    if($url->isRouted() && ($url->getRouteName() == 'view.schedules.page_1' || $url->getRouteName() == 'view.schedules.page_2')) {
       // $menuTree = \Drupal::menuTree()->load('account', new \Drupal\Core\Menu\MenuTreeParameters());
       // foreach($menuTree as $item) {
       //   error_log($item->link->getTitle());
@@ -445,6 +449,27 @@
 
   function itr_form_node_record_template_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     $form['#attached']['library'][] = 'itr/add-record-template';
+  }
+
+  // department information form
+  function itr_form_node_department_information_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    // Kint::dump($form);
+    error_log('itr.module: itr_form_node_department_information_form_alter: $form_id: ' . $form_id);
+    $form['#attributes']['class'][] = 'itr-form';
+    $depts = Utility::getDepartmentsForUser();
+    $deptOptions = array();
+    $deptOptions['_none'] = '- None -';
+    foreach($depts as $dept) {
+      $deptOptions[$dept['id']] = $dept['name'];
+    }
+    $keys = array_keys($deptOptions);
+    $key = $keys[1];
+    $form['field_department_name']['widget']['#options'] = $deptOptions;
+    $form['field_department_name']['widget']['#default_value'] = $key;
+    $form['#attached']['library'][] = 'itr/dept-info-form';
+    if(!Utility::userIsAdmin()) { // user is not admin, disable select
+      $form['field_department_name']['widget']['#attributes']['disabled'] = 'disabled';
+    }
   }
 
 ?>

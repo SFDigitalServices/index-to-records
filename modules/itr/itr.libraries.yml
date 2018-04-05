@@ -1,10 +1,5 @@
 add-record:
   version: 1.x
-  css:
-    layout:
-      css/add-edit-record.css: {}
-  #   theme:
-  #     css/add-record-theme.css: {}
   js:
     js/add-edit-record.js: {}
   dependencies:
@@ -17,11 +12,15 @@ add-record-template:
   dependencies:
     - core/jquery
 
+dept-info-form:
+  version: 1.x
+  js:
+    js/dept-info.js: {}
+  dependencies:
+    - core/jquery
+
 import-schedule:
   version: 1.x
-  css:
-    layout:
-      css/import-schedule.css: {}
   js:
     js/import-schedule.js: {}
   dependencies:

@@ -31,12 +31,12 @@ function itrtheme_preprocess_form(&$variables) {
   // Kint::dump($variables);
 }
 
-function itrtheme_preprocess_page(&$variables) {
-  error_log('itrtheme.theme:itrtheme_preprocess_page: preprocess page');
-  // Kint::dump($variables['page']['content']['itrtheme_content']);
-  // $block = $variables['page']['content']['itrtheme_content']['#block'];
-  // error_log('itrtheme.theme.itrtheme_preprocess_page: $block->getEntityType()' . print_r($block->getEntityType(), 1));
-}
+// function itrtheme_preprocess_page(&$variables) {
+//   error_log('itrtheme.theme:itrtheme_preprocess_page: preprocess page');
+//   // Kint::dump($variables['page']['content']['itrtheme_content']);
+//   // $block = $variables['page']['content']['itrtheme_content']['#block'];
+//   // error_log('itrtheme.theme.itrtheme_preprocess_page: $block->getEntityType()' . print_r($block->getEntityType(), 1));
+// }
 
 // function itrtheme_preprocess_vertical_tabs(&$variables) {
 //   error_log('preprocess vertical tabs');

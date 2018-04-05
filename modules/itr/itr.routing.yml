@@ -20,12 +20,12 @@ import.form:
     _role: 'authenticated'
     # _csrf_token: 'TRUE'
     # _permission: 'administer schedules'
-export.form:
+schedule.export:
   path: '/schedule/export'
   defaults:
     _title: 'Export Schedule'
     _controller:
-      '\Drupal\itr\Controller\ExportFormController'
+      '\Drupal\itr\Controller\ExportScheduleController::content'
   requirements:
     # _permission: 'administer content'
-    _role: 'authenticated user'
+    _role: 'authenticated'

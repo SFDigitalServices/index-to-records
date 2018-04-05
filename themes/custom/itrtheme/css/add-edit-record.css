@@ -1,0 +1,105 @@
+@import url("itr-form.css");
+
+#add-record-template-link { display: inline; padding-left: 10px; }
+#add-record-template-link.hide { display: none; }
+
+#overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #333;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+#block-itrtheme-content {
+  position: relative;
+}
+
+#record-template-browser {
+  /*display: none;*/
+  opacity: 0;
+  position: absolute;
+  /*top: -100%;*/
+  left: -100%;
+  margin-left: -485px;
+  width: 950px;
+  overflow-y: scroll;
+  /*border-radius: 5px;*/
+  background: #fff;
+  padding: 10px;
+  -webkit-transition: all 0.4s;
+  -webkit-transition-property: opacity;
+  -webkit-transition-timing-function: ease-in-out;
+  transition: all 0.4s;
+  transition-property: opacity;
+  transition-timing-function: ease-in-out;
+}
+
+#record-template-browser.show {
+  display: block;
+  opacity: 1;
+  left: 50%;
+  /*top: 0;*/
+}
+
+#record-template-browser h4 {
+  text-align: center;
+  padding: 0;
+  margin: 0 0 10px 0;
+}
+
+#record-template-browser table {
+  font-size: 0.85em;
+}
+
+#record-template-browser table td,
+#record-template-browser table th {
+  border: 1px solid #666;
+  padding: 5px;
+}
+
+#record-template-browser .record-template-row {
+  cursor: pointer;
+}
+
+#record-template-browser .record-template-row:hover {
+  background: yellow;
+}
+
+#record-template-browser h4 {
+  position: relative;
+}
+
+#record-template-browser h4 #close {
+  position: absolute;
+  right: 10px;
+  text-transform: capitalize;
+}
+
+#record-template-browser h4 #close:hover {
+  text-decoration: underline;
+}
+
+#record-template-browser .template-cell.template-link,
+#record-template-browser .template-cell.template-on-site,
+#record-template-browser .template-cell.template-off-site {
+  max-width: 1px;
+  text-overflow: clip;
+  overflow: hidden;
+}
+
+#record-template-browser .template-link {
+  width: 10%;
+}
+
+#record-template-browser .template-cell.template-on-site,
+#record-template-browser .template-cell.template-off-site {
+  width: 8%;
+}
+
+#record-template-browser .template-cell.template-title {
+  width: 20%;
+}

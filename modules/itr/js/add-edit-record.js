@@ -98,7 +98,7 @@ var templates = {
                   console.log('add category: ' + categoryName);
                   $.ajax({
                     type: 'POST',
-                    url: drupalSettings.path.baseUrl + 'itr_rest/department/category/add',
+                    url: drupalSettings.path.baseUrl + 'itr_rest/department/category/add?_format=json',
                     headers: {
                       "Content-Type": "application/json",
                       "X-CSRF-Token": token

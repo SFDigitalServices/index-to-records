@@ -76,3 +76,40 @@
 .dept-schedule-record .views-field-field-total .views-label {
   margin-right: 5px;
 }
+
+.dept-info-block {
+  border-top: 1px solid #d7d7d7;
+  border-left: 1px solid #d7d7d7;
+  border-right: 1px solid #d7d7d7;
+  padding: 35px 15px;
+  margin-top: 20px;
+  line-height: 1.5em;
+  background: #e9f5fc;
+}
+
+.dept-info-block h1 {
+  margin: 5px 0 10px 0;
+}
+
+.dept-info-block h1 a {
+  text-decoration: none;
+  color: #333;
+}
+
+.dept-info-block p {
+  margin: 0;
+}
+
+.dept-info-block #dept-info-contact .left {
+  float: left;
+}
+
+.dept-info-block #dept-info-contact .right {
+  float: right;
+}
+
+.clearfix:after {
+  content: " ";
+  display: table;
+  clear: both;
+}
