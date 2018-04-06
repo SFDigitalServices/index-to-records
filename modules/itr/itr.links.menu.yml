@@ -1,5 +1,10 @@
 # by default, users are allowed to see all and edit all schedules (this is configured through drupal ui)
 # restrictions are implemented through code in itr.module
+itr.dept.manage:
+  title: 'Manage Department'
+  parent: account
+  menu_name: account
+  route_name: department.edit
 itr.admin.menu:
   title: 'Schedules'
   description: 'View schedules'

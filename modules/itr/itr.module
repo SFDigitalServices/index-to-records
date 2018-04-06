@@ -191,6 +191,8 @@
       ),
     );
 
+    $form['actions']['submit']['#attributes']['class'][] = 'blue-btn btn-lg';
+
     foreach(array_keys($form['actions']) as $action) {
       if($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type']==='submit') {
         $form['actions'][$action]['#submit'][] = '_itr_form_redirect_callback';
@@ -241,6 +243,7 @@
     //   ),
     // );
     // Kint::dump($form);
+    $form['actions']['submit']['#attributes']['class'][] = 'blue-btn btn-lg';
     
   }
 
@@ -423,7 +426,7 @@
   function itr_link_alter(&$variables) {
 
     // Kint::dump($variables);
-    // error_log(print_r($variables, 1));
+    // error_log('itr.module:itr_link_alter');
     $url = $variables['url'];
     if($url->isRouted() && ($url->getRouteName() == 'view.schedules.page_1' || $url->getRouteName() == 'view.schedules.page_2')) {
       // $menuTree = \Drupal::menuTree()->load('account', new \Drupal\Core\Menu\MenuTreeParameters());
@@ -453,8 +456,16 @@
 
   // department information form
   function itr_form_node_department_information_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    departmentInformationFormAlter($form, $form_state, $form_id);
+  }
+
+  function itr_form_node_department_information_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    departmentInformationFormAlter($form, $form_state, $form_id);
+  }
+
+  function departmentInformationFormAlter(&$form, FormStateInterface $form_state, $form_id) {
     // Kint::dump($form);
-    error_log('itr.module: itr_form_node_department_information_form_alter: $form_id: ' . $form_id);
+    error_log('itr.module:departmentInformationFormAlter:$form_id:' . $form_id);
     $form['#attributes']['class'][] = 'itr-form';
     $depts = Utility::getDepartmentsForUser();
     $deptOptions = array();
@@ -467,6 +478,7 @@
     $form['field_department_name']['widget']['#options'] = $deptOptions;
     $form['field_department_name']['widget']['#default_value'] = $key;
     $form['#attached']['library'][] = 'itr/dept-info-form';
+    $form['actions']['submit']['#attributes']['class'][] = 'blue-btn btn-lg';
     if(!Utility::userIsAdmin()) { // user is not admin, disable select
       $form['field_department_name']['widget']['#attributes']['disabled'] = 'disabled';
     }

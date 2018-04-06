@@ -1,6 +1,7 @@
+$ = jQuery;
 function updateTitleWithDepartmentName(select) {
   var selector = '#' + $(select).attr('id') + ' option:selected';
-  $('#edit-title-0-value').val($(selector).text() + ' Department Information');
+  $('#edit-title-0-value').val($(selector).text());
 }
 
 $(window).on('load', function() {

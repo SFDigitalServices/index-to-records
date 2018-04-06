@@ -13,19 +13,27 @@ admin.content.user:
 import.form:
   path: '/schedule/import'
   defaults:
-    _title: 'Import Schedule'
+    _title: 'Schedule Import'
     _form: '\Drupal\itr\Form\ImportScheduleForm'
   requirements:
     # _permission: 'administer content'
     _role: 'authenticated'
     # _csrf_token: 'TRUE'
     # _permission: 'administer schedules'
-schedule.export:
-  path: '/schedule/export'
+# schedule.export:
+#   path: '/schedule/export'
+#   defaults:
+#     _title: 'Export Schedule'
+#     _controller:
+#       '\Drupal\itr\Controller\ExportScheduleController::content'
+#   requirements:
+#     # _permission: 'administer content'
+#     _role: 'authenticated'
+department.edit:
+  path: '/dept/edit'
   defaults:
-    _title: 'Export Schedule'
     _controller:
-      '\Drupal\itr\Controller\ExportScheduleController::content'
+      '\Drupal\itr\Controller\EditDepartmentController::content'
+    _title: 'Edit Department'
   requirements:
-    # _permission: 'administer content'
     _role: 'authenticated'

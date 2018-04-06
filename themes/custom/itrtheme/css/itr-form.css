@@ -27,8 +27,8 @@
   display: none;
 }
 
-/* hide vertical tabs on department information content type form */
-.node-department-information-form .form-type-vertical-tabs {
+/* hide vertical tabs */
+.itr-form .form-type-vertical-tabs {
   display: none;
 }
 
@@ -38,7 +38,7 @@ select#edit-field-department-name:disabled {
   border: 0;
 }
 
-.node-department-information-form input[type="text"] {
+.node-department-information-form input[type="text"],
+.node-department-information-edit-form input[type="text"] {
   width: 33%;
 }
-/* end form styles */
