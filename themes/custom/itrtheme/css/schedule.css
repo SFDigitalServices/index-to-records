@@ -113,3 +113,13 @@
   display: table;
   clear: both;
 }
+
+.view-display-id-page_1 .view-header h2 {
+  display: inline-block;
+  margin: 0 0 10px 0;
+}
+
+.view-display-id-page_1 .view-header h2 a {
+  text-decoration: none;
+  color: #428bca;
+}

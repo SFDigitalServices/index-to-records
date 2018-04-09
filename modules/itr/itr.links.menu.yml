@@ -5,6 +5,12 @@ itr.dept.manage:
   parent: account
   menu_name: account
   route_name: department.edit
+itr.add_template:
+  title: 'Manage Record Templates'
+  description: 'Manage record templates for quick recording'
+  parent: account
+  menu_name: account
+  route_name: view.content.manage_record_templates
 itr.admin.menu:
   title: 'Schedules'
   description: 'View schedules'
@@ -31,15 +37,6 @@ itr.add_record:
   route_parameters:
     node_type: 'record'
   weight: 2
-itr.add_template:
-  title: 'Add Template'
-  description: 'Add a template for quick recording'
-  parent: itr.admin.menu
-  menu_name: account
-  route_name: node.add
-  route_parameters:
-    node_type: 'record_template'
-  weight: 3
 # itr.import_export:
 #   title: 'Import/Export'
 #   description: 'Import/export a schedule from/to CSV'

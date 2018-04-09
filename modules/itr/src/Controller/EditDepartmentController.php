@@ -38,7 +38,7 @@
       if($nid) { // department information exists
         // if admin, redirect to admin view
         if(Utility::userIsAdmin()) {
-          $routeName = 'view.content.page_2';
+          $routeName = 'view.content.manage_department_info';
           $routeParameters = [];
         } else {
           $routeName = 'entity.node.edit_form';

@@ -2,6 +2,7 @@
 @import url("import-schedule.css");
 @import url("menu.css");
 @import url("schedule.css");
+@import url("view-filter-form.css");
 
 /* layout */
 
@@ -146,7 +147,7 @@ table.views-table .views-field {
 
 table.views-table .views-field a {
   font-weight: normal;
-  color: #428bca;
+  color: #333;
   text-decoration: none;
 }
 
@@ -195,6 +196,10 @@ table.views-table #view-field-category-table-column {
 table.views-table .views-field-operations {
   width: 2%;
   text-align: center;
+}
+
+table.views-table .views-field-operations a {
+  color: #428bca;
 }
 
 table.views-table td.views-field-operations .dropbutton-wrapper {

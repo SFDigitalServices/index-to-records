@@ -1,0 +1,24 @@
+#views-exposed-form-schedules-page-1 {
+  border-bottom: 1px solid #ccc;
+}
+
+#views-exposed-form-schedules-page-1 #edit-actions {
+  float: left;
+  clear: none;
+}
+
+#edit-node-bulk-form--2 {
+  margin-bottom: 15px;
+}
+
+#edit-node-bulk-form--2 > div {
+  display: inline-block;
+}
+
+#views-exposed-form-schedules-page-1 .form-submit,
+.itrtheme-schedules-view-form .form-submit {
+  border: 1px solid #428bca;
+  border-radius: 5px;
+  background: #fff;
+  color: #428bca;
+}
