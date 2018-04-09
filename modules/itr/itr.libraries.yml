@@ -25,3 +25,10 @@ import-schedule:
     js/import-schedule.js: {}
   dependencies:
     - core/jquery
+
+export-schedule:
+  version: 1.x
+  js:
+    js/export-schedule.js: {}
+  dependencies:
+    - core/jquery

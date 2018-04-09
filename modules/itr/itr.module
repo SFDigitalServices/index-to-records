@@ -410,11 +410,17 @@
   function itr_views_pre_render(\Drupal\views\ViewExecutable $view) {
     // error_log($view->id());
     // Kint::dump($view->field['node_bulk_form']);
-    // Kint::dump($view);
+    Kint::dump($view);
     // error_log(print_r($view->field['node_bulk_form']->options['selected_actions'], 1));
     $viewId = $view->id();
+    $deptIdContextualFilter = $view->args[0];
+
+    error_log('itr.module:itr_views_pre_render:viewId:' . $viewId);
+    error_log('itr.module:itr_views_pre_render:deptIdContextualFilter:' . $deptIdContextualFilter);
 
     if($viewId == 'schedules') { // the schedules view
+      $view->element['#attached']['library'][] = 'itr/export-schedule';
+      $view->element['#attached']['drupalSettings']['itr']['exportSchedule']['id'] = $deptIdContextualFilter;
       if(!userIsAdmin()) { // if user is not admin, only allow delete action
         if($view->field['node_bulk_form']) {
           $view->field['node_bulk_form']->options['selected_actions'] = ['node_delete_action'];

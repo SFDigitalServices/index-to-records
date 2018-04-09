@@ -2,7 +2,8 @@
   border-bottom: 1px solid #ccc;
 }
 
-#views-exposed-form-schedules-page-1 #edit-actions {
+#views-exposed-form-schedules-page-1 #edit-actions,
+#views-exposed-form-schedules-page-2 #edit-actions {
   float: left;
   clear: none;
 }
@@ -16,6 +17,7 @@
 }
 
 #views-exposed-form-schedules-page-1 .form-submit,
+#views-exposed-form-schedules-page-2 .form-submit,
 .itrtheme-schedules-view-form .form-submit {
   border: 1px solid #428bca;
   border-radius: 5px;
