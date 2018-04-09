@@ -35,18 +35,25 @@
     public function content() {
       $nid = $this->retrieveDepartmentInfo();
       error_log('EditDepartmentController:content:redirect with nid=' . $nid);
-      if($nid) {
-        // $this->redirect('entity.node.edit_form', ['node' => $nid]);
-        $routeName = 'entity.node.edit_form';
-        $routeParameters = ['node'=>$nid];
-        $url = \Drupal::url($routeName, $routeParameters);
-        return new RedirectResponse($url);
-      } else {
+      if($nid) { // department information exists
+        // if admin, redirect to admin view
+        if(Utility::userIsAdmin()) {
+          $routeName = 'view.content.page_2';
+          $routeParameters = [];
+        } else {
+          $routeName = 'entity.node.edit_form';
+          $routeParameters = ['node'=>$nid];
+        }
+      } else { // no department information found, redirect to create
         $routeName = 'node.add';
         $routeParameters = ['node_type'=>'department_information'];
-        $url = \Drupal::url($routeName, $routeParameters);
+      }
+      $url = \Drupal::url($routeName, $routeParameters);
+
+      if($routeName) {
         return new RedirectResponse($url);
       }
+
       return array(
         '#type' => 'markup',
         '#markup' => $this->t('No department information found.'),
