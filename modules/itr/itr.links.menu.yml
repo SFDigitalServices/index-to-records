@@ -37,12 +37,6 @@ itr.add_record:
   route_parameters:
     node_type: 'record'
   weight: 2
-# itr.import_export:
-#   title: 'Import/Export'
-#   description: 'Import/export a schedule from/to CSV'
-#   parent: account
-#   menu_name: account
-#   route_name: import.form
 itr.import:
   title: 'Import'
   description: 'Import a CSV schedule for a department'

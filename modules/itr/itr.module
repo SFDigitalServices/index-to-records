@@ -397,7 +397,8 @@
         }
         $form['field_department_target_id']['#options'] = $newOptions; // set new options
         $firstKey = current(array_keys($newOptions[0]->option));
-        $form['field_department_target_id']['#default_value'] = '10';
+        // Kint::dump($form['field_department_target_id']);
+        // $form['field_department_target_id']['#default_value'] = '5';
       } else { // requested dept does not belong to this user, throw access denied exception
         error_log('itr.module:itr_form_views_exposed_form_alter:access denied');
         throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
@@ -410,7 +411,7 @@
   function itr_views_pre_render(\Drupal\views\ViewExecutable $view) {
     // error_log($view->id());
     // Kint::dump($view->field['node_bulk_form']);
-    Kint::dump($view);
+    // Kint::dump($view);
     // error_log(print_r($view->field['node_bulk_form']->options['selected_actions'], 1));
     $viewId = $view->id();
     $deptIdContextualFilter = $view->args[0];

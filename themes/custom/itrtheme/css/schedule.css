@@ -125,3 +125,12 @@
   text-decoration: none;
   color: #428bca;
 }
+
+#schedule-export-dept-info #dept-info {
+  width: 100%;
+}
+
+#schedule-export-dept-info #dept-info td {
+  width: 33%;
+  padding: 0 0 0 10%;
+}
