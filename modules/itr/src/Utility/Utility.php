@@ -11,25 +11,30 @@
 
     public static function getDepartmentsForUser() {
       $user = User::load(\Drupal::currentUser()->id());
-      $assignedDepts = $user->get('field_department')->getValue();
-      $count = count($assignedDepts);
-      $vid = Term::load($assignedDepts[0]['target_id'])->getVocabularyId();
-      $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
-      $depts = array();
-      for($i = 0; $i < $count; $i++) {
-        $tid = $assignedDepts[$i]['target_id'];
-        $deptName = Term::load($tid)->getName();
-        $depts[] = array(
-          'id' => $tid,
-          'name' => $deptName
-        );
+      error_log('Utility:getDepartmentsForUser:user: ');
+      error_log(print_r($user->getRoles(), 1));
+      if(!in_array('anonymous', $user->getRoles())) {
+        $assignedDepts = $user->get('field_department')->getValue();
+        $count = count($assignedDepts);
+        $vid = Term::load($assignedDepts[0]['target_id'])->getVocabularyId();
+        $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
+        $depts = array();
+        for($i = 0; $i < $count; $i++) {
+          $tid = $assignedDepts[$i]['target_id'];
+          $deptName = Term::load($tid)->getName();
+          $depts[] = array(
+            'id' => $tid,
+            'name' => $deptName
+          );
+        }
+        foreach($depts as $key => $row) {
+          $id[$key] = $row['id'];
+          $name[$key] = $row['name'];
+        }
+        array_multisort($name, SORT_ASC, $depts);
+        return $depts;
       }
-      foreach($depts as $key => $row) {
-        $id[$key] = $row['id'];
-        $name[$key] = $row['name'];
-      }
-      array_multisort($name, SORT_ASC, $depts);
-      return $depts;
+      return [];
     }
 
     // get top level department terms from department vocab
