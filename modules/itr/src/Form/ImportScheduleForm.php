@@ -74,6 +74,7 @@
       $validators = array(
         'file_validate_extensions' => array('csv'),
       );
+      
       $form['import-schedule-fields']['schedule_file'] = array(
         '#type' => 'managed_file',
         '#name' => 'schedule_file',

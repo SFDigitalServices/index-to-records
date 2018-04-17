@@ -207,6 +207,11 @@
       return null;
     }
 
+    public static function getTermNameByTid($tid) {
+      $term = Term::load($tid);
+      return $term->getName();
+    }
+
   }
 
 ?>

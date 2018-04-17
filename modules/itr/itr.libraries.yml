@@ -32,3 +32,10 @@ export-schedule:
     js/export-schedule.js: {}
   dependencies:
     - core/jquery
+
+export-schedule-form:
+  version: 1.x
+  js:
+    js/export-schedule-form.js: {}
+  dependencies:
+    - core/jquery

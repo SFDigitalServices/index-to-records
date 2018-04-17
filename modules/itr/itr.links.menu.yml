@@ -51,10 +51,19 @@ itr.export:
   description: 'Export an existing schedule to CSV for a department'
   parent: itr.admin.menu
   menu_name: account
-  route_name: view.schedules.page_2
-  route_parameters:
-    dept_id: 'all'
+  route_name: schedule.export
   weight: 10
+  requirements:
+    _permission: 'administer content'
+# itr.export:
+#   title: 'Export'
+#   description: 'Export an existing schedule to CSV for a department'
+#   parent: itr.admin.menu
+#   menu_name: account
+#   route_name: view.schedules.page_2
+#   route_parameters:
+#     dept_id: 'all'
+#   weight: 10
 # user schedule
 # itr.user_schedule:
 #   title: 'Schedule'
