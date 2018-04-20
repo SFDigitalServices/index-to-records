@@ -8,18 +8,18 @@ use Drupal\file\Entity\File;
 use Drupal\itr\Utility\Utility;
 
 /**
-* Provides the a delete schedule resource
+* Provides the export schedule csv resource
 *
 * @RestResource(
 *   id = "schedule_export_csv",
 *   label = @Translation("Schedule Export CSV"),
 *   uri_paths = {
-*     "https://www.drupal.org/link-relations/create" = "/itr_rest/schedule/export"
+*     "https://www.drupal.org/link-relations/create" = "/itr_rest/schedule/export/csv"
 *   }
 * )
 */
 
-class ScheduleExportCSVResource extends ResourceBase {
+class ScheduleExportCsvResource extends ResourceBase {
 
   public function post($data) {
     $response = ['exists' => false, 'delete_ids' => []];

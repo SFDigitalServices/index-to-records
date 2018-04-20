@@ -39,7 +39,8 @@
   
 }
 
-#export-schedule-form #csv-export-status {
+#export-schedule-form #csv-export-status,
+#export-schedule-form #pdf-export-status {
   display: inline-block;
   margin-left: 20px;
 }
