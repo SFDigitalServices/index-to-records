@@ -28,6 +28,8 @@
 
     public function buildForm(array $form, FormStateInterface $form_state) {
 
+      global $base_url;
+
       // get departments from taxonomy
       $depts = Utility::getDepartmentsForUser();
       $deptOptions = array();
@@ -45,11 +47,11 @@
 
       $str = '<p>The following requirements should be met before importing a schedule:</p>';
       $str .= '<ul>';
-      $str .= '  <li>The file to import must follow <a href="#">this template</a></li>';
+      $str .= '  <li>The file to import must follow <a class="link" href="#">this template</a></li>';
       $str .= '  <li>The file to import must be in the CSV (comma separated values) file format</li>';
       $str .= '</ul>';
       $str .= '<p><strong>Please note that importing a schedule will overwrite the existing schedule</strong>.  If you are making changes to an existing schedule, ';
-      $str .= 'please either <a href="/node/add/record">add to the existing schedule</a> or <a href="/schedule/export">export the existing schedule</a>, ';
+      $str .= 'please either <a class="link" href="'.$base_url.'/node/add/record">add to the existing schedule</a> or <a class="link" href="'.$base_url.'/schedule/export">export the existing schedule</a>, ';
       $str .= 'make changes locally on your computer, then re-import the updated schedule.</p>';
       
       $form['file_upload_details'] = array(
@@ -74,7 +76,7 @@
       $validators = array(
         'file_validate_extensions' => array('csv'),
       );
-      
+
       $form['import-schedule-fields']['schedule_file'] = array(
         '#type' => 'managed_file',
         '#name' => 'schedule_file',
