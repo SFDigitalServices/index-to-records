@@ -11,8 +11,8 @@
 
     public static function getDepartmentsForUser() {
       $user = User::load(\Drupal::currentUser()->id());
-      error_log('Utility:getDepartmentsForUser:user: ');
-      error_log(print_r($user->getRoles(), 1));
+      // error_log('Utility:getDepartmentsForUser:user: ');
+      // error_log(print_r($user->getRoles(), 1));
       if(!in_array('anonymous', $user->getRoles())) {
         $assignedDepts = $user->get('field_department')->getValue();
         $count = count($assignedDepts);

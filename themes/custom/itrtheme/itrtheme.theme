@@ -20,7 +20,7 @@ function itrtheme_theme_suggestions_page_alter(array &$suggestions, array $varia
 }
 
 function itrtheme_preprocess_form(&$variables) {
-  error_log('itrtheme.theme:itrtheme_preprocess_form:preprocess form');
+  // error_log('itrtheme.theme:itrtheme_preprocess_form:preprocess form');
   // $node = \Drupal::request()->get('bundle');
   // // error_log($node);
   if($variables['attributes']['id'] == 'node-record-form' || $variables['attributes']['id'] == 'node-record-edit-form') {

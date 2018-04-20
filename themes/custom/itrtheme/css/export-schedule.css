@@ -1,0 +1,45 @@
+#export-schedule-form .form-item a {
+  display: inline-block;
+}
+
+#export-schedule-form .form-item-schedule-department {
+  border-bottom: 1px solid #ccc;
+  padding: 15px 0 20px 0;
+  margin: 0;
+}
+
+#export-schedule-form .export-schedule-fields {
+  padding: 10px 0 0 0;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+#export-schedule-form .form-item {
+
+}
+
+#export-schedule-form #edit-export-csv-link {
+  border-right: 1px solid #ccc;
+}
+
+#export-schedule-form .form-item p {
+  margin: 0 0 10px 0;
+}
+
+#export-schedule-form #edit-export-pdf-link,
+#export-schedule-form #edit-export-csv-link {
+  display: inline-block;
+  width: 45%;
+  padding: 20px;
+  margin: 0;
+  line-height: 1.5em;
+}
+
+#export-schedule-form .download-link {
+  
+}
+
+#export-schedule-form #csv-export-status {
+  display: inline-block;
+  margin-left: 20px;
+}

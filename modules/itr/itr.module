@@ -416,8 +416,8 @@
     $viewId = $view->id();
     $deptIdContextualFilter = $view->args[0];
 
-    error_log('itr.module:itr_views_pre_render:viewId:' . $viewId);
-    error_log('itr.module:itr_views_pre_render:deptIdContextualFilter:' . $deptIdContextualFilter);
+    // error_log('itr.module:itr_views_pre_render:viewId:' . $viewId);
+    // error_log('itr.module:itr_views_pre_render:deptIdContextualFilter:' . $deptIdContextualFilter);
 
     if($viewId == 'schedules') { // the schedules view
       $view->element['#attached']['library'][] = 'itr/export-schedule';
