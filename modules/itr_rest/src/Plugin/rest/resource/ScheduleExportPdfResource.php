@@ -22,7 +22,7 @@ use Drupal\itr\Utility\Utility;
 class ScheduleExportPdfResource extends ResourceBase {
 
   public function post($data) {
-    $response = ['exists' => false, 'delete_ids' => []];
+    $response = ['exists' => false, 'delete_ids' => [], 'data': []];
     // error_log('ScheduleExportCSVResource: ' . print_r($data, 1));
     // if(isset($data) && count($data) > 0) {
     //   $controller = \Drupal::entityTypeManager()->getStorage('node');
