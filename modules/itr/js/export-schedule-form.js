@@ -12,16 +12,20 @@ function exportSchedule(exportType) {
   var scheduleRetrieveUrl = drupalSettings.path.baseUrl + 'itr_rest_view/schedules/' + dept + '?_format=json';
   var scheduleExportUrl = null;
   var statusEl = null;
+  var loaderEl = null;
+  var statusLoaderImg = '<img src="' + drupalSettings.path.baseUrl + 'core/themes/stable/images/core/throbber-active.gif' + '"/>';
 
   switch(exportType.toLowerCase()) {
     case 'csv': {
       scheduleExportUrl = drupalSettings.path.baseUrl + 'itr_rest/schedule/export/csv?_format=json';
-      statusEl = '#csv-export-status';
+      statusEl = '#csv-export-status .message';
+      loaderEl = '#csv-export-status .loader';
       break;
     }
     case 'pdf': {
       scheduleExportUrl = drupalSettings.path.baseUrl + 'itr_rest/schedule/export/pdf?_format=json';
-      statusEl = '#pdf-export-status';
+      statusEl = '#pdf-export-status .message';
+      loaderEl = '#pdf-export-status .loader';
       break; 
     }
     default:
@@ -30,6 +34,7 @@ function exportSchedule(exportType) {
   if(!isNaN(dept)) {
     $('#errors').removeClass('messages messages--error'); // drupal in-built error message classes
     $('#errors').html('');
+    $(loaderEl).html(statusLoaderImg);
     $(statusEl).html('Retrieving auth token');
     $.ajax({
       type: 'GET',
@@ -54,8 +59,9 @@ function exportSchedule(exportType) {
                 var filedata = resp;
                 console.log(filedata);
                 if(filedata.length > 0) {
+                  $(loaderEl).html('');
                   $(statusEl).html('Schedule successfully exported');
-                  $(statusEl).html('<a class="download-link link" href=' + filedata[0].url + '>Download CSV</a>');
+                  $(statusEl).html('<a class="download-link link" target="_blank" href=' + filedata[0].url + '>Download CSV</a>');
                 }
               }
             });

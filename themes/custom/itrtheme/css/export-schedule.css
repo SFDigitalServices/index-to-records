@@ -44,3 +44,8 @@
   display: inline-block;
   margin-left: 20px;
 }
+
+#export-schedule-form .export-status > div {
+  display: inline-block;
+  margin-right: 8px;
+}
