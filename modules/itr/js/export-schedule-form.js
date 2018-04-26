@@ -35,7 +35,7 @@ function exportSchedule(exportType) {
     $('#errors').removeClass('messages messages--error'); // drupal in-built error message classes
     $('#errors').html('');
     $(loaderEl).html(statusLoaderImg);
-    $(statusEl).html('Retrieving auth token');
+    $(statusEl).html('Retrieving token');
     $.ajax({
       type: 'GET',
       url: sessionUrl,

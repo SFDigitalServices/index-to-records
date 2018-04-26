@@ -17,7 +17,7 @@
         error_log('EditDepartmentController:deptId:' . $deptId);
         error_log('EditDepartmentController:base_url:' . $base_url);
         $client = \Drupal::httpClient();
-        $request = $client->get($base_url . '/dept/info/' . $deptId . '/?_format=json'); // this path is a rest route defined in view Department Information
+        $request = $client->get($base_url . '/itr_rest_view/dept/info/' . $deptId . '/?_format=json'); // this path is a rest route defined in view Department Information
         $response = json_decode($request->getBody(), true);
         if(count($response) > 0) {
           error_log('EditDepartmentController:has data, go to edit');

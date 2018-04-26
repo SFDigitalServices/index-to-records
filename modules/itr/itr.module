@@ -420,8 +420,8 @@
     // error_log('itr.module:itr_views_pre_render:deptIdContextualFilter:' . $deptIdContextualFilter);
 
     if($viewId == 'schedules') { // the schedules view
-      $view->element['#attached']['library'][] = 'itr/export-schedule';
-      $view->element['#attached']['drupalSettings']['itr']['exportSchedule']['id'] = $deptIdContextualFilter;
+      // $view->element['#attached']['library'][] = 'itr/export-schedule';
+      // $view->element['#attached']['drupalSettings']['itr']['exportSchedule']['id'] = $deptIdContextualFilter;
       if(!userIsAdmin()) { // if user is not admin, only allow delete action
         if($view->field['node_bulk_form']) {
           $view->field['node_bulk_form']->options['selected_actions'] = ['node_delete_action'];

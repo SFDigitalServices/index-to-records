@@ -38,6 +38,27 @@ class ScheduleExportPdfResource extends ResourceBase {
     return new ResourceResponse($response);
   }
 
+  function deptInfo($deptId) {
+    global $base_url;
+    $request = \Drupal::httpClient()->get($base_url . '/itr_rest_view/dept/info/' . $deptId . '?_format=json'); // this path is a rest route defined in view Department Info
+    $deptInfoData = json_decode($request->getBody(), true);
+    $deptData = null;
+    if(count($deptInfoData) > 0) {
+      $deptData = [Array(
+        'field_department_name' => count($deptInfoData[0]['field_department_name']) > 0 ? $deptInfoData[0]['field_department_name'][0]['target_id'] : 'no dept name',
+        'field_department_contact_name' => count($deptInfoData[0]['field_department_contact_name']) > 0 ? $deptInfoData[0]['field_department_contact_name'][0]['value'] : 'no dept contact name',
+        'field_department_contact_email' => count($deptInfoData[0]['field_department_contact_email']) > 0 ? $deptInfoData[0]['field_department_contact_email'][0]['value'] : 'no dept contact email',
+        'field_department_contact_phone_n' => count($deptInfoData[0]['field_department_contact_phone_n']) > 0 ? $deptInfoData[0]['field_department_contact_phone_n'][0]['value'] : 'no dept contact phone',
+        'field_department_website' => count($deptInfoData[0]['field_department_website']) > 0 ? $deptInfoData[0]['field_department_website'][0]['value'] : 'no dept website',
+        'field_schedule_ratified_date' => count($deptInfoData[0]['field_schedule_ratified_date']) > 0 ? $deptInfoData[0]['field_schedule_ratified_date'][0]['value'] : 'no ratified date',
+      )];
+    }
+    // error_log(print_r($deptInfoData, 1));
+    // error_log($deptName);
+    // error_log($deptContactName);
+    return $deptData;
+  }
+
   function createPdf(array $data, $deptId) {
     if(!isset($deptId)) {
       return null;
@@ -45,30 +66,30 @@ class ScheduleExportPdfResource extends ResourceBase {
     $deptName = Utility::getTermNameByTid($deptId);
     $fileName = str_replace(' ', '-', strtolower($deptName)) . '.pdf';
 
-    $deptName = 'Adult Probation';
-    $deptContact = 'Lee Samson';
-    $deptContactPhone = '415-553-1912';
-    $deptWebsite = 'www.sfgov.org/adultprobation/';
-    $deptContactEmail = 'test@test.com';
+    $deptInfo = $this->deptInfo($deptId);
+    error_log(print_r($deptInfo, 1));
+    if(count($deptInfo) > 0) {
+      $deptContact = $deptInfo[0]['field_department_contact_name'];
+      $deptContactPhone = $deptInfo[0]['field_department_contact_phone_n'];
+      $deptWebsite = $deptInfo[0]['field_department_website'];
+      $deptContactEmail = $deptInfo[0]['field_department_contact_email'];
+    }
 
     $headerHtml = '<h1>Records Retention and Destruction Schedule</h1>' . "\n" .
                   '<div id="header-table-container">' . "\n" . 
                   ' <table id="header-dept-info">' . "\n" .
                   '   <tr>' . "\n" . 
-                  '     <td><strong>Department Name:</strong>' . $deptName . '</td>' . "\n" .
+                  '     <td><strong>Department Name: </strong>' . $deptName . '</td>' . "\n" .
                   '     <td>&nbsp;</td>' . "\n" .
-                  '     <td><strong>Department Website:</strong>' . $deptWebsite . '</td>' . "\n" .
+                  '     <td><strong>Department Website: </strong>' . $deptWebsite . '</td>' . "\n" .
                   '   </tr>' . "\n" .
                   '  <tr>' . "\n" . 
-                  '     <td><strong>Department Contact:</strong>' . $deptContact . '</td>' . "\n" .
-                  '    <td><strong>Contact Phone Number:</strong>' . $deptContactPhone . '</td>' . "\n" .
-                  '     <td><strong>Contact Email:</strong>' . $deptContactEmail . '</td>' . "\n" .
+                  '     <td><strong>Department Contact: </strong>' . $deptContact . '</td>' . "\n" .
+                  '    <td><strong>Contact Phone Number: </strong>' . $deptContactPhone . '</td>' . "\n" .
+                  '     <td><strong>Contact Email: </strong>' . $deptContactEmail . '</td>' . "\n" .
                   '   </tr>' . "\n" .
                   ' </table>' . "\n" .
                   '</div>';
-
-
-
     
     $scheduleHtml = '<table width="100%" id="schedule-table">' . "\n" .
                     '  <tr>' . "\n" .
@@ -213,7 +234,7 @@ class ScheduleExportPdfResource extends ResourceBase {
               '</style>' . "\n";
 
     $html = $headerHtml . $scheduleHtml . $sigHtml . $style;
-    error_log($html);
+    // error_log($html);
     $dompdf = new Dompdf();
     $dompdf->setPaper('A4', 'landscape');
     $dompdf->set_option('isHtml5ParserEnabled', true);
