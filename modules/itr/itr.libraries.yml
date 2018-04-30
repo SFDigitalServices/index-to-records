@@ -39,3 +39,10 @@ export-schedule-form:
     js/export-schedule-form.js: {}
   dependencies:
     - core/jquery
+
+view-edit-schedule:
+  version: 1.x
+  js:
+    js/view-edit-schedule.js: {}
+  dependencies:
+    - core/jquery

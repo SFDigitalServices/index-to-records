@@ -17,7 +17,7 @@
   use Drupal\itr\Utility\Utility;
 
   require_once('modules/devel/kint/kint/Kint.class.php');
-  Kint::$maxLevels = 4;
+  Kint::$maxLevels = 3;
 
 
   /*
@@ -315,7 +315,7 @@
   function itr_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     error_log('form_id: ' . $form_id);
     if($form_id == 'user_login_form') {
-      error_log('this is the login form blah');
+      error_log('itr.module:itr_form_user_login_form_alter:' . $form_id);
       $form['#submit'][] = '_itr_form_redirect_callback';
     }
   }
@@ -340,16 +340,17 @@
       }
     } else if($formId == 'user_login_form') {
       $isAdmin = in_array('administrator', $user->getRoles());
-      if(!$isAdmin) {
+      // if(!$isAdmin) {
         $form_state->setRedirect('view.schedules.page_1', [
           'dept_id' => $userDepts[0]['id']
         ]); // this route defined in itr.routing.yml
-      } else {
-        // $form_state->setRedirect('admin.content'); // this route defined in itr.routing.yml
-        $form_state->setRedirect('view.schedules.page_1', [
-          'dept_id' => 'all'
-        ]); // this route defined in itr.routing.yml
-      }
+      // } 
+      // else {
+      //   // $form_state->setRedirect('admin.content'); // this route defined in itr.routing.yml
+      //   $form_state->setRedirect('view.schedules.page_1', [
+      //     'dept_id' => 'all'
+      //   ]); // this route defined in itr.routing.yml
+      // }
     }
   }
 
@@ -374,14 +375,25 @@
   function itr_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     // alter the form for the unpublished schedule view filter
     if($form['#id'] == 'views-exposed-form-schedules-page-1' || $form['#id'] == 'views-exposed-form-schedules-page-2') {
+      $form['#attached']['library'][] = 'itr/view-edit-schedule';
       $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
-      error_log('itr.module:itr_form_views_exposed_form_alter:$user->getRoles():' . print_r($user->getRoles(), 1));
+      error_log('itr.modules:itr_form_views_exposed_form_alter:id:' . $form['#id']);
+      // error_log('itr.module:itr_form_views_exposed_form_alter:$user->getRoles():' . print_r($user->getRoles(), 1));
       // Kint::dump($user);
       $requestDeptId = \Drupal::routeMatch()->getParameter('dept_id'); // the requested dept_id from the route
       // if the requested deptId (a contextual filter defined in drupal ui view "schedules") is a dept belonging to this user
       // or the user is admin, display this view and alter the filter options to only show the user's departments (done through user settings via drupal ui)
-      if(userHasDept($requestDeptId) || userIsAdmin()) {
+      // Kint::dump($form_state->get('view'));
+
+      $view = $form_state->get('view');
+      $deptId = count($view->getExposedInput()) > 0 ? $view->getExposedInput()['field_department_target_id'] : $view->args[0]; // this contextual filter could be coming from two different places
+      error_log('itr_form_views_exposed_form_alter:id:' . $form['#id'] . ':getExposedInput():' . print_r($view->getExposedInput(), 1));
+      error_log('itr_form_views_exposed_form_alter:id:' . $form['#id'] . ':deptId:' . $deptId);
+      $form['#attached']['drupalSettings']['itr']['schedule']['deptId'] = $deptId;
+
+      if(userHasDept($deptId) || userIsAdmin()) {
         $currentOptions = $form['field_department_target_id']['#options']; // get current options
+        // error_log(print_r($currentOptions, 1));
         $newOptions = array(
           'All' => $currentOptions['All']
         ); // grab All key from current options and assign to new options
@@ -396,16 +408,39 @@
           $newOptions[] = $obj; // append
         }
         $form['field_department_target_id']['#options'] = $newOptions; // set new options
-        $firstKey = current(array_keys($newOptions[0]->option));
-        // Kint::dump($form['field_department_target_id']);
-        // $form['field_department_target_id']['#default_value'] = '5';
       } else { // requested dept does not belong to this user, throw access denied exception
         error_log('itr.module:itr_form_views_exposed_form_alter:access denied');
         throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
       }
-      // Kint::dump($form);
     } 
   }
+
+  function _itr_form_schedule_filter_submit($form, FormStateInterface $form_state) {
+    error_log('_itr_form_schedule_filter_submit');
+  }
+
+  // function itr_form_views_form_schedules_page_1_alter(&$form, FormStateInterface $form_state, $form_id) {
+  //   error_log('itr.module:itr_form_views_form_schedules_page_1_alter:' . $form_id);
+  //   $form['#attached']['library'][] = 'itr/view-edit-schedule';
+  //   Kint::dump($form_state->getStorage());
+  //   $view = $form_state->get('view');
+  //   // error_log('itr.module:itr_form_views_form_schedules_page_1_alter:$view->id():' . $view->id());
+  //   // send along the department info node id if it exists
+  //   // $request = \Drupal::httpClient()->get($base_url . '/itr_rest_view/dept/info/' . $deptId . '?_format=json'); // this path is a rest route defined in view Department Info
+  //   // $deptInfoData = json_decode($request->getBody(), true);
+  //   // error_log(print_r($deptInfoData, 1));
+  //   // $form['#submit'][] = '_itr_form_views_form_schedules_page_1_all_submit_callback';
+  //   // Kint::dump($form);
+  //   // Kint::dump($form);
+  // }
+
+
+  // function _itr_form_views_form_schedules_page_1_all_submit_callback($form, FormStateInterface $form_state) {
+  //   // Kint::dump($form_state);
+  //   error_log(print_r($form_state, 1));
+  //   $form['#attached']['drupalSettings']['itr']['scheduleAction']['publish'] = true;
+  //   error_log('itr.module:_itr_form_views_form_schedules_page_1_all_submit_callback:here');
+  // }
 
   // do some stuff with views before render
   function itr_views_pre_render(\Drupal\views\ViewExecutable $view) {
@@ -416,12 +451,20 @@
     $viewId = $view->id();
     $deptIdContextualFilter = $view->args[0];
 
+
+
     // error_log('itr.module:itr_views_pre_render:viewId:' . $viewId);
     // error_log('itr.module:itr_views_pre_render:deptIdContextualFilter:' . $deptIdContextualFilter);
+
+    // error_log(print_r($view->args, 1));
 
     if($viewId == 'schedules') { // the schedules view
       // $view->element['#attached']['library'][] = 'itr/export-schedule';
       // $view->element['#attached']['drupalSettings']['itr']['exportSchedule']['id'] = $deptIdContextualFilter;
+
+      // error_log(print_r($view->field['field_department_target_id'], 1));
+      // Kint::dump($view->field);
+
       if(!userIsAdmin()) { // if user is not admin, only allow delete action
         if($view->field['node_bulk_form']) {
           $view->field['node_bulk_form']->options['selected_actions'] = ['node_delete_action'];
@@ -446,12 +489,12 @@
       //     }
       //   }
       // }
-      if(!userIsAdmin()) {
+      // if(!userIsAdmin()) {
         $depts = Utility::getDepartmentsForUser();
         if(count($depts) > 0) {
           $url->setRouteParameter('dept_id', $depts[0]['id']);
         }  
-      }
+      // }
       
       // Kint::dump($variables);
     }
@@ -488,6 +531,15 @@
     $form['actions']['submit']['#attributes']['class'][] = 'blue-btn btn-lg';
     if(!Utility::userIsAdmin()) { // user is not admin, disable select
       $form['field_department_name']['widget']['#attributes']['disabled'] = 'disabled';
+    }
+  }
+
+  function itr_views_pre_view(ViewExecutable $view, $display_id, &$args) {
+    error_log('itr.module:itr_views_pre_view');
+    error_log($view->id());
+    if($view->id() == 'schedules') {
+      // error_log(print_r($args, 1));
+      // $args[0] = '10';
     }
   }
 
