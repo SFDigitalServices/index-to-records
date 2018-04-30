@@ -118,7 +118,7 @@
     // check if the current user has the admin role
     public static function userIsAdmin() {
       $user = User::load(\Drupal::currentUser()->id());
-      return in_array('administrator', $user->getRoles());
+      return in_array('administrator', $user->getRoles()) || in_array('schedule_administrator', $user->getRoles());
     }
 
     public static function getCategoryTermId($deptId) {

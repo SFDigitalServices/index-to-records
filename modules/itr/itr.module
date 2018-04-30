@@ -136,10 +136,10 @@
   }
 
   // check if the current user has the admin role
-  function userIsAdmin() {
-    $user = User::load(\Drupal::currentUser()->id());
-    return in_array('administrator', $user->getRoles());
-  }
+  // function userIsAdmin() {
+  //   $user = User::load(\Drupal::currentUser()->id());
+  //   return in_array('administrator', $user->getRoles());
+  // }
 
   // alter add record form
   function itr_form_node_record_form_alter(&$form, FormStateInterface $form_state, $form_id) {
@@ -378,7 +378,7 @@
       $form['#attached']['library'][] = 'itr/view-edit-schedule';
       $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
       error_log('itr.modules:itr_form_views_exposed_form_alter:id:' . $form['#id']);
-      // error_log('itr.module:itr_form_views_exposed_form_alter:$user->getRoles():' . print_r($user->getRoles(), 1));
+      error_log('itr.module:itr_form_views_exposed_form_alter:$user->getRoles():' . print_r($user->getRoles(), 1));
       // Kint::dump($user);
       $requestDeptId = \Drupal::routeMatch()->getParameter('dept_id'); // the requested dept_id from the route
       // if the requested deptId (a contextual filter defined in drupal ui view "schedules") is a dept belonging to this user
@@ -391,7 +391,7 @@
       error_log('itr_form_views_exposed_form_alter:id:' . $form['#id'] . ':deptId:' . $deptId);
       $form['#attached']['drupalSettings']['itr']['schedule']['deptId'] = $deptId;
 
-      if(userHasDept($deptId) || userIsAdmin()) {
+      if(userHasDept($deptId) || Utility::userIsAdmin()) {
         $currentOptions = $form['field_department_target_id']['#options']; // get current options
         // error_log(print_r($currentOptions, 1));
         $newOptions = array(
@@ -465,7 +465,7 @@
       // error_log(print_r($view->field['field_department_target_id'], 1));
       // Kint::dump($view->field);
 
-      if(!userIsAdmin()) { // if user is not admin, only allow delete action
+      if(!Utility::userIsAdmin()) { // if user is not admin, only allow delete action
         if($view->field['node_bulk_form']) {
           $view->field['node_bulk_form']->options['selected_actions'] = ['node_delete_action'];
         }
