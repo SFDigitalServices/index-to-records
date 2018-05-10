@@ -463,7 +463,7 @@
       // $view->element['#attached']['drupalSettings']['itr']['exportSchedule']['id'] = $deptIdContextualFilter;
 
       // error_log(print_r($view->field['field_department_target_id'], 1));
-      // Kint::dump($view->field);
+      // Kint::dump($view->field)
 
       if(!Utility::userIsAdmin()) { // if user is not admin, only allow delete action
         if($view->field['node_bulk_form']) {
