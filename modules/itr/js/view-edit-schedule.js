@@ -32,6 +32,7 @@ window.onload = function() {
 
     var deptInfoUrl = drupalSettings.path.baseUrl + 'itr_rest_view/dept/info/' + deptId + '?_format=json';
     var tokenUrl = drupalSettings.path.baseUrl + 'session/token';
+    var nodePatchUrl = drupalSettings.path.baseUrl + 'node';
     var hasCheckedRecords = $('form[data-drupal-selector*="views-form-schedules"] input[type="checkbox"]:checked').length > 0 ? true : false;
     console.log('actionVal: ' + actionVal + ', deptId: ' + deptId + ', hasCheckedRecords: ' + hasCheckedRecords);
 
@@ -61,7 +62,7 @@ window.onload = function() {
                 };
                 $.ajax({
                   type: 'PATCH',
-                  url: '/node/' + deptInfoNid + '?_format=json',
+                  url: nodePatchUrl + '/' + deptInfoNid + '?_format=json',
                   headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-Token' : token
@@ -69,6 +70,10 @@ window.onload = function() {
                   data: JSON.stringify(theUpdateData),
                   success: function(node) {
                     console.log('ratified date updated');
+                  },
+                  error: function(resp) {
+                    console.log('error');
+                    console.log(resp);
                   },
                   complete: function() {
                     $(_this).off('submit');
