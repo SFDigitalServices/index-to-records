@@ -4,6 +4,7 @@
 @import url("schedule.css");
 @import url("view-filter-form.css");
 @import url("export-schedule.css");
+@import url("dept-info.css");
 
 /* layout */
 
@@ -300,4 +301,9 @@ table.views-table td.views-field-operations .dropbutton-widget .dropbutton-toggl
   position: absolute;
   left: -700px;
   z-index: 1000;
+}
+
+#dept-empty-schedule-msg {
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
 }

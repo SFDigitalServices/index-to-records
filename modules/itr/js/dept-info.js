@@ -1,3 +1,4 @@
+console.log('dept-info.js');
 $ = jQuery;
 function updateTitleWithDepartmentName(select) {
   var selector = '#' + $(select).attr('id') + ' option:selected';

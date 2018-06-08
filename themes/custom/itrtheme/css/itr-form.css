@@ -22,6 +22,11 @@
   font-weight: normal;
 }
 
+/* help text */
+.itr-form .form-wrapper .description { 
+  margin-top: 5px;
+}
+
 /* hide title field (it is required, but auto populated by js) */
 .form-item-title-0-value {
   display: none;

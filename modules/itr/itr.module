@@ -16,6 +16,8 @@
 
   use Drupal\itr\Utility\Utility;
 
+  use Drupal\Core\Url;
+
   require_once('modules/devel/kint/kint/Kint.class.php');
   Kint::$maxLevels = 3;
 
@@ -518,6 +520,7 @@
     error_log('itr.module:departmentInformationFormAlter:$form_id:' . $form_id);
     $form['#attributes']['class'][] = 'itr-form';
     $depts = Utility::getDepartmentsForUser();
+    error_log('itr.module:departmentInformationFormAlter:user has ' . count($depts) . ' depts');
     $deptOptions = array();
     $deptOptions['_none'] = '- None -';
     foreach($depts as $dept) {
@@ -530,7 +533,43 @@
     $form['#attached']['library'][] = 'itr/dept-info-form';
     $form['actions']['submit']['#attributes']['class'][] = 'blue-btn btn-lg';
     if(!Utility::userIsAdmin()) { // user is not admin, disable select
+      // Kint::$maxLevels = 5;
+      // Kint::dump($form['field_schedule_ratified_date']);
+      error_log('itr.module:departmentInformationFormAlter:user is not admin');
+      // disable schedule ratified date
+      $form['field_schedule_ratified_date']['widget'][0]['value']['#attributes']['readonly'] = TRUE;
+    }
+
+    if(count($depts) == 1) {
       $form['field_department_name']['widget']['#attributes']['disabled'] = 'disabled';
+    }
+
+    // $url = Url::fromRoute('node.edit_form', ['node' => 5530]);
+    // $current_path = \Drupal::service('path.current')->getPath();
+    // $route_name = Url::fromUserInput($current_path)->getRouteName();
+    // error_log('itr.module:departmentInformationFormAlter:url:' . $route_name);
+    // $form_state->setRedirect('entity.node.edit_form', ['node' => 5530]);
+
+
+    foreach(array_keys($form['actions']) as $action) {
+      if($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type']==='submit') {
+        $form['actions'][$action]['#submit'][] = '_itr_form_manage_dept_callback';
+      }  
+    }
+
+
+  }
+
+  function _itr_form_manage_dept_callback($form, FormStateInterface $form_state) {
+    error_log('_itr_form_manage_dept_callback');
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if ($node instanceof \Drupal\node\NodeInterface) {
+      // You can get nid and anything else you need from the node object.
+      $nid = $node->id();
+      error_log($nid);
+      $routeName = 'entity.node.edit_form';
+      $routeParameters = ['node'=>$nid];
+      $form_state->setRedirect($routeName, $routeParameters);
     }
   }
 
