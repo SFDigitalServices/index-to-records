@@ -82,7 +82,16 @@ window.onload = function() {
                   }
                 });
               } else {
-                console.log('dept info data does not exist, prompt user to enter dept info before publishing');
+                var deptName = $('#edit-field-department-target-id option:selected').text();
+                var errorMsg = 'Department information was not found for ' + deptName + '.' + '<br/><br/>' + 
+                               '  Please first <a href="/node/add/department_information">add department information</a> for ' + deptName + ' before publishing.';
+                var errorHtml = '' +
+                                '<div role="contentinfo" aria-label="Error message" class="messages messages--error">' +
+                                '  <div role="alert">' +
+                                '    <h2 class="visually-hidden">Error message</h2>' + errorMsg +
+                                '  </div>' +
+                                '</div>';
+                $('.region.region-highlighted').append(errorHtml);
               }
             }
           });
