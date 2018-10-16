@@ -1,0 +1,40 @@
+uuid: 4a5cc1f7-b3ff-4643-ad0e-2bf5012117f3
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.record_template.field_template_category
+    - field.field.node.record_template.field_template_division
+    - field.field.node.record_template.field_template_division_contact
+    - field.field.node.record_template.field_template_link
+    - field.field.node.record_template.field_template_off_site
+    - field.field.node.record_template.field_template_on_site
+    - field.field.node.record_template.field_template_rem
+    - field.field.node.record_template.field_template_retention
+    - field.field.node.record_template.field_template_title
+    - field.field.node.record_template.field_template_total
+    - node.type.record_template
+  module:
+    - user
+id: node.record_template.teaser
+targetEntityType: node
+bundle: record_template
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_template_category: true
+  field_template_division: true
+  field_template_division_contact: true
+  field_template_link: true
+  field_template_off_site: true
+  field_template_on_site: true
+  field_template_rem: true
+  field_template_retention: true
+  field_template_title: true
+  field_template_total: true

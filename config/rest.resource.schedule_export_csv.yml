@@ -1,0 +1,18 @@
+uuid: fae70d93-a969-40af-9e16-b18cf3b4c4ce
+langcode: en
+status: true
+dependencies:
+  module:
+    - itr_rest
+    - serialization
+    - user
+id: schedule_export_csv
+plugin_id: schedule_export_csv
+granularity: resource
+configuration:
+  methods:
+    - POST
+  formats:
+    - json
+  authentication:
+    - cookie

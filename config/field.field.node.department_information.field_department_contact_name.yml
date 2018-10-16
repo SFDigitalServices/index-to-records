@@ -1,0 +1,19 @@
+uuid: 91340c1f-d0e8-42aa-969d-ca513c041757
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_department_contact_name
+    - node.type.department_information
+id: node.department_information.field_department_contact_name
+field_name: field_department_contact_name
+entity_type: node
+bundle: department_information
+label: 'Department Contact Name'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

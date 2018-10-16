@@ -1,0 +1,29 @@
+uuid: be3c4d1e-8ccf-4e5f-86f0-f0e9183961d4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_template_retention
+    - node.type.record_template
+    - taxonomy.vocabulary.retention
+id: node.record_template.field_template_retention
+field_name: field_template_retention
+entity_type: node
+bundle: record_template
+label: 'Template Retention'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      retention: retention
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

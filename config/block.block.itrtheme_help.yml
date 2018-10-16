@@ -1,0 +1,22 @@
+uuid: 45a23510-993d-4599-aa6a-fdaebdec349b
+langcode: en
+status: false
+dependencies:
+  module:
+    - help
+  theme:
+    - itrtheme
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: itrtheme_help
+theme: itrtheme
+region: content
+weight: 0
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,25 @@
+uuid: cf1f6a5b-c6de-4705-9474-2f05a0cf45e5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_department_name
+    - node.type.department_information
+id: node.department_information.field_department_name
+field_name: field_department_name
+entity_type: node
+bundle: department_information
+label: 'Department Name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: departments
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference

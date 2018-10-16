@@ -1,0 +1,19 @@
+uuid: 520836d5-2263-4290-9e3f-37fc73759e00
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_schedule_ratified_date
+    - node.type.department_information
+id: node.department_information.field_schedule_ratified_date
+field_name: field_schedule_ratified_date
+entity_type: node
+bundle: department_information
+label: 'Schedule Ratified Date'
+description: 'This field is automatically populated when the schedule is published'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

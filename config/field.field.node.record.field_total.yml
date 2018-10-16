@@ -1,0 +1,19 @@
+uuid: df7d696f-84ba-4187-afe9-55d03fd47688
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_total
+    - node.type.record
+id: node.record.field_total
+field_name: field_total
+entity_type: node
+bundle: record
+label: Total
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

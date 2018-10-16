@@ -1,0 +1,36 @@
+uuid: 2bbeff78-89d4-4dd7-bee7-73ab93b0a369
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access content overview'
+  - 'access shortcuts'
+  - 'access site-wide contact form'
+  - 'administer nodes'
+  - 'administer schedules'
+  - 'create department_information content'
+  - 'create record content'
+  - 'delete any record content'
+  - 'delete own record content'
+  - 'edit any department_information content'
+  - 'edit any record content'
+  - 'edit own department_information content'
+  - 'edit own record content'
+  - 'restful get department_category_by_id'
+  - 'restful get department_division_by_id'
+  - 'restful get departments'
+  - 'restful post department_category_by_id'
+  - 'restful post department_division_by_id'
+  - 'restful post schedule_delete'
+  - 'restful post schedule_export_csv'
+  - 'restful post schedule_export_pdf'
+  - 'search content'
+  - 'use text format basic_html'
+  - 'view own unpublished content'

@@ -1,0 +1,19 @@
+uuid: 37cc7aa5-2e9e-45c2-9f86-8b86e016b8a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_template_category
+    - node.type.record_template
+id: node.record_template.field_template_category
+field_name: field_template_category
+entity_type: node
+bundle: record_template
+label: 'Template Category'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

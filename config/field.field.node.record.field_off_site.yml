@@ -1,0 +1,19 @@
+uuid: a3fa3b5f-928a-40f6-af39-87ecc455a5a5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_off_site
+    - node.type.record
+id: node.record.field_off_site
+field_name: field_off_site
+entity_type: node
+bundle: record
+label: Off-site
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

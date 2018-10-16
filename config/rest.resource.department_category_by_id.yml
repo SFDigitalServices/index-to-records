@@ -1,0 +1,19 @@
+uuid: e2da00c0-9d92-482f-b322-7af470e5ec9c
+langcode: en
+status: true
+dependencies:
+  module:
+    - itr_rest
+    - serialization
+    - user
+id: department_category_by_id
+plugin_id: department_category_by_id
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+  formats:
+    - json
+  authentication:
+    - cookie

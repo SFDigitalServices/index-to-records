@@ -1,0 +1,14 @@
+uuid: 9d1640e2-c8a3-4840-af13-caefe4c7bd4d
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.schedule_administrator
+  module:
+    - user
+id: user_add_role_action.schedule_administrator
+label: 'Add the Schedule Administrator role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: schedule_administrator

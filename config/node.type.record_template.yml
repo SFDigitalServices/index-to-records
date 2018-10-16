@@ -1,0 +1,18 @@
+uuid: 9a4de2eb-6c7d-4aaa-a1b7-d7c96c2c5ecf
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'Record Template'
+type: record_template
+description: 'Common record templates for quick additions'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: false

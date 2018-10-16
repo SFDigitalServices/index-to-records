@@ -1,0 +1,18 @@
+uuid: b3bc727d-b5b1-4afc-a46f-f9f4415e3bff
+langcode: en
+status: true
+dependencies:
+  module:
+    - itr_rest
+    - serialization
+    - user
+id: schedule_delete
+plugin_id: schedule_delete
+granularity: resource
+configuration:
+  methods:
+    - POST
+  formats:
+    - json
+  authentication:
+    - cookie

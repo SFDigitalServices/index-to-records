@@ -1,0 +1,120 @@
+uuid: 2c3e7253-bb9f-4492-ad62-a27a88270166
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.record_template.field_template_category
+    - field.field.node.record_template.field_template_division
+    - field.field.node.record_template.field_template_division_contact
+    - field.field.node.record_template.field_template_link
+    - field.field.node.record_template.field_template_off_site
+    - field.field.node.record_template.field_template_on_site
+    - field.field.node.record_template.field_template_rem
+    - field.field.node.record_template.field_template_retention
+    - field.field.node.record_template.field_template_title
+    - field.field.node.record_template.field_template_total
+    - node.type.record_template
+id: node.record_template.default
+targetEntityType: node
+bundle: record_template
+mode: default
+content:
+  field_template_category:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_template_division:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_template_division_contact:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_template_link:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_template_off_site:
+    weight: 9
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_template_on_site:
+    weight: 8
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_template_rem:
+    weight: 11
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_template_retention:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
+  field_template_title:
+    weight: 4
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_template_total:
+    weight: 10
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 7
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

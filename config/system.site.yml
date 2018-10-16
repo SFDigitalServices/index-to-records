@@ -1,0 +1,14 @@
+uuid: c6f12b63-9f7b-4e27-919f-79f6701b6b6b
+name: 'Index to Records'
+mail: anthony.kong@sfgov.org
+slogan: 'Welcome to the City and County of San Francisco''s Index to Records. The Index is made available to assist the public with access to City records. This is in accordance with the Sunshine Ordinance.'
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI

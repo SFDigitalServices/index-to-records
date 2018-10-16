@@ -1,0 +1,32 @@
+uuid: e1b54ca8-bff1-49d9-a846-049c57568a9f
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.department_information.field_department_contact_email
+    - field.field.node.department_information.field_department_contact_name
+    - field.field.node.department_information.field_department_contact_phone_n
+    - field.field.node.department_information.field_department_name
+    - field.field.node.department_information.field_department_website
+    - field.field.node.department_information.field_schedule_ratified_date
+    - node.type.department_information
+  module:
+    - user
+id: node.department_information.teaser
+targetEntityType: node
+bundle: department_information
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_department_contact_email: true
+  field_department_contact_name: true
+  field_department_contact_phone_n: true
+  field_department_name: true
+  field_department_website: true
+  field_schedule_ratified_date: true

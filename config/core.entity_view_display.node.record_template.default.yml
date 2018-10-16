@@ -1,0 +1,100 @@
+uuid: 28087157-69c8-4f06-aa3f-d7d933cd6be3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.record_template.field_template_category
+    - field.field.node.record_template.field_template_division
+    - field.field.node.record_template.field_template_division_contact
+    - field.field.node.record_template.field_template_link
+    - field.field.node.record_template.field_template_off_site
+    - field.field.node.record_template.field_template_on_site
+    - field.field.node.record_template.field_template_rem
+    - field.field.node.record_template.field_template_retention
+    - field.field.node.record_template.field_template_title
+    - field.field.node.record_template.field_template_total
+    - node.type.record_template
+  module:
+    - user
+id: node.record_template.default
+targetEntityType: node
+bundle: record_template
+mode: default
+content:
+  field_template_category:
+    weight: 0
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_template_division:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_template_division_contact:
+    weight: 2
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_template_link:
+    weight: 3
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_template_off_site:
+    weight: 6
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_template_on_site:
+    weight: 5
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_template_rem:
+    weight: 8
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_template_retention:
+    weight: 4
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_template_title:
+    weight: 9
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_template_total:
+    weight: 7
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+hidden:
+  links: true

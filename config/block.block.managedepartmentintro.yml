@@ -1,0 +1,33 @@
+uuid: 0663308a-d22a-4540-99ef-83a5e96e3783
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:1cc901c4-a7e3-4877-a6ef-6ad200209a6c'
+  module:
+    - block_content
+    - node
+  theme:
+    - itrtheme
+id: managedepartmentintro
+theme: itrtheme
+region: content
+weight: -9
+provider: null
+plugin: 'block_content:1cc901c4-a7e3-4877-a6ef-6ad200209a6c'
+settings:
+  id: 'block_content:1cc901c4-a7e3-4877-a6ef-6ad200209a6c'
+  label: 'Manage Department'
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  node_type:
+    id: node_type
+    bundles:
+      department_information: department_information
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

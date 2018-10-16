@@ -1,0 +1,18 @@
+uuid: 8f5cc3bd-082c-4a59-8e36-f5c9570ac223
+langcode: en
+status: true
+dependencies:
+  module:
+    - itr_rest
+    - serialization
+    - user
+id: schedule_export_pdf
+plugin_id: schedule_export_pdf
+granularity: resource
+configuration:
+  methods:
+    - POST
+  formats:
+    - json
+  authentication:
+    - cookie

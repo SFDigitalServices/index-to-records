@@ -1,0 +1,20 @@
+uuid: 46d7c484-ac80-4c91-8f9a-4896b3b22688
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_template_retention
+field_name: field_template_retention
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

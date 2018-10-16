@@ -1,0 +1,19 @@
+uuid: 45c4b695-caf5-47f1-8e44-993cbc18fadf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_template_total
+    - node.type.record_template
+id: node.record_template.field_template_total
+field_name: field_template_total
+entity_type: node
+bundle: record_template
+label: 'Template Total'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,19 @@
+uuid: 309f42b3-830c-4bcd-ae93-c81ce36e7811
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_link
+    - node.type.record
+id: node.record.field_link
+field_name: field_link
+entity_type: node
+bundle: record
+label: Link
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

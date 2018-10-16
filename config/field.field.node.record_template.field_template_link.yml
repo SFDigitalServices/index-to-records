@@ -1,0 +1,19 @@
+uuid: f1d87e92-28dc-497d-be20-840bff9e7605
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_template_link
+    - node.type.record_template
+id: node.record_template.field_template_link
+field_name: field_template_link
+entity_type: node
+bundle: record_template
+label: 'Template Link'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

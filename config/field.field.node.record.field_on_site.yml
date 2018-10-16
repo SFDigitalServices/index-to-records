@@ -1,0 +1,19 @@
+uuid: 048ce67a-32ed-456d-91ea-639b0eadf76e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_on_site
+    - node.type.record
+id: node.record.field_on_site
+field_name: field_on_site
+entity_type: node
+bundle: record
+label: On-site
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,31 @@
+uuid: 111bc83f-ae1e-4652-a200-7a2e73a35c24
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.departments
+  module:
+    - system
+    - views
+  theme:
+    - itrtheme
+id: views_block__departments_block_1
+theme: itrtheme
+region: content
+weight: -1
+provider: null
+plugin: 'views_block:departments-block_1'
+settings:
+  id: 'views_block:departments-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }
