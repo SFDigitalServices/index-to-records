@@ -18,8 +18,8 @@
 
   use Drupal\Core\Url;
 
-  require_once('modules/devel/kint/kint/Kint.class.php');
-  Kint::$maxLevels = 3;
+  // require_once('modules/devel/kint/kint/Kint.class.php');
+  // Kint::$maxLevels = 3;
 
 
   /*
