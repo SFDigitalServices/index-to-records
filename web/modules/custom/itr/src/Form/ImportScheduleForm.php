@@ -13,8 +13,8 @@
 
   use Drupal\itr\Utility\Utility;
 
-  require_once('modules/devel/kint/kint/Kint.class.php');
-  \Kint::$maxLevels = 4;  
+  // require_once('modules/devel/kint/kint/Kint.class.php');
+  // \Kint::$maxLevels = 4;  
 
   class ImportScheduleForm extends FormBase {
 
