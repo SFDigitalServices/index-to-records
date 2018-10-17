@@ -17,7 +17,7 @@ provider: null
 plugin: search_form_block
 settings:
   id: search_form_block
-  label: 'Search for a Record'
+  label: 'Search for a Record here'
   provider: search
   label_display: visible
 visibility:
