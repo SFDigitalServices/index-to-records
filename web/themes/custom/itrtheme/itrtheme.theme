@@ -3,7 +3,7 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\ViewExecutable;
 
-//require_once('modules/devel/kint/kint/Kint.class.php');
+// require_once('modules/devel/kint/kint/Kint.class.php');
 
 function itrtheme_form_search_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 

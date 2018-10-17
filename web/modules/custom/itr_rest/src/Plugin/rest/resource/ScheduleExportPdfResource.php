@@ -9,7 +9,7 @@ use Drupal\itr\Utility\Utility;
 
 use Dompdf\Dompdf;
 
-// require_once 'vendor/dompdf/autoload.inc.php';
+require DRUPAL_ROOT . '/../vendor/autoload.php';
 
 /**
 * Provides the export schedule csv resource
