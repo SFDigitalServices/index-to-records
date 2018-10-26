@@ -18,8 +18,8 @@
 
   use Drupal\Core\Url;
 
-  require_once(DRUPAL_ROOT . '/modules/contrib/devel/kint/kint/Kint.class.php');
-  Kint::$maxLevels = 3;
+  // require_once(DRUPAL_ROOT . '/modules/contrib/devel/kint/kint/Kint.class.php');
+  // Kint::$maxLevels = 3;
 
   /*
   * get categories for a specific department for the current user
