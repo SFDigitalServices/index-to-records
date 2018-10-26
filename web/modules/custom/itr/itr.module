@@ -451,7 +451,7 @@
     // Kint::dump($view);
     // error_log(print_r($view->field['node_bulk_form']->options['selected_actions'], 1));
     $viewId = $view->id();
-    $deptIdContextualFilter = $view->args[0];
+    // $deptIdContextualFilter = $view->args[0];
 
 
 
