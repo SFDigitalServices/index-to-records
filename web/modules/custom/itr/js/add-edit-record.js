@@ -208,13 +208,18 @@ $(addRecTemplateLink).click(function(e) {
   }
 });
 
-$('#edit-field-department').on('change', function() {
+// $('#edit-field-department').on('change', function() {
+//   Drupal.AjaxCommands.prototype.demoTestJsCommand = function(ajax, response) {
+//     $(addRecTemplateLink).removeClass('hide');
+//     $('#edit-field-category').html($('#edit-field-category > div').contents());
+//     $('#edit-field-division').html($('#edit-field-division > div').contents());
+//     if(_catSelect !== '_none') {
+//       $('#edit-field-category').val(_catSelect);
+//     }
+//   };
+// });
+if(Drupal.AjaxCommands) {
   Drupal.AjaxCommands.prototype.demoTestJsCommand = function(ajax, response) {
-    $(addRecTemplateLink).removeClass('hide');
-    $('#edit-field-category').html($('#edit-field-category > div').contents());
-    $('#edit-field-division').html($('#edit-field-division > div').contents());
-    if(_catSelect !== '_none') {
-      $('#edit-field-category').val(_catSelect);
-    }
+  
   };
-});
+}

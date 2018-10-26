@@ -18,9 +18,8 @@
 
   use Drupal\Core\Url;
 
-  // require_once('modules/devel/kint/kint/Kint.class.php');
-  // Kint::$maxLevels = 3;
-
+  require_once(DRUPAL_ROOT . '/modules/contrib/devel/kint/kint/Kint.class.php');
+  Kint::$maxLevels = 3;
 
   /*
   * get categories for a specific department for the current user
@@ -251,7 +250,8 @@
 
   // ajax callback when department is changed to update category and division options
   function itrDepartmentChangeAjax(array &$form, FormStateInterface $form_state) {
-    // error_log(print_r($form['field_department'], 1));
+    error_log('itr.module:itrDepartmentChangeAjax:');
+    error_log(print_r($form['field_department']['widget']['#value'], 1));
     $deptId = $form['field_department']['widget']['#value'];
 
     $categories = Utility::getDepartmentCategories($deptId);
@@ -573,13 +573,13 @@
     }
   }
 
-  function itr_views_pre_view(ViewExecutable $view, $display_id, &$args) {
-    error_log('itr.module:itr_views_pre_view');
-    error_log($view->id());
-    if($view->id() == 'schedules') {
-      // error_log(print_r($args, 1));
-      // $args[0] = '10';
-    }
-  }
+  // function itr_views_pre_view(ViewExecutable $view, $display_id, &$args) {
+  //   error_log('itr.module:itr_views_pre_view');
+  //   error_log($view->id());
+  //   if($view->id() == 'schedules') {
+  //     // error_log(print_r($args, 1));
+  //     // $args[0] = '10';
+  //   }
+  // }
 
 ?>

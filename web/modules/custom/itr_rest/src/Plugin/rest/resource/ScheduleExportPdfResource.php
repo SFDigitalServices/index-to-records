@@ -118,7 +118,7 @@ class ScheduleExportPdfResource extends ResourceBase {
       $off_site = $item['field_off_site'][0]['value'];
       $total = $item['field_total'][0]['value'];
       $category = count($item['field_category']) > 0 ? Utility::getTermNameByTid($item['field_category'][0]['target_id']) : '';
-      $retention = count($item['field_retention']) ? 'get retention string' : '';
+      $retention = count($item['field_retention']) > 0 ? print_r($item['field_retention'], TRUE) : '';
       $remarks = $item['field_remarks'][0]['value'];
       $scheduleHtml .=  '<tr class="' . $cssRowClass . '">' . "\n" .
                         '  <td>' . $division . '</td>' . "\n" .
