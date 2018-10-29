@@ -110,3 +110,6 @@ Thumbs.db
 
 # visual code config
 .vscode
+
+# ignore app directory created by lando
+app
