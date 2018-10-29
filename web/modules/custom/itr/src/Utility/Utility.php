@@ -217,6 +217,16 @@
       return $term->getName();
     }
 
+    public static function getRetentionName($retentionTermId) {
+      $retentionTerms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('retention');
+      foreach($retentionTerms as $retentionTerm) {
+        if($retentionTerm->tid == $retentionTermId) {
+          return $retentionTerm->name;
+        }
+      }
+      return null;
+    }
+
   }
 
 ?>
