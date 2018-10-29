@@ -9,6 +9,9 @@
       return $str;
     }
 
+
+    // $retentionTerms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('retention');
+
     public static function getDepartmentsForUser() {
       $user = User::load(\Drupal::currentUser()->id());
       // error_log('Utility:getDepartmentsForUser:user: ');
@@ -16,23 +19,29 @@
       if(!in_array('anonymous', $user->getRoles())) {
         $assignedDepts = $user->get('field_department')->getValue();
         $count = count($assignedDepts);
-        $vid = Term::load($assignedDepts[0]['target_id'])->getVocabularyId();
-        $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
-        $depts = array();
-        for($i = 0; $i < $count; $i++) {
-          $tid = $assignedDepts[$i]['target_id'];
-          $deptName = Term::load($tid)->getName();
-          $depts[] = array(
-            'id' => $tid,
-            'name' => $deptName
-          );
+        if($count > 0) {
+          $vid = Term::load($assignedDepts[0]['target_id'])->getVocabularyId();
+          $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
+          $depts = array();
+          for($i = 0; $i < $count; $i++) {
+            $tid = $assignedDepts[$i]['target_id'];
+            error_log('Utility:getDepartmentsForUser:user:$tid:'.$tid);
+            $deptTerm = Term::load($tid);
+            if($deptTerm) {
+              $deptName = $deptTerm->getName();
+              $depts[] = array(
+                'id' => $tid,
+                'name' => $deptName
+              );
+            }
+          }
+          foreach($depts as $key => $row) {
+            $id[$key] = $row['id'];
+            $name[$key] = $row['name'];
+          }
+          array_multisort($name, SORT_ASC, $depts);
+          return $depts;
         }
-        foreach($depts as $key => $row) {
-          $id[$key] = $row['id'];
-          $name[$key] = $row['name'];
-        }
-        array_multisort($name, SORT_ASC, $depts);
-        return $depts;
       }
       return [];
     }

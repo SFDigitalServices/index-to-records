@@ -13,7 +13,7 @@
       $depts = Utility::getDepartmentsForUser();
       error_log('EditDepartmentController:count:' . count($depts) . ':contents:' . print_r($depts, 1));
       if(count($depts) > 0) {
-        $deptId = $depts[0][id];
+        $deptId = $depts[0]['id'];
         error_log('EditDepartmentController:deptId:' . $deptId);
         error_log('EditDepartmentController:base_url:' . $base_url);
         $client = \Drupal::httpClient();
