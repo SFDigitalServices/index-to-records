@@ -11,7 +11,7 @@ services:
       services:
         environment:
           BEHAT_PARAMS: >-
-            { "extensions": { "Behat\\MinkExtension": { "base_url": "http://sfgov.lndo.site", "goutte": { "guzzle_parameters": { "verify": false } } }, "Drupal\\DrupalExtension": { "drush": { "root": "/app/web" } } } }
+            { "extensions": { "Behat\\MinkExtension": { "base_url": "http://indextorecords.lndo.site", "goutte": { "guzzle_parameters": { "verify": false } } }, "Drupal\\DrupalExtension": { "drush": { "root": "/app/web" } } } }
 
 tooling:
   behat:
