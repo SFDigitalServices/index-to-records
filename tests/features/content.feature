@@ -1,7 +1,12 @@
-Feature: Content
-  In order to test some basic Behat functionality
-  As a website user
-  I need to be able to see that the Drupal and Drush drivers are working
+# the tests below are from the drops 8 composer repo and check vanilla drupal functionality
+# https://github.com/pantheon-systems/example-drops-8-composer
+# index to records is heavily customized so these tests fail
+# new tests are located at itr.feature in /tests/features/itr.feature
+
+# Feature: Content
+#   In order to test some basic Behat functionality
+#   As a website user
+#   I need to be able to see that the Drupal and Drush drivers are working
 
 # TODO: 'Given ... content' (below) works, but 'When I am viewing ... content'
 # uses data that pantheonssh rejects

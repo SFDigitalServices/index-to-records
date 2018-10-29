@@ -4,3 +4,16 @@ config:
   framework: drupal8
   site: index-to-records
   id: d8404382-ee59-443c-94c3-1ba439cfbe46
+
+services:
+  appserver:
+    overrides:
+      services:
+        environment:
+          BEHAT_PARAMS: >-
+            { "extensions": { "Behat\\MinkExtension": { "base_url": "http://indextorecords.lndo.site", "goutte": { "guzzle_parameters": { "verify": false } } }, "Drupal\\DrupalExtension": { "drush": { "root": "/app/web" } } } }
+
+tooling:
+  behat:
+    service: appserver
+    cmd: /app/vendor/bin/behat
