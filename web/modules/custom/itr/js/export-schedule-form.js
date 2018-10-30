@@ -61,7 +61,7 @@ function exportSchedule(exportType) {
                 if(filedata.length > 0) {
                   $(loaderEl).html('');
                   $(statusEl).html('Schedule successfully exported');
-                  $(statusEl).html('<a class="download-link link" target="_blank" href=' + filedata[0].url + '>Download ' + exportType.toUpperCase() + '</a>');
+                  $(statusEl).html('<a class="download-link link" target="_blank" href=' + filedata[0].url + ' download>Download ' + exportType.toUpperCase() + '</a>');
                 }
               }
             });

@@ -64,11 +64,19 @@ class ScheduleExportCsvResource extends ResourceBase {
       $off_site = $item['field_off_site'][0]['value'];
       $total = $item['field_total'][0]['value'];
       $category = count($item['field_category']) > 0 ? Utility::getTermNameByTid($item['field_category'][0]['target_id']) : '';
-      $retention = count($item['field_retention']) ? 'get retention string' : '';
+
+      $retention = '';
+      if(count($item['field_retention']) > 0) {
+        foreach($item['field_retention'] as $retentionItem) {
+          $retentionId = $retentionItem['target_id'];
+          $retention .= Utility::getRetentionName($retentionId) ? Utility::getRetentionName($retentionId) . "\n" : '';
+        }
+      }
+
       $remarks = $item['field_remarks'][0]['value'];
       // $csvRow .= "\n" . '"' . $title . '","' . $link . '","' . $division . '","' . $division_contact . '","' . $on_site . '","' . $off_site . '","' . $total . '","' . $category . '","' . addslashes($retention) . '","' . addslashes($remarks) . '"';
       $csvArray = array($title, $link, $division, $division_contact, $on_site, $off_site, $total, $category, $retention, $remarks);
-      error_log(print_r($csvArray, 1));
+      // error_log(print_r($csvArray, 1));
       fputcsv($fp, $csvArray);
     }
 

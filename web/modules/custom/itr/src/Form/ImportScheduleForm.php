@@ -111,11 +111,12 @@
       $file = \Drupal::entityTypeManager()->getStorage('file')->load($form_state->getValue('schedule_file')[0]);
       if($file) {
         $fileUri = $file->getFileUri();
+        error_log('ImportScheduleForm.php:btn_ajax_callback:'.$fileUri);
         $handle = fopen($fileUri, 'r');
         $header = NULL;
         $d = array();
         $count = 0;
-        while(($row = fgetcsv($handle, 1000, ',')) !== FALSE) {
+        while(($row = fgetcsv($handle, 0, ',')) !== FALSE) {
           if(!$header) {
             $header = $row;
           } else {
