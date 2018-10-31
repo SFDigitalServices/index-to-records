@@ -36,3 +36,7 @@ department.edit:
     _title: 'Edit Department'
   requirements:
     _role: 'authenticated'
+itr.admin.manage.users:
+  path: '/admin/people'
+  requirements:
+    _permission: 'administer users'
