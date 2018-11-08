@@ -8,9 +8,14 @@ weight: 3
 is_admin: null
 permissions:
   - 'access content'
+  - 'access user profiles'
+  - 'administer account settings'
+  - 'administer permissions'
   - 'administer rest resources'
   - 'administer taxonomy'
+  - 'administer users'
   - 'bypass node access'
+  - 'change own username'
   - 'create department_information content'
   - 'create record content'
   - 'create record_template content'
