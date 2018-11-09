@@ -6,7 +6,6 @@ dependencies:
     - core.entity_view_mode.node.full
     - field.field.node.department_information.field_department_contact_email
     - field.field.node.department_information.field_department_contact_name
-    - field.field.node.department_information.field_department_contact_phone_n
     - field.field.node.department_information.field_department_name
     - field.field.node.department_information.field_department_website
     - field.field.node.department_information.field_schedule_ratified_date
@@ -18,32 +17,8 @@ targetEntityType: node
 bundle: department_information
 mode: full
 content:
-  field_department_contact_email:
-    weight: 104
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   field_department_contact_name:
     weight: 102
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_department_contact_phone_n:
-    weight: 103
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_department_website:
-    weight: 105
     label: above
     settings:
       link_to_entity: false
@@ -56,5 +31,7 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_department_contact_email: true
   field_department_name: true
+  field_department_website: true
   field_schedule_ratified_date: true

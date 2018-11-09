@@ -1,4 +1,4 @@
-uuid: 0460cb01-781a-40c0-8fab-3ae1e4e1c801
+uuid: 8effab6a-294a-49b1-8eb4-22c052c9e4fc
 langcode: en
 status: true
 dependencies:
@@ -16,4 +16,4 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: string
+field_type: email

@@ -1,4 +1,4 @@
-uuid: cbee1e23-5a21-4326-97c5-2b20bc1d247a
+uuid: d370f8cb-30df-4fcd-9bf4-dbcd22b90d99
 langcode: en
 status: true
 dependencies:
@@ -7,11 +7,8 @@ dependencies:
 id: node.field_department_contact_email
 field_name: field_department_contact_email
 entity_type: node
-type: string
-settings:
-  max_length: 255
-  is_ascii: false
-  case_sensitive: false
+type: email
+settings: {  }
 module: core
 locked: false
 cardinality: 1

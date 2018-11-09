@@ -11,9 +11,11 @@ dependencies:
     - field.storage.node.field_schedule_ratified_date
     - node.type.department_information
   module:
+    - link
     - node
     - rest
     - serialization
+    - telephone
     - user
 id: department_info
 label: 'Department Info'
@@ -404,9 +406,9 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: string
+          type: telephone_link
           settings:
-            link_to_entity: false
+            title: ''
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -467,9 +469,8 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
+          type: basic_string
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -529,11 +530,15 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: value
-          type: string
+          click_sort_column: uri
+          type: link
           settings:
-            link_to_entity: false
-          group_column: value
+            trim_length: 80
+            url_only: false
+            url_plain: false
+            rel: '0'
+            target: '0'
+          group_column: ''
           group_columns: {  }
           group_rows: true
           delta_limit: 0

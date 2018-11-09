@@ -1,18 +1,16 @@
-uuid: bf9baf10-7e9c-4658-a7b1-25a3a47dfccc
+uuid: 358f49b1-a860-4bda-a5b7-d7539e3a3e26
 langcode: en
 status: true
 dependencies:
   module:
+    - link
     - node
 id: node.field_department_website
 field_name: field_department_website
 entity_type: node
-type: string
-settings:
-  max_length: 255
-  is_ascii: false
-  case_sensitive: false
-module: core
+type: link
+settings: {  }
+module: link
 locked: false
 cardinality: 1
 translatable: true

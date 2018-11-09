@@ -32,8 +32,10 @@ dependencies:
     - user.role.administrator
     - user.role.schedule_administrator
   module:
+    - link
     - node
     - taxonomy
+    - telephone
     - user
 _core:
   default_config_hash: tS8PbpJX90aRFC3-UTgXzdqkq7_2frk2pz4TMijEebM
@@ -926,14 +928,14 @@ display:
           type: user_name
           entity_type: user
           entity_field: name
-        field_department_contact_email:
-          id: field_department_contact_email
-          table: node__field_department_contact_email
-          field: field_department_contact_email
+        field_department_name:
+          id: field_department_name
+          table: node__field_department_name
+          field: field_department_name
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Contact Email'
+          label: Department
           exclude: false
           alter:
             alter_text: false
@@ -974,11 +976,11 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: value
-          type: string
+          click_sort_column: target_id
+          type: entity_reference_label
           settings:
-            link_to_entity: false
-          group_column: value
+            link: true
+          group_column: target_id
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -1059,7 +1061,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Contact Phone Number'
+          label: 'Department Contact Phone Number'
           exclude: false
           alter:
             alter_text: false
@@ -1101,9 +1103,9 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: string
+          type: telephone_link
           settings:
-            link_to_entity: false
+            title: ''
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -1115,14 +1117,14 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
-        field_department_name:
-          id: field_department_name
-          table: node__field_department_name
-          field: field_department_name
+        field_department_contact_email:
+          id: field_department_contact_email
+          table: node__field_department_contact_email
+          field: field_department_contact_email
           relationship: none
           group_type: group
           admin_label: ''
-          label: Department
+          label: 'Department Contact Email'
           exclude: false
           alter:
             alter_text: false
@@ -1163,11 +1165,10 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: true
-          group_column: target_id
+          click_sort_column: value
+          type: basic_string
+          settings: {  }
+          group_column: value
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -1185,7 +1186,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Website
+          label: 'Department Website'
           exclude: false
           alter:
             alter_text: false
@@ -1226,11 +1227,15 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: value
-          type: string
+          click_sort_column: uri
+          type: link
           settings:
-            link_to_entity: false
-          group_column: value
+            trim_length: 80
+            url_only: false
+            url_plain: false
+            rel: '0'
+            target: '0'
+          group_column: ''
           group_columns: {  }
           group_rows: true
           delta_limit: 0

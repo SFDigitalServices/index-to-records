@@ -10,18 +10,21 @@ dependencies:
     - field.field.node.department_information.field_department_website
     - field.field.node.department_information.field_schedule_ratified_date
     - node.type.department_information
+  module:
+    - link
+    - telephone
 id: node.department_information.default
 targetEntityType: node
 bundle: department_information
 mode: default
 content:
   field_department_contact_email:
-    weight: 4
+    weight: 3
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
+    type: email_default
     region: content
   field_department_contact_name:
     weight: 2
@@ -32,12 +35,11 @@ content:
     type: string_textfield
     region: content
   field_department_contact_phone_n:
-    weight: 3
+    weight: 4
     settings:
-      size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
+    type: telephone_default
     region: content
   field_department_name:
     weight: 1
@@ -48,10 +50,10 @@ content:
   field_department_website:
     weight: 5
     settings:
-      size: 60
-      placeholder: ''
+      placeholder_url: ''
+      placeholder_title: ''
     third_party_settings: {  }
-    type: string_textfield
+    type: link_default
     region: content
   field_schedule_ratified_date:
     weight: 6
