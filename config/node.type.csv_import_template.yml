@@ -1,0 +1,18 @@
+uuid: 405752ef-c39d-4845-84a4-e618eafce2d7
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'CSV Import Template'
+type: csv_import_template
+description: 'Schedule import csv template'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: true

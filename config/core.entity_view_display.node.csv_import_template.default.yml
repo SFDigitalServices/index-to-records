@@ -1,0 +1,29 @@
+uuid: e46354e6-4553-42a1-a160-0f0af41c4894
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.csv_import_template.field_template_file
+    - node.type.csv_import_template
+  module:
+    - file
+    - user
+id: node.csv_import_template.default
+targetEntityType: node
+bundle: csv_import_template
+mode: default
+content:
+  field_template_file:
+    weight: 101
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

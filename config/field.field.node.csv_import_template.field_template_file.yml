@@ -1,0 +1,27 @@
+uuid: e6cd40a3-6f05-44dd-8cff-0a5f518a5f60
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_template_file
+    - node.type.csv_import_template
+  module:
+    - file
+id: node.csv_import_template.field_template_file
+field_name: field_template_file
+entity_type: node
+bundle: csv_import_template
+label: 'Template File'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: ''
+  file_extensions: 'csv xls xlsx'
+  max_filesize: '1 MB'
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file
