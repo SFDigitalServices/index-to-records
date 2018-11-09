@@ -49,11 +49,11 @@ class ScheduleExportPdfResource extends ResourceBase {
         'field_department_contact_name' => count($deptInfoData[0]['field_department_contact_name']) > 0 ? $deptInfoData[0]['field_department_contact_name'][0]['value'] : 'no dept contact name',
         'field_department_contact_email' => count($deptInfoData[0]['field_department_contact_email']) > 0 ? $deptInfoData[0]['field_department_contact_email'][0]['value'] : 'no dept contact email',
         'field_department_contact_phone_n' => count($deptInfoData[0]['field_department_contact_phone_n']) > 0 ? $deptInfoData[0]['field_department_contact_phone_n'][0]['value'] : 'no dept contact phone',
-        'field_department_website' => count($deptInfoData[0]['field_department_website']) > 0 ? $deptInfoData[0]['field_department_website'][0]['value']['uri'] : 'no dept website',
+        'field_department_website' => count($deptInfoData[0]['field_department_website']) > 0 ? $deptInfoData[0]['field_department_website'][0]['uri'] : 'no dept website',
         'field_schedule_ratified_date' => count($deptInfoData[0]['field_schedule_ratified_date']) > 0 ? $deptInfoData[0]['field_schedule_ratified_date'][0]['value'] : 'no ratified date',
       )];
     }
-    // error_log($deptInfoData[0]['field_department_contact_phone_n'][0]);
+    // error_log(print_r($deptInfoData[0]['field_department_website'][0],1));
     // error_log(print_r($deptInfoData, 1));
     // error_log($deptName);
     // error_log($deptContactName);
