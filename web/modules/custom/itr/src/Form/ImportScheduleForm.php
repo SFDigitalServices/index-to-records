@@ -47,7 +47,7 @@
 
       $str = '<p>The following requirements should be met before importing a schedule:</p>';
       $str .= '<ul>';
-      $str .= '  <li>The file to import must follow <a class="link" href="#">this template</a></li>';
+      $str .= '  <li>The file to import must follow <a class="link" href="/sites/default/files/itr-schedule-import-template.csv" download>this template</a></li>';
       $str .= '  <li>The file to import must be in the CSV (comma separated values) file format</li>';
       $str .= '</ul>';
       $str .= '<p><strong>Please note that importing a schedule will overwrite the existing schedule</strong>.  If you are making changes to an existing schedule, ';
