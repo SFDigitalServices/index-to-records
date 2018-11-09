@@ -32,6 +32,7 @@ content:
     third_party_settings: {  }
 hidden:
   field_department_contact_email: true
+  field_department_contact_phone_n: true
   field_department_name: true
   field_department_website: true
   field_schedule_ratified_date: true

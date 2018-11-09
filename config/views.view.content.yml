@@ -887,47 +887,6 @@ display:
           hide_alter_empty: true
           plugin_id: node_bulk_form
           entity_type: node
-        status:
-          id: status
-          table: node_field_data
-          field: status
-          label: Status
-          exclude: false
-          alter:
-            alter_text: false
-          element_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          type: boolean
-          settings:
-            format: custom
-            format_custom_true: Published
-            format_custom_false: Unpublished
-          plugin_id: field
-          entity_type: node
-          entity_field: status
-        name:
-          id: name
-          table: users_field_data
-          field: name
-          relationship: uid
-          label: Author
-          exclude: false
-          alter:
-            alter_text: false
-          element_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          plugin_id: field
-          type: user_name
-          entity_type: user
-          entity_field: name
         field_department_name:
           id: field_department_name
           table: node__field_department_name
