@@ -25,7 +25,7 @@
           $depts = array();
           for($i = 0; $i < $count; $i++) {
             $tid = $assignedDepts[$i]['target_id'];
-            error_log('Utility:getDepartmentsForUser:user:$tid:'.$tid);
+            // error_log('Utility:getDepartmentsForUser:user:$tid:'.$tid);
             $deptTerm = Term::load($tid);
             if($deptTerm) {
               $deptName = $deptTerm->getName();
@@ -59,7 +59,7 @@
     }
 
     public static function getTermId(string $idStr, $vocab = 'department', $parentId = 0) {
-      error_log('Utility: getTermId: get term id for [' . $idStr . '] with parentId: [' . $parentId . '] in vocab [' . $vocab . ']');
+      // error_log('Utility: getTermId: get term id for [' . $idStr . '] with parentId: [' . $parentId . '] in vocab [' . $vocab . ']');
       $vid = $vocab;
       $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $parentId);
       $tid = -1;
@@ -76,7 +76,7 @@
 
     // get categories for a specific department
     public static function getDepartmentCategories($deptId) {
-      error_log('Utility: getDepartmentCategories: whut getDepartmentCategories: ' . $deptId);
+      // error_log('Utility: getDepartmentCategories: whut getDepartmentCategories: ' . $deptId);
       if(!isset($deptId)) return array();
       $vid = 'department';
       $categories = array();
@@ -94,7 +94,7 @@
     }
 
     public static function getDepartmentDivisions($deptId) {
-      error_log('Utility: getDepartmentDivisions: whut getDepartmentDivisions: ' . $deptId);
+      // error_log('Utility: getDepartmentDivisions: whut getDepartmentDivisions: ' . $deptId);
       if(!isset($deptId)) return array();
       $vid = 'department';
       $divisions = array();
@@ -178,7 +178,7 @@
     */
     public static function addTermToDeptChildTerm($deptId, $deptChildTermName, array $termsToAdd) {
       $deptChildTermId = self::getDeptChildTerm($deptId, $deptChildTermName);
-      error_log('Utility: addTermToDeptChildTerm: deptId: ' . $deptId . ', deptChildTermName: ' . $deptChildTermName . ', termsToAdd: ' . print_r($termsToAdd, 1));
+      //error_log('Utility: addTermToDeptChildTerm: deptId: ' . $deptId . ', deptChildTermName: ' . $deptChildTermName . ', termsToAdd: ' . print_r($termsToAdd, 1));
       $createdIds = [];
       if(!isset($deptChildTermId)) { // this term does not exist, create it
         $deptChildTerm = Term::create([

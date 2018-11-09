@@ -1,14 +1,29 @@
 console.log('dept-info.js');
 $ = jQuery;
-function updateTitleWithDepartmentName(select) {
-  var selector = '#' + $(select).attr('id') + ' option:selected';
-  $('#edit-title-0-value').val($(selector).text());
-}
 
 $(window).on('load', function() {
-  updateTitleWithDepartmentName($('#edit-field-department-name'));
+  var titleElem = $('#edit-title-0-value');
+  var selectElem = $('#edit-field-department-name');
+  
+  function updateTitleWithSelectValue(titleElem, selectElem) {
+    titleElem.val($(selectElem).find('option[value="' + $(selectElem).val() + '"]').text());
+  }
+
+  if(titleElem.val().length > 0) { // there is already a value for title, editing
+    var options = $(selectElem).find('option');
+    for(var i=0; i<options.length; i++) {
+      if($(options[i]).text() == $(titleElem).val()) {
+        $(selectElem).val($(options[i]).attr('value'));
+        break;
+      }
+    }
+  } else {
+    updateTitleWithSelectValue(titleElem, selectElem);
+  }
+
+  // attach change listener
   $('#edit-field-department-name').change(function() {
-    updateTitleWithDepartmentName(this);
+    updateTitleWithSelectValue(titleElem, selectElem);
   });
 });
 

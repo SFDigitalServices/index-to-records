@@ -540,7 +540,7 @@
       $form['field_schedule_ratified_date']['widget'][0]['value']['#attributes']['readonly'] = TRUE;
     }
 
-    if(count($depts) == 1) {
+    if(count($depts) == 1 || $form_state->getFormObject()->getOperation() == 'edit') {
       $form['field_department_name']['widget']['#attributes']['disabled'] = 'disabled';
     }
 

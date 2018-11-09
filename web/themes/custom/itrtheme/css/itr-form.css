@@ -10,6 +10,9 @@
 }
 
 .itr-form .form-item input[type="text"],
+.itr-form .form-item input[type="email"],
+.itr-form .form-item input[type="tel"],
+.itr-form .form-item input[type="url"],
 .itr-form .form-item textarea,
 .itr-form .form-item select,
 .itr-form .form-item input[type="checkbox"] {
@@ -44,6 +47,23 @@ select#edit-field-department-name:disabled {
 }
 
 .node-department-information-form input[type="text"],
-.node-department-information-edit-form input[type="text"] {
+.node-department-information-form input[type="email"],
+.node-department-information-form input[type="tel"],
+.node-department-information-form input[type="url"],
+.node-department-information-edit-form input[type="text"],
+.node-department-information-edit-form input[type="email"],
+.node-department-information-edit-form input[type="tel"],
+.node-department-information-edit-form input[type="url"] {
   width: 33%;
+}
+
+.node-department-information-form #edit-field-department-website-0,
+.node-department-information-edit-form #edit-field-department-website-0 {
+  border: 0;
+  padding: 0;
+}
+
+.node-department-information-form .form-item-field-department-website-0-title,
+.node-department-information-edit-form .form-item-field-department-website-0-title {
+  display: none;
 }
