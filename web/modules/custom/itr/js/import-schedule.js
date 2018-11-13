@@ -81,9 +81,11 @@ $(window).on('load', function() {
                     return a;
                   };
 
-                  var checkValues = function(value) {
+                  var checkValues = function(value, truncate) {
                     if(value === null || value === 'null' || value === 'undefined' || value === undefined) {
                       value = '';
+                    } else if(value.length > 255 && truncate) {
+                      value = value.substr(0,255);
                     }
                     return value;
                   }
@@ -97,7 +99,7 @@ $(window).on('load', function() {
                       var recordNode = {
                         type: [{ target_id: 'record'}],
                         title: [{
-                          value: checkValues(rec.title)
+                          value: checkValues(rec.title, true)
                         }],
                         field_record_title: [{
                           value: checkValues(rec.title)
@@ -171,9 +173,11 @@ $(window).on('load', function() {
         },
         error: function(resp) {
           console.log('error: ', nodeJson);
+          console.log(resp);
         },
         fail: function(resp) {
           console.log('fail: ', nodeJson);
+          console.log(resp);
         }
       })
     }
