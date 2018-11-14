@@ -20,7 +20,7 @@ $(window).on('load', function() {
 
     var progressHtml = '';
     progressHtml =  '<div id="import-progress-wrap">';
-    progressHtml += '  <div id="import-progress"></div>';
+    // progressHtml += '  <div id="import-progress"></div>';
     progressHtml += '</div>';
     progressHtml += '<div id="import-progress-msg"></div>';
     progressHtml += '<div id="import-progress-log"></div>';
@@ -42,6 +42,15 @@ $(window).on('load', function() {
       // }
     }
 
+    var updateProgressBar2 = function(recCount, success) {
+      var progressBarWrap = $('#import-progress-wrap');
+      var elemSize = 100/recCount;
+      var elemMargin = .1;
+      var elemClass = success ? 'import-progress-indicator-success' : 'import-progress-indicator-error';
+      var elem = '<div style="width:' + (elemSize - (elemMargin * 2)) + '%; margin: 0 ' + elemMargin + '%" class="' + elemClass + '"></div>';
+      $(progressBarWrap).append(elem);
+    }
+
     // first retrieve auth token
     $.ajax({
       type: 'GET',
@@ -49,18 +58,20 @@ $(window).on('load', function() {
       success: function(token) {
         // token retrieved
         // now delete all records for dept
-        // updateProgressLog('auth token retrieved');
+
+        // get records for deletion
         $.ajax({
           type: 'GET',
           url: scheduleRetrieveUrl,
           success: function(resp) {
             updateProgressLog('Records for deletion retrieved');
-            console.log(resp);
             var deptRecords = resp;
             var deleteIds = [];
             for(var i=0; i<deptRecords.length; i++) {
               deleteIds.push(deptRecords[i].nid[0].value);
             }
+
+            // now delete them
             $.ajax({
                 method: 'POST',
                 url: deleteUrl,
@@ -70,9 +81,10 @@ $(window).on('load', function() {
                 },
                 data: JSON.stringify(deleteIds),
                 success: function(resp) {
-                  console.log('records for delete:', resp);
+                  // records successfully deleted
                   updateProgressLog('Records for ' + $('#edit-schedule-department')[0].options[$('#edit-schedule-department')[0].selectedIndex].innerHTML + ' deleted');
 
+                  // now import the schedule
                   var getEntityRefTargets = function(entityRefIds) {
                     var a = [];
                     for(var i=0; i<entityRefIds.length; i++) {
@@ -91,66 +103,79 @@ $(window).on('load', function() {
                   }
 
                   var p = $.when();
+                  var processed = 0;
+                  var successCount = 0;
+                  var failCount = 0;
                   $.each(schedule, function(idx) {
                     p = p.then(function() {
                       var rec = schedule[idx];
                       console.log(rec);
                       // handle category, retention, and division
-                      var recordNode = {
-                        type: [{ target_id: 'record'}],
-                        title: [{
-                          value: checkValues(rec.title, true)
-                        }],
-                        field_record_title: [{
-                          value: checkValues(rec.title)
-                        }],
-                        field_division_contact: [{
-                          value: checkValues(rec.division_contact)
-                        }],
-                        field_link: [{
-                          value: checkValues(rec.link)
-                        }],
-                        field_off_site: [{
-                          value: checkValues(rec.off_site)
-                        }],
-                        field_on_site: [{
-                          value: checkValues(rec.on_site)
-                        }],
-                        field_remarks: [{
-                          value: checkValues(rec.remarks)
-                        }],
-                        field_total: [{
-                          value: checkValues(rec.total)
-                        }],
-                        field_department: [{
-                          target_id: dept
-                        }],
-                        field_division: getEntityRefTargets(rec.division),
-                        field_category: getEntityRefTargets(rec.category),
-                        field_retention: getEntityRefTargets(rec.retention)
-                      };
-                      return postNode(recordNode, token); 
-                    }).done(function(resp) {
-                      updateProgressLog('Imported: ' + resp.title[0].value);
-                      var increment = (start++)/recCount;
-                      if(increment == 1) {
-                        var finishedMsg = '<p>Imported ' + recCount + ' records successfully.</p>';
-                        var finishedLinks = '<a href="' + drupalSettings.path.baseUrl + 'schedules/' + dept + '">View imported schedule</a><a href="#" id="view-log-link">View log</a>';
-                        updateProgressLog(finishedMsg);
-                        updateProgressLog(finishedLinks, true);
-                        updateProgressBar(increment);
-                        $('#view-log-link').click(function() {
-                          $('#import-progress-log').toggle();
-                          var display = $('#import-progress-log').css('display');
-                          display === 'block' ? $(this).html('Hide log') : $(this).html('View log');
-                        });
+                      if(!rec.category || !rec.retention || !rec.title) {
+                        updateProgressLog('<span class="import-error-msg">Skipped: ' + rec.title + '.  Missing category or retention</span>');
+                        updateProgressBar2(schedule.length, false);
+                        processed++;
+                        failCount++;
                       } else {
-                        updateProgressBar(increment);
+                        var recordNode = {
+                          type: [{ target_id: 'record'}],
+                          title: [{
+                            value: checkValues(rec.title, true)
+                          }],
+                          field_record_title: [{
+                            value: checkValues(rec.title)
+                          }],
+                          field_division_contact: [{
+                            value: checkValues(rec.division_contact)
+                          }],
+                          field_link: [{
+                            value: checkValues(rec.link)
+                          }],
+                          field_off_site: [{
+                            value: checkValues(rec.off_site)
+                          }],
+                          field_on_site: [{
+                            value: checkValues(rec.on_site)
+                          }],
+                          field_remarks: [{
+                            value: checkValues(rec.remarks)
+                          }],
+                          field_total: [{
+                            value: checkValues(rec.total)
+                          }],
+                          field_department: [{
+                            target_id: dept
+                          }],
+                          field_division: getEntityRefTargets(rec.division),
+                          field_category: getEntityRefTargets(rec.category),
+                          field_retention: getEntityRefTargets(rec.retention)
+                        };
+                        return postNode(recordNode, token); 
                       }
-                    })
+                    }).done(function(resp) {
+                      if(resp) {
+                        updateProgressLog('Imported: ' + resp.title[0].value);
+                        updateProgressBar2(recCount, true);
+                        processed++;
+                        successCount++;
+                        if(processed == recCount) {
+                          var finishedMsg = '<div class="import-stats"><p class="import-success-msg">Imported ' + successCount + ' record(s) successfully.</p>';
+                          finishedMsg += '<p class="import-error-msg">Could not import ' + failCount + ' record(s)</p></div>';
+                          var finishedLinks = '<a href="' + drupalSettings.path.baseUrl + 'schedules/' + dept + '">View imported schedule</a><a href="#" id="view-log-link">View log</a>';
+                          updateProgressLog(finishedMsg);
+                          updateProgressLog(finishedLinks, true);
+                          $('#view-log-link').click(function() {
+                            $('#import-progress-log').toggle();
+                            var display = $('#import-progress-log').css('display');
+                            display === 'block' ? $(this).html('Hide log') : $(this).html('View log');
+                          });
+                        } 
+                      }  
+                    });
                   });
                 },
                 fail: function(resp) {
+                  console.log('failed to delete existing records');
                   console.log(resp);
                 }
             });

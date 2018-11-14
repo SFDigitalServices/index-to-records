@@ -35,7 +35,7 @@
   border: 1px solid #ccc;
   padding: 2px;
   margin-bottom: 10px;
-  border-radius: 12px;
+  /* border-radius: 12px; */
   height: 25px;
 }
 
@@ -55,6 +55,18 @@
   -webkit-transition: width 0.8s;
 }
 
+.import-progress-indicator-success {
+  background: #579ad1;
+  height: 25px;
+  display: inline-block;
+}
+
+.import-progress-indicator-error {
+  background: rgb(243, 124, 124);
+  height: 25px;
+  display: inline-block;
+}
+
 #import-progress-log {
   display: none;
 }
@@ -71,4 +83,25 @@
   line-height: 1.5em;
   font-family: 'verdana';
   font-size: 0.8em;
+}
+
+#import-progress-log p {
+  margin: 0;
+}
+
+#import-progress-log .import-success-msg,
+#import-progress-log .import-error-msg {
+  font-weight: 400;
+}
+
+#import-progress-log .import-success-msg {
+  color: #579ad1;
+}
+
+#import-progress-log .import-error-msg {
+  color: rgb(243, 124, 124);
+}
+
+.import-stats {
+  margin-top: 10px;
 }
