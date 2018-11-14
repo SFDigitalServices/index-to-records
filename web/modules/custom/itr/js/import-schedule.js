@@ -112,7 +112,7 @@ $(window).on('load', function() {
                       console.log(rec);
                       // handle category, retention, and division
                       if(!rec.category || !rec.retention || !rec.title) {
-                        updateProgressLog('<span class="import-error-msg">Skipped: ' + rec.title + '.  Missing category or retention</span>');
+                        updateProgressLog('<span class="import-error-msg">Skipped: ' + rec.title + '.  Missing title, category, or retention</span>');
                         updateProgressBar2(schedule.length, false);
                         processed++;
                         failCount++;
