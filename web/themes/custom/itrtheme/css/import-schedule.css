@@ -55,6 +55,12 @@
   -webkit-transition: width 0.8s;
 }
 
+.import-progress-indicator-error,
+.import-progress-indicator-success {
+  width: 0px;
+  -webkit-transition: width 0.8s;
+}
+
 .import-progress-indicator-success {
   background: #579ad1;
   height: 25px;

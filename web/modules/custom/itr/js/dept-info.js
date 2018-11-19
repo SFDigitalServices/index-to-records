@@ -25,5 +25,10 @@ $(window).on('load', function() {
   $('#edit-field-department-name').change(function() {
     updateTitleWithSelectValue(titleElem, selectElem);
   });
+
+
+  $('#edit-field-department-contact-name-0-value').blur(function() {
+    $('#edit-field-department-contact-email-0-value').val($(this).val().replace(/\s/g, '.').toLowerCase() + '@sfgov.org');
+  });
 });
 

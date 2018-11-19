@@ -45,10 +45,12 @@ $(window).on('load', function() {
     var updateProgressBar2 = function(recCount, success) {
       var progressBarWrap = $('#import-progress-wrap');
       var elemSize = 100/recCount;
-      var elemMargin = .1;
+      var elemMargin = 0;
       var elemClass = success ? 'import-progress-indicator-success' : 'import-progress-indicator-error';
       var elem = '<div style="width:' + (elemSize - (elemMargin * 2)) + '%; margin: 0 ' + elemMargin + '%" class="' + elemClass + '"></div>';
       $(progressBarWrap).append(elem);
+      console.log($(elem));
+      window.getComputedStyle($(elem)[0]).width;
     }
 
     // first retrieve auth token
