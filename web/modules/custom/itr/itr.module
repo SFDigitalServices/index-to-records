@@ -227,7 +227,9 @@
       $divisionOptions[$division['id']] = $division['name'];
     }
 
-    $form['field_division']['widget']['#options'] = $divisionOptions;
+    if(!empty($divisionOptions)) {
+      $form['field_division']['widget']['#options'] = $divisionOptions;
+    }
 
     // disable to the department
     $form['field_department']['widget']['#attributes']['disabled'] = 'disabled';
