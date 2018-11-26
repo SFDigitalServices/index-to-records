@@ -1,54 +1,25 @@
 <?php
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\views\ViewExecutable;
-
-// require_once('modules/devel/kint/kint/Kint.class.php');
-
-function itrtheme_form_search_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-
-}
-
 function itrtheme_preprocess_block(&$variables) {
   if($variables['attributes']['id'] == 'block-itrtheme-search') {
     $variables['title_suffix'] = 'Use agency names, record titles, keywords';
   }
 }
 
-function itrtheme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
-  // error_log(print_r($variables, 1));
-}
-
 function itrtheme_preprocess_form(&$variables) {
-  // error_log('itrtheme.theme:itrtheme_preprocess_form:preprocess form');
-  // $node = \Drupal::request()->get('bundle');
-  // // error_log($node);
   if($variables['attributes']['id'] == 'node-record-form' || $variables['attributes']['id'] == 'node-record-edit-form') {
-    error_log('itrtheme.theme:itrtheme_preprocess_form:this is a add/edit record form');
     $variables['content_type'] = 'record';
   }
-  // $variable['content_type'] = 'record';
-  // Kint::dump($variables);
 }
 
-// function itrtheme_preprocess_page(&$variables) {
-//   error_log('itrtheme.theme:itrtheme_preprocess_page: preprocess page');
-//   // Kint::dump($variables['page']['content']['itrtheme_content']);
-//   // $block = $variables['page']['content']['itrtheme_content']['#block'];
-//   // error_log('itrtheme.theme.itrtheme_preprocess_page: $block->getEntityType()' . print_r($block->getEntityType(), 1));
-// }
-
-// function itrtheme_preprocess_vertical_tabs(&$variables) {
-//   error_log('preprocess vertical tabs');
-//   Kint::dump($variables);
-//   // $variables['node']->getType();
-//   // error_log(print_r($variables['node'], 1));
-
-//   $node = \Drupal::request()->get('node');
-//   if(isset($node)) {
-//     error_log($node->getType());
-//     $variables['content_type'] = $node->getType();
-//     error_log($variables['content_type']);
+// function itrtheme_preprocess_input(&$variables) {
+//   if(!empty($variables['attributes']['id'])) {
+//     if($variables['attributes']['id'] == 'edit-submit') {
+//       $variables['attributes']['class'][] = 'blue-btn btn-lg';
+//     }
+//     if($variables['attributes']['id'] == 'edit-delete') {
+//       $variables['attributes']['class'][] = 'red-btn-link';
+//     }
 //   }
 // }
 

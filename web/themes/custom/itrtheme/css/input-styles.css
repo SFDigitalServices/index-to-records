@@ -12,3 +12,10 @@
 .btn-md {
   padding: 10px;
 }
+
+.red-btn-link {
+  border: 0;
+  padding: 0;
+  color: #c72100;
+  text-decoration: underline;
+}

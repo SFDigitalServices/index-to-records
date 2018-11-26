@@ -6,6 +6,7 @@
 @import url("export-schedule.css");
 @import url("dept-info.css");
 @import url("itr-manage.css");
+@import url("itr-edit-person.css");
 
 /* layout */
 
@@ -15,7 +16,7 @@ main {
 }
 
 main {
-  margin: 0 10px;
+  margin: 0 2.5em;
 }
 
 .path-frontpage main {
