@@ -205,7 +205,7 @@
               $values = array();
               if($vocab == 'retention') {
                 $keyTermId = 0;
-                $retentionArray = preg_split("/,(\s+)/", $value);
+                $retentionArray = preg_split("/,(\s+)?/", $value);
                 // error_log('ImportScheduleForm: modifyData: retention array: ' . print_r($retentionArray, 1));
                 $values = $retentionArray;
               } else {

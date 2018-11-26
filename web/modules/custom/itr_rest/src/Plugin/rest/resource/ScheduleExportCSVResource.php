@@ -69,8 +69,10 @@ class ScheduleExportCsvResource extends ResourceBase {
       if(count($item['field_retention']) > 0) {
         foreach($item['field_retention'] as $retentionItem) {
           $retentionId = $retentionItem['target_id'];
-          $retention .= Utility::getRetentionName($retentionId) ? Utility::getRetentionName($retentionId) . "\n" : '';
+          $retention .= Utility::getRetentionName($retentionId) ? Utility::getRetentionName($retentionId) . ', ' : '';
         }
+        $retention = rtrim($retention);
+        $retention = rtrim($retention, ',');
       }
 
       $remarks = $item['field_remarks'][0]['value'];
