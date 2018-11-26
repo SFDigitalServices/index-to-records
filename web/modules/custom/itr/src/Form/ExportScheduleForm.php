@@ -83,7 +83,7 @@
       //   //   'callback' => array($this, 'btn_ajax_csv_export_callback'),
       //   // ),
       // );
-      $exportCsvHtml =  '<p>The export csv option will take a department schedule and output it as a downloadable csv file.  A csv file may be opened in a spreadsheet application (MS Excel, for example) for editing.  Click the "Export CSV" button to begin csv export.</p>';
+      $exportCsvHtml =  '<p>The export csv option will output a department schedule as a downloadable csv file.  A csv file may be opened for editing with a spreadsheet application, such as Microsoft Excel.  Click the "Export CSV" button to begin csv export.</p>';
       $exportCsvHtml .= '<a id="export-csv" class="blue-btn btn-md" href="javascript:void(0)">Export CSV</a>';
       $exportCsvHtml .= '<div id="csv-export-status" class="export-status"><div class="loader"></div><div class="message"></div></div>';
 
@@ -95,7 +95,7 @@
         '#markup' => t($exportCsvHtml),
       );
 
-      $exportPdfHtml = '<p>The export pdf with signature page option will take a department schedule and output it as a downloadable pdf with a signature page for department head approval.  Click the "Export PDF with signature page" button to begin pdf export.</p>';
+      $exportPdfHtml = '<p>The export pdf with signature page option will output a department schedule as a downloadable pdf with a signature page for department head approval.  Click the "Export PDF with signature page" button to begin pdf export.</p>';
       $exportPdfHtml .= '<a id="export-pdf" class="blue-btn btn-md" href="javascript:void(0)">Export PDF with signature page</a>';
       $exportPdfHtml .= '<div id="pdf-export-status" class="export-status"><div class="loader"></div><div class="message"></div></div>';
 

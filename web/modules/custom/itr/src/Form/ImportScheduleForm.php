@@ -45,18 +45,18 @@
       $form['#prefix'] = '<div id="import-form-wrapper">';
       $form['#suffix'] = '</div>';
 
-      $str = '<p>The following requirements should be met before importing a schedule:</p>';
-      $str .= '<ul>';
-      $str .= '  <li>The file to import must follow <a class="link" href="/sites/default/files/itr-schedule-import-template.csv" download>this template</a></li>';
-      $str .= '  <li>The file to import must be in the CSV (comma separated values) file format</li>';
-      $str .= '</ul>';
-      $str .= '<p><strong>Please note that importing a schedule will overwrite the existing schedule</strong>.  If you are making changes to an existing schedule, ';
-      $str .= 'please either <a class="link" href="'.$base_url.'/node/add/record">add to the existing schedule</a> or <a class="link" href="'.$base_url.'/schedule/export">export the existing schedule</a>, ';
-      $str .= 'make changes locally on your computer, then re-import the updated schedule.</p>';
+      // $str = '<p>The following requirements should be met before importing a schedule:</p>';
+      // $str .= '<ul>';
+      // $str .= '  <li>The file to import must follow <a class="link" href="/sites/default/files/itr-schedule-import-template.csv" download>this template</a></li>';
+      // $str .= '  <li>The file to import must be in the CSV (comma separated values) file format</li>';
+      // $str .= '</ul>';
+      // $str .= '<p><strong>Please note that importing a schedule will overwrite the existing schedule</strong>.  If you are making changes to an existing schedule, ';
+      // $str .= 'please either <a class="link" href="'.$base_url.'/node/add/record">add to the existing schedule</a> or <a class="link" href="'.$base_url.'/schedule/export">export the existing schedule</a>, ';
+      // $str .= 'make changes locally on your computer, then re-import the updated schedule.</p>';
       
-      $form['file_upload_details'] = array(
-        '#markup' => t($str),
-      );
+      // $form['file_upload_details'] = array(
+      //   '#markup' => t($str),
+      // );
 
       // provides a container to group fields together to style with css
       $form['import-schedule-fields'] = array(
