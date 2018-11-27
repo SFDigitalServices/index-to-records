@@ -19,7 +19,7 @@
       if(!in_array('anonymous', $user->getRoles())) {
         $assignedDepts = $user->get('field_department')->getValue();
         $count = count($assignedDepts);
-        if($count > 0) {
+        if($count > 0 && !empty(Term::load($assignedDepts[0]['target_id']))) {
           $vid = Term::load($assignedDepts[0]['target_id'])->getVocabularyId();
           $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
           $depts = array();

@@ -344,17 +344,14 @@
       }
     } else if($formId == 'user_login_form') {
       $isAdmin = in_array('administrator', $user->getRoles());
-      // if(!$isAdmin) {
+      if(!empty($userDepts)) {
         $form_state->setRedirect('view.schedules.page_1', [
           'dept_id' => $userDepts[0]['id']
-        ]); // this route defined in itr.routing.yml
-      // } 
-      // else {
-      //   // $form_state->setRedirect('admin.content'); // this route defined in itr.routing.yml
-      //   $form_state->setRedirect('view.schedules.page_1', [
-      //     'dept_id' => 'all'
-      //   ]); // this route defined in itr.routing.yml
-      // }
+        ]); // this is a view route defined by drupal, view --> schedules --> page_1
+      } 
+      else {
+        $form_state->setRedirect('user.page'); // this route defined in itr.routing.yml
+      }
     }
   }
 
@@ -529,9 +526,11 @@
       $deptOptions[$dept['id']] = $dept['name'];
     }
     $keys = array_keys($deptOptions);
-    $key = $keys[1];
+    if(!empty($keys[1])) {
+      $key = $keys[1];
+      $form['field_department_name']['widget']['#default_value'] = $key;
+    }
     $form['field_department_name']['widget']['#options'] = $deptOptions;
-    $form['field_department_name']['widget']['#default_value'] = $key;
     $form['#attached']['library'][] = 'itr/dept-info-form';
     $form['actions']['submit']['#attributes']['class'][] = 'blue-btn btn-lg';
 
