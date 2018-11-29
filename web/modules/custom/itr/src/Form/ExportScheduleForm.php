@@ -198,11 +198,11 @@
     }
 
     public function submitForm(array &$form, FormStateInterface $form_state) {
-      error_log('export standard submit');
+      // error_log('export standard submit');
     }
 
     public function exportSubmitPDF(array &$form, FormStateInterface $form_state) {
-      error_log('export submit pdf signature');
+      // error_log('export submit pdf signature');
     }
 
 

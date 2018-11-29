@@ -199,7 +199,7 @@
           
           if(in_array($key, $entityRefKeys)) {
             $vocab = $key == 'retention' ? 'retention' : 'department';
-            error_log('ImportScheduleForm: modifyData: find term id for ' . $key . ': ' . $value);
+            // error_log('ImportScheduleForm: modifyData: find term id for ' . $key . ': ' . $value);
             if(isset($value) && $value !== 'null' && strlen($value) > 0) {
               $keyTermId = Utility::getTermId(strtolower($key), $vocab, $deptId);
               $values = array();
@@ -211,20 +211,20 @@
               } else {
                 $values = [$value];
               }
-              error_log('ImportScheduleForm: modifyData: $values: ' . print_r($values, 1));
+              // error_log('ImportScheduleForm: modifyData: $values: ' . print_r($values, 1));
               $valuesCount = count($values);
               for($j=0; $j<$valuesCount; $j++) {
                 $someValue = $values[$j];
                 $valueTermId = Utility::getTermId(strtolower($someValue), $vocab, $keyTermId);
                 if($valueTermId > 0) {
-                  error_log('ImportScheduleForm: modifyData: ' . $key . ' term id found for [' . $someValue . '] in [' . $vocab . ']: [' . $valueTermId . ']');
+                  // error_log('ImportScheduleForm: modifyData: ' . $key . ' term id found for [' . $someValue . '] in [' . $vocab . ']: [' . $valueTermId . ']');
                   if(is_array($d[$i][$key])) {
                     array_push($d[$i][$key], $valueTermId);
                   } else {
                     $d[$i][$key] = [$valueTermId];
                   }
                 } else {
-                  error_log('ImportScheduleForm: modifyData: ' . $key . ' term id not found for [' . $someValue . '] in [' . $vocab . '], create');
+                  // error_log('ImportScheduleForm: modifyData: ' . $key . ' term id not found for [' . $someValue . '] in [' . $vocab . '], create');
                   $newTermId = null;
                   if($key == 'category') {
                     $newTermId = Utility::addTermToDeptChildTerm($deptId, 'category', [$someValue]);
@@ -236,10 +236,10 @@
                     $newTermId = Utility::addRetention($someValue);
                   }
                   if(isset($newTermId)) {
-                    error_log('ImportScheduleForm: modifyData: ' . $key . ' created: ' . print_r($someValue, 1) . ' with newTermId: ' . $newTermId);
-                    error_log('pre: ' . print_r($d[$i][$key], 1));
+                    // error_log('ImportScheduleForm: modifyData: ' . $key . ' created: ' . print_r($someValue, 1) . ' with newTermId: ' . $newTermId);
+                    // error_log('pre: ' . print_r($d[$i][$key], 1));
                     is_array($d[$i][$key]) ? array_push($d[$i][$key], $newTermId) : $d[$i][$key] = $newTermId;
-                    error_log('post: ' . print_r($d[$i][$key], 1));
+                    // error_log('post: ' . print_r($d[$i][$key], 1));
                   }
                 }
               }
@@ -248,7 +248,7 @@
             }
           }
         }
-        error_log('-----ImportScheduleForm: recNum: ' . $recNum . '-----');
+        // error_log('-----ImportScheduleForm: recNum: ' . $recNum . '-----');
         $recNum++;
       }
       return ['department' => $deptId, 'schedule' => $d];

@@ -69,8 +69,8 @@ class DepartmentDivisionResource extends ResourceBase {
       }
       $response = ['message' => 'save success'];
     } catch (Exception $e) {
-      error_log('Exception in DepartmentDivisionResource POST: ');
-      error_log($e->getMessage());
+      // error_log('Exception in DepartmentDivisionResource POST: ');
+      // error_log($e->getMessage());
       $response = ['message' => 'save fail.  check logs'];
     }
 

@@ -22,7 +22,7 @@ class ScheduleDeleteResource extends ResourceBase {
 
   public function post($data) {
     $response = ['exists' => false, 'delete_ids' => []];
-    error_log('ScheduleDeleteResource: ' . print_r($data, 1));
+    // error_log('ScheduleDeleteResource: ' . print_r($data, 1));
     if(isset($data) && count($data) > 0) {
       $controller = \Drupal::entityTypeManager()->getStorage('node');
       $entities = $controller->loadMultiple($data);

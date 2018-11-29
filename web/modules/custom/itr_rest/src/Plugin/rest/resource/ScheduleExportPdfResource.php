@@ -41,7 +41,7 @@ class ScheduleExportPdfResource extends ResourceBase {
   function deptInfo($deptId) {
     global $base_url;
     $request = \Drupal::httpClient()->get($base_url . '/itr_rest_view/dept/info/' . $deptId . '?_format=json'); // this path is a rest route defined in view Department Info
-    error_log('itr_rest:ScheduleExportPdfResource:deptInfo:deptId:' . $deptId);
+    // error_log('itr_rest:ScheduleExportPdfResource:deptInfo:deptId:' . $deptId);
     $deptInfoData = json_decode($request->getBody(), true);
     $deptData = null;
     if(count($deptInfoData) > 0) {
@@ -69,7 +69,7 @@ class ScheduleExportPdfResource extends ResourceBase {
     $fileName = str_replace(' ', '-', strtolower($deptName)) . '.pdf';
 
     $deptInfo = $this->deptInfo($deptId);
-    error_log(print_r($deptInfo, 1));
+    // error_log(print_r($deptInfo, 1));
     if(count($deptInfo) > 0) {
       $deptContact = $deptInfo[0]['field_department_contact_name'];
       $deptContactPhone = $deptInfo[0]['field_department_contact_phone_n'];
