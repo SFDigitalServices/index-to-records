@@ -1,3 +1,7 @@
 #edit-field-department-name:disabled {
   height: 45px;
 }
+
+.itr-dept-info-page .page-title {
+  display: none;
+}

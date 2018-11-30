@@ -22,6 +22,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "<front>\r\n/taxonomy/term/*\r\n/schedule/import"
+    pages: "<front>\r\n/taxonomy/term/*\r\n/schedule/import\r\n/node/add/department_information"
     negate: true
     context_mapping: {  }

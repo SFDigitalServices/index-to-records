@@ -12,15 +12,11 @@ function itrtheme_preprocess_form(&$variables) {
   }
 }
 
-// function itrtheme_preprocess_input(&$variables) {
-//   if(!empty($variables['attributes']['id'])) {
-//     if($variables['attributes']['id'] == 'edit-submit') {
-//       $variables['attributes']['class'][] = 'blue-btn btn-lg';
-//     }
-//     if($variables['attributes']['id'] == 'edit-delete') {
-//       $variables['attributes']['class'][] = 'red-btn-link';
-//     }
-//   }
-// }
+function itrtheme_theme_suggestions_page_alter(&$suggestions, &$variables) {
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    $content_type = $node->bundle();
+    $suggestions[] = 'page__'.$content_type;
+  }
+}
 
 ?>
