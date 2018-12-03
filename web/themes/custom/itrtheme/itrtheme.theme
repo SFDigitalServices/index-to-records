@@ -1,10 +1,5 @@
 <?php
 
-$module_handler = Drupal::service('module_handler');
-$devel_path = $module_handler->getModule('devel')->getPath();
-require_once($devel_path.'/kint/kint/Kint.class.php');
-Kint::$maxLevels = 4;
-
 function itrtheme_preprocess_block(&$variables) {
   if($variables['attributes']['id'] == 'block-itrtheme-search') {
     $variables['title_suffix'] = 'Use agency names, record titles, keywords';
@@ -26,7 +21,6 @@ function itrtheme_theme_suggestions_page_alter(&$suggestions, &$variables) {
   } else if($current_route) {
     $content_type = $current_route->label();
   }
-  Kint::dump($content_type);
   if($content_type == 'Department Information' || $content_type == 'department_information') {
     $suggestions[] = 'page__department_information';
   }
