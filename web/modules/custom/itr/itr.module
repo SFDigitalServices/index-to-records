@@ -534,13 +534,13 @@
     $form['#attached']['library'][] = 'itr/dept-info-form';
     $form['actions']['submit']['#attributes']['class'][] = 'blue-btn btn-lg';
 
-    // if(!Utility::userIsAdmin()) { // user is not admin, disable select
+    if(!Utility::userIsAdmin()) { // user is not admin, disable select
     //   // Kint::$maxLevels = 5;
     //   // Kint::dump($form['field_schedule_ratified_date']);
     //   error_log('itr.module:departmentInformationFormAlter:user is not admin');
     //   // disable schedule ratified date
-    //   $form['field_schedule_ratified_date']['widget'][0]['value']['#attributes']['readonly'] = TRUE;
-    // }
+      $form['field_schedule_ratified_date']['widget'][0]['value']['#attributes']['readonly'] = TRUE;
+    }
 
     // if(count($depts) == 1 || $form_state->getFormObject()->getOperation() == 'edit') {
     //   $form['field_department_name']['widget']['#attributes']['disabled'] = 'disabled';
