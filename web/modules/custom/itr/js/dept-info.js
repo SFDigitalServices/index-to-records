@@ -16,7 +16,7 @@ $(window).on('load', function() {
       success: function(token) {
         $.ajax({
           type: 'GET',
-          url: '/itr_rest/department/' + deptId + '/category',
+          url: '/itr_rest/department/' + deptId + '/category?t=' + (new Date()).getTime(),
           success: function(data) {
             var categoryHtml = '<ul>';
             for(var i=0; i<data.length; i++) {
@@ -28,7 +28,7 @@ $(window).on('load', function() {
         });
         $.ajax({
           type: 'GET',
-          url: '/itr_rest/department/' + deptId + '/division',
+          url: '/itr_rest/department/' + deptId + '/division?t=' + (new Date()).getTime(),
           success: function(data) {
             var divisionHtml = '<ul>';
             for(var i=0; i<data.length; i++) {
