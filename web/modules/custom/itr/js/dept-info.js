@@ -17,6 +17,7 @@ $(window).on('load', function() {
         $.ajax({
           type: 'GET',
           url: '/itr_rest/department/' + deptId + '/category?t=' + (new Date()).getTime(),
+          cache: false,
           success: function(data) {
             var categoryHtml = '<ul>';
             for(var i=0; i<data.length; i++) {
@@ -29,6 +30,7 @@ $(window).on('load', function() {
         $.ajax({
           type: 'GET',
           url: '/itr_rest/department/' + deptId + '/division?t=' + (new Date()).getTime(),
+          cache: false,
           success: function(data) {
             var divisionHtml = '<ul>';
             for(var i=0; i<data.length; i++) {
