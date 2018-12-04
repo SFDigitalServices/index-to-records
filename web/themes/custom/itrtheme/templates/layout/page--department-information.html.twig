@@ -64,9 +64,38 @@
 
     <div class="layout-content">
       {{ page.pre_content }}
-      {{ page.content }}
+      <div class="itr-tabs-container">
+        <div class="itr-tabs-menu">
+          <ul>
+            <li class="current" data-itr-menu-item data-itr-tab-index="0"><a href="#">Department Information</a></li>
+            <li data-itr-menu-item data-itr-tab-index="1"><a href="#" >Categories and Divisions</a></li>
+          </ul>
+        </div>
+        <div class="itr-tab-content">
+          <div class="itr-tab current" data-itr-tab-index="0">
+            {{ page.content }}
+          </div>
+          <div class="itr-tab" data-itr-tab-index="1">
+            <h2 id="dept-categories-divisions-title"></h2>
+            <div id="itr-categories">
+              <h3>Categories</h3>
+              <div id="itr-categories-existing"></div>
+              <div id="itr-categories-add-container" class="itr-term-add-container">
+                <input type="text" id="itr-add-category-name"/><a href="#" class="blue-btn btn-md" id="itr-add-category-submit">Add Category</a>
+              </div>
+            </div>
+            <div id="itr-divisions">
+              <h3>Divisions</h3>
+              <div id="itr-divisions-existing"></div>
+              <div id="itr-divisions-add-container" class="itr-term-add-container">
+                <input type="text" id="itr-add-division-name"/><a href="#" class="blue-btn btn-md" id="itr-add-division-submit">Add Division</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>{# /.layout-content #}
-
+{# 
     {% if page.sidebar_first %}
       <aside class="layout-sidebar-first" role="complementary">
         {{ page.sidebar_first }}
@@ -77,7 +106,7 @@
       <aside class="layout-sidebar-second" role="complementary">
         {{ page.sidebar_second }}
       </aside>
-    {% endif %}
+    {% endif %} #}
 
   </main>
 

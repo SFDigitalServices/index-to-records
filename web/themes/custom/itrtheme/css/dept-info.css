@@ -5,3 +5,61 @@
 .itr-dept-info-page .page-title {
   display: none;
 }
+
+.itr-tabs-menu > ul {
+  margin: 0;
+  padding: 0;
+}
+
+.itr-tabs-menu > ul > li {
+  display: inline-block;
+  background: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+.itr-tabs-menu > ul > li.current {
+  z-index: 2;
+}
+
+.itr-tabs-menu > ul > li > a {
+  border: 1px solid #000;
+  display: inline-block;
+  padding: 10px;
+  background: #fff;
+  font-weight: normal;
+  text-decoration: none;
+  color: #428bca;
+}
+
+.itr-tabs-menu > ul > li.current > a {
+  border-bottom: 0;
+  font-weight: bold;
+}
+
+.itr-tab {
+  padding: 0 25px 25px 25px;
+}
+
+.itr-tab-content {
+  border: 1px solid #000;
+  margin-top: -2px;
+  background: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+.itr-tab-content ul li {
+  line-height: 1.5em;
+}
+
+.itr-term-add-container {
+  margin-left: 25px;
+}
+
+.itr-term-add-container input[type="text"] {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 3px;
+  margin-right: 10px;
+}

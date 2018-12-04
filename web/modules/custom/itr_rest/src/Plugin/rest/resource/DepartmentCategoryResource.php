@@ -91,15 +91,15 @@ class DepartmentCategoryResource extends ResourceBase {
   //   return new ResourceResponse($response);
   // }
 
-  // private function getCategoryTermId($deptId) {
-  //   $deptTermChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('department', $deptId);
-  //   foreach($deptTermChildren as $deptTermChild) {
-  //     if(strtolower($deptTermChild->name) == 'category') {
-  //       return $deptTermChild->tid;
-  //     }
-  //   }
-  //   return null;
-  // }
+  private function getCategoryTermId($deptId) {
+    $deptTermChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('department', $deptId);
+    foreach($deptTermChildren as $deptTermChild) {
+      if(strtolower($deptTermChild->name) == 'category') {
+        return $deptTermChild->tid;
+      }
+    }
+    return null;
+  }
 }
 
 ?>

@@ -15,3 +15,17 @@ $(topLevelMenuLinks).click(function(e) {
     }
   }
 });
+
+
+$(document).ready(function() {
+
+  // tabs
+  $('.itr-tabs-menu li[data-itr-menu-item]').click(function(e) {
+    e.preventDefault();
+    var tabIndex = $(this).attr('data-itr-tab-index');
+    $('.itr-tab-content .itr-tab').removeClass('current');
+    $('li[data-itr-menu-item]').removeClass('current');
+    $(this).addClass('current');
+    $('.itr-tab[data-itr-tab-index="' + tabIndex + '"]').addClass('current');
+  });
+});
