@@ -27,6 +27,11 @@ class DepartmentCategoryResource extends ResourceBase {
   */
   public function get($deptId) {
     $response = ['message' => 'Hello, this is a rest service'];
+    $build = array(
+      '#cache' => array(
+        'max-age' => 0,
+      ),
+    );
     if(!isset($deptId)) {
       $response = ['message' => 'dept id is required'];
     } else {
@@ -41,7 +46,7 @@ class DepartmentCategoryResource extends ResourceBase {
       }
       $response = $categories;
     }
-    return new ResourceResponse($response);
+    return (new ResourceResponse($response))->addCacheableDependency($build);
   }
 
   /**
