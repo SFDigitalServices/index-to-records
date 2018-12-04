@@ -10,6 +10,8 @@ $(window).on('load', function() {
   // get dept categories and divisions
 
   function getCategoriesAndDivisions(deptId) {
+    $('#itr-categories-existing').html('');
+    $('#itr-divisions-existing').html('');
     $.ajax({
       type: 'GET',
       url: sessionUrl,
@@ -67,6 +69,7 @@ $(window).on('load', function() {
   // attach change listener
   $('#edit-field-department-name').change(function() {
     updateTitleWithSelectValue(titleElem, selectElem);
+    getCategoriesAndDivisions($(selectElem).val());
   });
 
 
