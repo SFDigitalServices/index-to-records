@@ -11,7 +11,7 @@ dependencies:
     - itrtheme
 id: managedepartmentintro
 theme: itrtheme
-region: content
+region: pre_content
 weight: -9
 provider: null
 plugin: 'block_content:1cc901c4-a7e3-4877-a6ef-6ad200209a6c'

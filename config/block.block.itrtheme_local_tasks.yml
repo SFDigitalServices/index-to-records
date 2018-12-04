@@ -9,7 +9,7 @@ _core:
 id: itrtheme_local_tasks
 theme: itrtheme
 region: content
-weight: 1
+weight: -1
 provider: null
 plugin: local_tasks_block
 settings:

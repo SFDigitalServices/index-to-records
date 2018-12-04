@@ -9,7 +9,7 @@ _core:
 id: itrtheme_local_actions
 theme: itrtheme
 region: content
-weight: -6
+weight: -8
 provider: null
 plugin: local_actions_block
 settings:

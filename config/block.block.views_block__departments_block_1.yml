@@ -12,7 +12,7 @@ dependencies:
 id: views_block__departments_block_1
 theme: itrtheme
 region: content
-weight: -1
+weight: -3
 provider: null
 plugin: 'views_block:departments-block_1'
 settings:

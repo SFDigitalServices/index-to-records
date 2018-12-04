@@ -2,17 +2,14 @@ uuid: 27769a0b-0889-4a85-ad49-dd214595dcf7
 langcode: en
 status: true
 dependencies:
-  content:
-    - 'block_content:basic:4a423193-2b39-4670-8bab-a3a6ff2dd58d'
   module:
-    - block_content
     - system
   theme:
     - itrtheme
 id: importscheduledescriptionblock
 theme: itrtheme
 region: pre_content
-weight: 0
+weight: -10
 provider: null
 plugin: 'block_content:4a423193-2b39-4670-8bab-a3a6ff2dd58d'
 settings:

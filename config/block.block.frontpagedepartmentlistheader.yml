@@ -12,7 +12,7 @@ dependencies:
 id: frontpagedepartmentlistheader
 theme: itrtheme
 region: content
-weight: -2
+weight: -4
 provider: null
 plugin: 'block_content:ed7a1d53-f2d9-4643-b6b8-bc6b68bf25ed'
 settings:

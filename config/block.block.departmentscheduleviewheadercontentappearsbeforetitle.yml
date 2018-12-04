@@ -12,7 +12,7 @@ dependencies:
 id: departmentscheduleviewheadercontentappearsbeforetitle
 theme: itrtheme
 region: content
-weight: -8
+weight: -10
 provider: null
 plugin: 'block_content:31ee1f8d-adaa-4967-88e2-1e8966aff940'
 settings:
