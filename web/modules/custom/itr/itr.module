@@ -2,6 +2,7 @@
 
   use Drupal\taxonomy\Entity\Term;
   use Drupal\user\Entity\User;
+  use Drupal\Core\Entity\EntityInterface;
   use Drupal\Core\Form\FormStateInterface;
   use Drupal\Core\Ajax\AjaxResponse;
   use Drupal\Core\Ajax\ReplaceCommand;
@@ -17,6 +18,7 @@
   use Drupal\itr\Utility\Utility;
 
   use Drupal\Core\Url;
+  use Symfony\Component\HttpFoundation\RedirectResponse;
 
   // require_once(DRUPAL_ROOT . '/modules/contrib/devel/kint/kint/Kint.class.php');
   // Kint::$maxLevels = 3;
@@ -514,9 +516,23 @@
     departmentInformationFormAlter($form, $form_state, $form_id);
   }
 
+  function itr_entity_insert(EntityInterface $entity) {
+    if ($entity instanceof \Drupal\node\NodeInterface){
+      if($entity->bundle() == 'department_information') {
+        // error_log('itr.module:itr_entity_insert');
+        // error_log('itr.module:itr_entity_insert:bundle:' . $entity->bundle());
+        $id = $entity->id();
+        $url = Url::fromRoute('entity.node.edit_form', ['node' => $id])->toString();
+        // Redirecting to edit after department information created
+        $response = new RedirectResponse($url);
+        $response->send();
+      }
+    }
+  }
+
   function departmentInformationFormAlter(&$form, FormStateInterface $form_state, $form_id) {
     // Kint::dump($form);
-    // error_log('itr.module:departmentInformationFormAlter:$form_id:' . $form_id);
+    error_log('itr.module:departmentInformationFormAlter:$form_id:' . $form_id);
     $form['#attributes']['class'][] = 'itr-form';
     $depts = Utility::getDepartmentsForUser();
     // error_log('itr.module:departmentInformationFormAlter:user has ' . count($depts) . ' depts');
@@ -553,13 +569,11 @@
     // $form_state->setRedirect('entity.node.edit_form', ['node' => 5530]);
 
 
-    // foreach(array_keys($form['actions']) as $action) {
-    //   if($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type']==='submit') {
-    //     $form['actions'][$action]['#submit'][] = '_itr_form_manage_dept_callback';
-    //   }  
-    // }
-
-
+    foreach(array_keys($form['actions']) as $action) {
+      if($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type']==='submit') {
+        $form['actions'][$action]['#submit'][] = '_itr_form_manage_dept_callback';
+      }  
+    }
   }
 
   function _itr_form_manage_dept_callback($form, FormStateInterface $form_state) {
