@@ -10,7 +10,6 @@ $(window).on('load', function() {
     var deleteUrl = drupalSettings.path.baseUrl + 'itr_rest/schedule/delete?_format=json';
     // console.log('record count: ' + schedule.length);
     var recCount = schedule.length;
-    var start = 1;
 
     $('#edit-import-schedule-fields').addClass('disabled');
     $('#import-schedule-form input').attr('disabled', true);
@@ -49,9 +48,11 @@ $(window).on('load', function() {
       var elemClass = success ? 'import-progress-indicator-success' : 'import-progress-indicator-error';
       var elem = '<div style="width:' + (elemSize - (elemMargin * 2)) + '%; margin: 0 ' + elemMargin + '%" class="' + elemClass + '"></div>';
       $(progressBarWrap).append(elem);
-      console.log($(elem));
+      // console.log($(elem));
       window.getComputedStyle($(elem)[0]).width;
     }
+
+    var deptName = $('#edit-schedule-department')[0].options[$('#edit-schedule-department')[0].selectedIndex].innerHTML;
 
     // first retrieve auth token
     $.ajax({
@@ -60,13 +61,13 @@ $(window).on('load', function() {
       success: function(token) {
         // token retrieved
         // now delete all records for dept
-
+        updateProgressLog('Retrieving records for ' + deptName + ' for deletion');
         // get records for deletion
         $.ajax({
           type: 'GET',
           url: scheduleRetrieveUrl,
           success: function(resp) {
-            updateProgressLog('Records for deletion retrieved');
+            updateProgressLog('Records for deletion for ' + deptName + ' retrieved');
             var deptRecords = resp;
             var deleteIds = [];
             for(var i=0; i<deptRecords.length; i++) {
@@ -84,7 +85,11 @@ $(window).on('load', function() {
                 data: JSON.stringify(deleteIds),
                 success: function(resp) {
                   // records successfully deleted
-                  updateProgressLog('Records for ' + $('#edit-schedule-department')[0].options[$('#edit-schedule-department')[0].selectedIndex].innerHTML + ' deleted');
+                  updateProgressLog('Records for ' + deptName + ' deleted');
+
+                  var p = $.when();
+                  var successCount = 0;
+                  var failCount = 0;
 
                   // now import the schedule
                   var getEntityRefTargets = function(entityRefIds) {
@@ -104,75 +109,101 @@ $(window).on('load', function() {
                     return value;
                   }
 
-                  var p = $.when();
-                  var processed = 0;
-                  var successCount = 0;
-                  var failCount = 0;
+                  var processRecord = function(rec, index) {
+                    var defer = $.Deferred();
+                    if(!rec.category || !rec.retention || !rec.title) {
+                      updateProgressLog('<span class="import-error-msg">Skipped: ' + rec.title + '.  Missing title, category, or retention</span>');
+                      updateProgressBar2(schedule.length, false);
+                      failCount = failCount + 1;
+                      // console.log(failCount + ':fail: ' + rec.title);
+                      defer.resolve();
+                    } else {
+
+                      // this is the format that entity create api is expecting
+                      var recordNode = {
+                        type: [{ target_id: 'record'}],
+                        title: [{
+                          value: checkValues(rec.title, true)
+                        }],
+                        field_record_title: [{
+                          value: checkValues(rec.title)
+                        }],
+                        field_division_contact: [{
+                          value: checkValues(rec.division_contact)
+                        }],
+                        field_link: [{
+                          value: checkValues(rec.link)
+                        }],
+                        field_off_site: [{
+                          value: checkValues(rec.off_site)
+                        }],
+                        field_on_site: [{
+                          value: checkValues(rec.on_site)
+                        }],
+                        field_remarks: [{
+                          value: checkValues(rec.remarks)
+                        }],
+                        field_total: [{
+                          value: checkValues(rec.total)
+                        }],
+                        field_department: [{
+                          target_id: dept
+                        }],
+                        field_division: getEntityRefTargets(rec.division),
+                        field_category: getEntityRefTargets(rec.category),
+                        field_retention: getEntityRefTargets(rec.retention)
+                      };
+
+                      // create the record
+                      $.ajax({
+                        method: 'POST',
+                        url: entityCreateUrl + '?_format=json',
+                        headers: {
+                          "Content-Type": "application/json",
+                          "X-CSRF-Token": token
+                        },
+                        data: JSON.stringify(recordNode),
+                        success: function(node) {
+                          successCount++;
+                          updateProgressLog('Imported: ' + node.title[0].value);
+                          updateProgressBar2(recCount, true);
+                          defer.resolve();
+                        },
+                        error: function(resp) {
+                          console.log('error: ', nodeJson);
+                          defer.resolve();
+                        },
+                        fail: function(resp) {
+                          console.log('fail: ', nodeJson);
+                          defer.resolve();
+                        }
+                      });
+                    }
+                    return $.when(defer).done().promise();
+                  };
+
+                  var deferred = $.Deferred().resolve(); // start the defer chain
                   $.each(schedule, function(idx) {
-                    p = p.then(function() {
-                      var rec = schedule[idx];
-                      console.log(rec);
-                      // handle category, retention, and division
-                      if(!rec.category || !rec.retention || !rec.title) {
-                        updateProgressLog('<span class="import-error-msg">Skipped: ' + rec.title + '.  Missing title, category, or retention</span>');
-                        updateProgressBar2(schedule.length, false);
-                        processed++;
-                        failCount++;
-                      } else {
-                        var recordNode = {
-                          type: [{ target_id: 'record'}],
-                          title: [{
-                            value: checkValues(rec.title, true)
-                          }],
-                          field_record_title: [{
-                            value: checkValues(rec.title)
-                          }],
-                          field_division_contact: [{
-                            value: checkValues(rec.division_contact)
-                          }],
-                          field_link: [{
-                            value: checkValues(rec.link)
-                          }],
-                          field_off_site: [{
-                            value: checkValues(rec.off_site)
-                          }],
-                          field_on_site: [{
-                            value: checkValues(rec.on_site)
-                          }],
-                          field_remarks: [{
-                            value: checkValues(rec.remarks)
-                          }],
-                          field_total: [{
-                            value: checkValues(rec.total)
-                          }],
-                          field_department: [{
-                            target_id: dept
-                          }],
-                          field_division: getEntityRefTargets(rec.division),
-                          field_category: getEntityRefTargets(rec.category),
-                          field_retention: getEntityRefTargets(rec.retention)
-                        };
-                        return postNode(recordNode, token); 
-                      }
-                    }).done(function(resp) {
-                      if(resp) {
-                        updateProgressLog('Imported: ' + resp.title[0].value);
-                        updateProgressBar2(recCount, true);
-                        processed++;
-                        successCount++;
-                        if(processed == recCount) {
-                          var finishedMsg = '<div class="import-stats"><p class="import-success-msg">Imported ' + successCount + ' record(s) successfully.</p>';
-                          finishedMsg += '<p class="import-error-msg">Could not import ' + failCount + ' record(s)</p></div>';
-                          var finishedLinks = '<a href="' + drupalSettings.path.baseUrl + 'schedules/' + dept + '">View imported schedule</a><a href="#" id="view-log-link">View log</a>';
-                          updateProgressLog(finishedMsg);
-                          updateProgressLog(finishedLinks, true);
-                          $('#view-log-link').click(function() {
-                            $('#import-progress-log').toggle();
-                            var display = $('#import-progress-log').css('display');
-                            display === 'block' ? $(this).html('Hide log') : $(this).html('View log');
-                          });
-                        } 
-                      }  
+                    var rec = schedule[idx];
+                    deferred = deferred.then(function() {
+                      return processRecord(rec, idx);
+                    });
+                  });
+
+                  // all things done
+                  deferred.done(function() {
+                    console.log('all things complete');
+                    console.log('success: ' + successCount);
+                    console.log('fail: ' + failCount);
+                    var finishedMsg = '<div class="import-stats"><p class="import-success-msg">Imported ' + successCount + ' record(s) successfully.</p>';
+                    finishedMsg += '<p class="import-error-msg">Could not import ' + failCount + ' record(s)</p></div>';
+                    var finishedLinks = '<a href="' + drupalSettings.path.baseUrl + 'schedules/' + dept + '">View imported schedule</a><a href="#" id="view-log-link">View log</a>';
+                    updateProgressLog(finishedMsg);
+                    updateProgressLog(finishedLinks, true);
+                    $('#view-log-link').click(function() {
+                      $('#import-progress-log').toggle();
+                      var display = $('#import-progress-log').css('display');
+                      display === 'block' ? $(this).html('Hide log') : $(this).html('View log');
                     });
                   });
                 },
@@ -185,30 +216,5 @@ $(window).on('load', function() {
         });
       }
     });
-
-    var postNode = function(nodeJson, theToken) {
-      return $.ajax({
-        method: 'POST',
-        url: entityCreateUrl + '?_format=json',
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": theToken
-        },
-        data: JSON.stringify(nodeJson),
-        success: function(node) {
-          console.log('success: ' + nodeJson.title[0].value);
-        },
-        error: function(resp) {
-          console.log('error: ', nodeJson);
-          console.log(resp);
-        },
-        fail: function(resp) {
-          console.log('fail: ', nodeJson);
-          console.log(resp);
-        }
-      })
-    }
-
-
   };
 });
