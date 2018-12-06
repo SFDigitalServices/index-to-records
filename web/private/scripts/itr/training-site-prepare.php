@@ -10,10 +10,41 @@ $sitename = \Drupal::config('system.site')->get('name');
 echo "This is the site $sitename\n";
 echo "PANTHEON_ENV:".$_ENV['PANTHEON_ENVIRONMENT']."\n";
 
+function deleteNodes($record_nodes, $count, $run) {
+  $records_deleted = 0;
+  while($count > 0) {
+    $record_node = array_pop($record_nodes);
+    if($record_node) {
+      $record_node->delete();
+      $records_deleted++;
+    }
+    $count--; 
+  }
+  echo "Deleted " . $records_deleted . " records on run " . $run . "\n";
+  return $record_nodes;
+}
+
 if($_ENV['PANTHEON_ENVIRONMENT'] == 'training' || $_ENV['PANTHEON_ENVIRONMENT'] == 'lando') {
   // delete record content types
   echo "Deleting record content types...\n";
   $record_nodes = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties(array('type'=>'record'));
+  $num_records = count($record_nodes);
+  $batch_size = 500;
+  $runs = ceil($num_records/$batch_size);
+  
+  echo '# records: ' . $num_records . ', batch_size: ' . $batch_size . ', runs: ' . $runs . "\n";
+
+  // $record_node = array_pop($record_nodes);
+  // print_r($record_node);
+
+  while($runs > 0) {
+    // echo "run # " . $runs . "\n";
+    $num_records = count($record_nodes);
+    $count = $num_records > $batch_size ? $batch_size : $num_records;
+    $record_nodes = deleteNodes($record_nodes, $count, $runs);
+    $runs--;
+  }
+
   foreach($record_nodes as $record_node) {
     $record_node->delete();
   }
