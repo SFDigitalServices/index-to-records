@@ -62,6 +62,7 @@ class ScheduleExportPdfResource extends ResourceBase {
   }
 
   function createPdf(array $data, $deptId) {
+    error_log('itr_rest:ScheduleExportResource.php:createPdf');
     if(!isset($deptId)) {
       return null;
     }
@@ -109,6 +110,7 @@ class ScheduleExportPdfResource extends ResourceBase {
 
     $i = 0;
 
+    error_log('itr_rest:ScheduleExportResource.php:createPdf:iterate record collection');
     foreach($data as $item) {
       $cssRowClass = $i % 2 == 0 ? 'even' : 'odd';
       // error_log(print_r($item,1));
@@ -144,6 +146,7 @@ class ScheduleExportPdfResource extends ResourceBase {
                         '</tr>' . "\n";
       $i++;
     }
+    error_log('itr_rest:ScheduleExportResource.php:createPdf:completed iterating record collection');
 
     $scheduleHtml .= '</table>' . "\n";
 
@@ -244,11 +247,12 @@ class ScheduleExportPdfResource extends ResourceBase {
               '</style>' . "\n";
 
     $html = $headerHtml . $scheduleHtml . $sigHtml . $style;
-    // error_log($html);
+    error_log('itr_rest:ScheduleExportResource.php:createPdf:html stored, pass off to dompdf');
     $dompdf = new Dompdf();
-    $dompdf->setPaper('A4', 'landscape');
+    $dompdf->setPaper('A3', 'landscape');
     $dompdf->set_option('isHtml5ParserEnabled', true);
     $dompdf->loadHtml($html);
+    error_log('itr_rest:ScheduleExportResource.php:createPdf:html loaded to dompdf, render');
     $dompdf->render();
     $output = $dompdf->output();
 

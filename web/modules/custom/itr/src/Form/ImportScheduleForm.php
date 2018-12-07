@@ -111,7 +111,7 @@
       $file = \Drupal::entityTypeManager()->getStorage('file')->load($form_state->getValue('schedule_file')[0]);
       if($file) {
         $fileUri = $file->getFileUri();
-        error_log('ImportScheduleForm.php:btn_ajax_callback:'.$fileUri);
+        // error_log('ImportScheduleForm.php:btn_ajax_callback:'.$fileUri);
         $handle = fopen($fileUri, 'r');
         $header = NULL;
         $d = array();
@@ -157,7 +157,7 @@
       $entityRefKeys = ['category','division','retention']; // these are the keys that use entity references for record content type
       $recNum = 0;
       for($i = 0; $i < $count; $i++) {
-        error_log('-----ImportScheduleForm: recNum: ' . $recNum . '-----');
+        // error_log('-----ImportScheduleForm: recNum: ' . $recNum . '-----');
         $rec = $d[$i];
         // error_log(print_r($rec, 1));
 
