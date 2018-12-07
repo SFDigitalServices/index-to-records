@@ -73,8 +73,31 @@ $(window).on('load', function() {
   });
 
 
+  // auto populate email based on name
   $('#edit-field-department-contact-name-0-value').blur(function() {
     $('#edit-field-department-contact-email-0-value').val($(this).val().replace(/\s/g, '.').toLowerCase() + '@sfgov.org');
+  });
+
+  var spacer = '-';
+  $('#edit-field-department-contact-phone-n-0-value').keypress(function(e) {
+		var key = event.key.toLowerCase();
+		var val = $(this).val();
+		if(((key != 'backspace' && key != 'tab' && key.indexOf('arrow') == -1) && isNaN(key))) {
+				return false;
+		} else {
+			if(key != 'backspace' && key != 'tab' && key.indexOf('arrow') == -1) {
+				if(val.length <= 11) {
+					switch(val.length){
+						case 3 : case 7 : 
+							val += spacer;
+							break;
+					}
+					$(this).val(val);
+				} else {
+					return false;
+				}
+			}
+		}
   });
 
   // click add category
