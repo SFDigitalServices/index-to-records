@@ -18,10 +18,15 @@
   use Drupal\itr\Utility\Utility;
 
   use Drupal\Core\Url;
+  use Drupal\node\NodeInterface;
+  use \Drupal\Core\Session\AccountInterface;
+  use Drupal\Core\Access\AccessResult;
   use Symfony\Component\HttpFoundation\RedirectResponse;
 
-  // require_once(DRUPAL_ROOT . '/modules/contrib/devel/kint/kint/Kint.class.php');
-  // Kint::$maxLevels = 3;
+  // $module_handler = Drupal::service('module_handler');
+  // $devel_path = $module_handler->getModule('devel')->getPath();
+  // require_once($devel_path.'/kint/kint/Kint.class.php');
+  // Kint::$maxLevels = 4;
 
   /*
   * get categories for a specific department for the current user
@@ -393,6 +398,7 @@
       // error_log('itr_form_views_exposed_form_alter:id:' . $form['#id'] . ':getExposedInput():' . print_r($view->getExposedInput(), 1));
       // error_log('itr_form_views_exposed_form_alter:id:' . $form['#id'] . ':deptId:' . $deptId);
       $form['#attached']['drupalSettings']['itr']['schedule']['deptId'] = $deptId;
+      $form['#attached']['drupalSettings']['itr']['user']['admin'] = Utility::userIsAdmin();
 
       if(userHasDept($deptId) || Utility::userIsAdmin()) {
         $currentOptions = $form['field_department_target_id']['#options']; // get current options
@@ -422,6 +428,18 @@
     error_log('_itr_form_schedule_filter_submit');
   }
 
+  function itr_node_access(NodeInterface $node, $op, AccountInterface $account) {
+    // error_log('itr.module:itr_node_access:'.$op);
+    $content_type = $node->bundle();
+    if($content_type == 'record') {
+      if(!Utility::userIsAdmin() && $node->isPublished()) { // non admin users cannot mess with published records
+        if($op == 'delete' || $op == 'update') {
+          return AccessResult::forbidden('A published record may not be modified');
+        }
+      }
+    }
+  }
+
   // function itr_form_views_form_schedules_page_1_alter(&$form, FormStateInterface $form_state, $form_id) {
   //   error_log('itr.module:itr_form_views_form_schedules_page_1_alter:' . $form_id);
   //   $form['#attached']['library'][] = 'itr/view-edit-schedule';
@@ -435,6 +453,10 @@
   //   // $form['#submit'][] = '_itr_form_views_form_schedules_page_1_all_submit_callback';
   //   // Kint::dump($form);
   //   // Kint::dump($form);
+  // }
+
+  // function itr_form_views_form_schedules_page_1_alter(&$form, FormStateInterface $form_state, $form_id) {
+  //   error_log('itr.module:itr_form_views_form_schedules_page_1_alter:' . $form_id);
   // }
 
 
@@ -471,6 +493,11 @@
       if(!Utility::userIsAdmin()) { // if user is not admin, only allow delete action
         if($view->field['node_bulk_form']) {
           $view->field['node_bulk_form']->options['selected_actions'] = ['node_delete_action'];
+          // $results = $view->result;
+          // Kint::dump($results);
+          // foreach($results as $result) {
+          //   Kint::dump($result->_entity->getFields());
+          // }
         }
       }
     }
@@ -532,7 +559,7 @@
 
   function departmentInformationFormAlter(&$form, FormStateInterface $form_state, $form_id) {
     // Kint::dump($form);
-    error_log('itr.module:departmentInformationFormAlter:$form_id:' . $form_id);
+    // error_log('itr.module:departmentInformationFormAlter:$form_id:' . $form_id);
     $form['#attributes']['class'][] = 'itr-form';
     $depts = Utility::getDepartmentsForUser();
     // error_log('itr.module:departmentInformationFormAlter:user has ' . count($depts) . ' depts');

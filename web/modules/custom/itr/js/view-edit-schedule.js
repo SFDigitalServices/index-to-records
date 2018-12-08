@@ -21,6 +21,38 @@ window.onload = function() {
     window.location.href = url+params;
   });
 
+  // find and hide checkboxes for records that cannot be edited/deleted
+  var noneditableNodes = $('.schedule-row .dropbutton-single');
+  $(noneditableNodes).each(function() {
+    var parentRow = $(this).parents('.schedule-row');
+    var checkbox = $(parentRow).find('.form-checkbox');
+    $(parentRow).addClass('itr-no-select');
+    $(checkbox).attr('disabled', true);
+    $(checkbox).addClass('hide');
+  });
+
+  // add click listener to select all checkbox
+  $('.select-all.views-field-node-bulk-form input[type="checkbox"]').click(function() {
+    setTimeout(function() {
+      $('.itr-no-select').removeClass('selected');
+    }, 100);
+    
+  });
+
+  function publishButtonClick() {
+    $('.select-all.views-field-node-bulk-form input[type="checkbox"]').click(); // select all records
+    $('#edit-action').val('node_publish_action'); // select publish action
+    $('#edit-submit--2').click(); // publish!
+  }
+
+  if(drupalSettings.itr.user.admin) {
+    var publishLink = $('<a class="itr-publish-link" href="javascript:void(0)">Publish Schedule</a>');
+    $('.view-header').append(publishLink);
+    $(publishLink).click(function() {
+      publishButtonClick();
+    })
+  }
+
   $('form[data-drupal-selector*="views-form-schedules"]').submit(function(e) {
     var _submit = $(this)[0].submit;
     var _this = $(this)[0];

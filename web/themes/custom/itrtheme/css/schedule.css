@@ -134,3 +134,17 @@
   width: 33%;
   padding: 0 0 0 10%;
 }
+
+.hide {
+  display: none;
+}
+
+.itr-publish-link {
+  color: #fff;
+  border: 1px solid #428bca;
+  border-radius: 5px;
+  background: #428bca;
+  padding: 10px;
+  text-decoration: none;
+  display: inline-block;
+}
