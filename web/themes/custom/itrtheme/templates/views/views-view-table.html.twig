@@ -111,7 +111,6 @@
               <{{ column.wrapper_element }}>
               {% for content in column.content %}
                 {{ content.separator }}{{ content.field_output }}
-                {{ kint(content) }}
               {% endfor %}
               </{{ column.wrapper_element }}>
             {%- else -%}
