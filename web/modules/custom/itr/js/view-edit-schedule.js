@@ -22,13 +22,24 @@ window.onload = function() {
   });
 
   // find and hide checkboxes for records that cannot be edited/deleted
-  var noneditableNodes = $('.schedule-row .dropbutton-single');
-  $(noneditableNodes).each(function() {
-    var parentRow = $(this).parents('.schedule-row');
-    var checkbox = $(parentRow).find('.form-checkbox');
-    $(parentRow).addClass('itr-no-select');
-    $(checkbox).attr('disabled', true);
-    $(checkbox).addClass('hide');
+  // var noneditableNodes = $('.schedule-row .dropbutton-single');
+  // $(noneditableNodes).each(function() {
+  //   var parentRow = $(this).parents('.schedule-row');
+  //   var checkbox = $(parentRow).find('.form-checkbox');
+  //   $(parentRow).addClass('itr-no-select');
+  //   $(checkbox).attr('disabled', true);
+  //   $(checkbox).addClass('hide');
+  // });
+
+  var noEditNodes = $('.schedule-row .views-field-operations'); // find the rows with operations column
+  $(noEditNodes).each(function() {
+    if($(this).find('.dropbutton-wrapper').length == 0 || $(this).find('.dropbutton-action.delete').length == 0) {
+      var parentRow = $(this).parents('.schedule-row');
+      var checkbox = $(parentRow).find('.form-checkbox');
+      $(parentRow).addClass('itr-no-select');
+      $(checkbox).attr('disabled', true);
+      $(checkbox).addClass('hide');
+    }
   });
 
   // add click listener to select all checkbox
