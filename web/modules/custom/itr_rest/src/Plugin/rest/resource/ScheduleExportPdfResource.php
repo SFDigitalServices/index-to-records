@@ -159,7 +159,7 @@ class ScheduleExportPdfResource extends ResourceBase {
                 '  <div id="dept-board-commission">' . "\n" .
                 '    <div class="dept-board-commission-section">' . "\n" .
                 '      <div class="dept-board-commission-text">For departments that do not have a board or commission:</div>' . "\n" .
-                '      <div class="signature-name-title text-below">Steve Kawa, Mayor\'s Chief of Staff</div>' . "\n" .
+                '      <div class="signature-name-title text-below">Sean Elsbernd, Mayor\'s Chief of Staff</div>' . "\n" .
                 '      <div class="signature-date-approved text-below">Date Approved</div>' . "\n" .
                 '    </div>' .
                 '    <div class="dept-board-commission-section">' . "\n" .
