@@ -4,6 +4,8 @@ config:
   framework: drupal8
   site: index-to-records
   id: d8404382-ee59-443c-94c3-1ba439cfbe46
+  webroot: web
+  drush: global:8.1.16
 
 services:
   appserver:
