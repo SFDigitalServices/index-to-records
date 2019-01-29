@@ -45,19 +45,6 @@
       $form['#prefix'] = '<div id="import-form-wrapper">';
       $form['#suffix'] = '</div>';
 
-      // $str = '<p>The following requirements should be met before importing a schedule:</p>';
-      // $str .= '<ul>';
-      // $str .= '  <li>The file to import must follow <a class="link" href="/sites/default/files/itr-schedule-import-template.csv" download>this template</a></li>';
-      // $str .= '  <li>The file to import must be in the CSV (comma separated values) file format</li>';
-      // $str .= '</ul>';
-      // $str .= '<p><strong>Please note that importing a schedule will overwrite the existing schedule</strong>.  If you are making changes to an existing schedule, ';
-      // $str .= 'please either <a class="link" href="'.$base_url.'/node/add/record">add to the existing schedule</a> or <a class="link" href="'.$base_url.'/schedule/export">export the existing schedule</a>, ';
-      // $str .= 'make changes locally on your computer, then re-import the updated schedule.</p>';
-      
-      // $form['file_upload_details'] = array(
-      //   '#markup' => t($str),
-      // );
-
       // provides a container to group fields together to style with css
       $form['import-schedule-fields'] = array(
         '#type' => 'container',
@@ -74,7 +61,7 @@
       );
 
       $validators = array(
-        'file_validate_extensions' => array('csv'),
+        'file_validate_extensions' => array('csv', 'txt'),
       );
 
       $form['import-schedule-fields']['schedule_file'] = array(
@@ -104,6 +91,8 @@
       return $form;
     }
 
+
+
     public function btn_ajax_callback(array &$form, FormStateInterface $form_state) {
       $response = new AjaxResponse();
 
@@ -111,23 +100,24 @@
       $file = \Drupal::entityTypeManager()->getStorage('file')->load($form_state->getValue('schedule_file')[0]);
       if($file) {
         $fileUri = $file->getFileUri();
-        // error_log('ImportScheduleForm.php:btn_ajax_callback:'.$fileUri);
-        $handle = fopen($fileUri, 'r');
+        $handle = fopen($fileUri, 'r', 'utf-8');
         $header = NULL;
         $d = array();
         $count = 0;
         while(($row = fgetcsv($handle, 0, ',')) !== FALSE) {
+          $elemCount = count($row);
+          $bomRemoved = [];
+          for($i=0; $i<$elemCount; $i++) {
+            $bomRemoved[] = $this->remove_utf8_bom($row[$i]);
+          }
           if(!$header) {
-            $header = $row;
+            $header = $bomRemoved;
           } else {
-            $d[] = array_combine($header, $row);
+            $d[] = array_combine($header, $bomRemoved);
             $count++;
           }
         }
         fclose($handle);
-        // error_log(print_r($d, 1));
-
-
 
         // csv data is now in associate array
         // each item in the associative array contains a key that corresponds to a field in the record content type
@@ -140,6 +130,9 @@
         $deptId = $form_state->getValue('schedule_department');
         $finalData = $this->modifyData($d, $deptId);
 
+        error_log('final data');
+        error_log(print_r($finalData, 1));
+
         // $form['#attached']['drupalSettings']['itr']['importSchedule']['data'] = json_encode($d);
         $response->addCommand(new ImportScheduleCommand($finalData)); // execute custom ajax command which renders json array with data $d
       } else {
@@ -147,6 +140,15 @@
       }
 
       return $response;
+    }
+
+    // from here: https://stackoverflow.com/questions/10290849/how-to-remove-multiple-utf-8-bom-sequences
+    // when saving as csv from MS Excel, a byte order mark is automatically inserted.
+    // this function will remove it.  if left alone, the importer will throw up
+    function remove_utf8_bom($text) {
+      $bom = pack('H*', 'EFBBBF');
+      $text = preg_replace("/^$bom/", '', $text);
+      return $text;
     }
 
     // modify data specifically for record content type with a given associative array or records
@@ -157,74 +159,31 @@
       $entityRefKeys = ['category','division','retention']; // these are the keys that use entity references for record content type
       $recNum = 0;
       for($i = 0; $i < $count; $i++) {
-        // error_log('-----ImportScheduleForm: recNum: ' . $recNum . '-----');
         $rec = $d[$i];
-        // error_log(print_r($rec, 1));
-
-        // replace the category
-        // if(isset($rec['category']) && $rec['category'] !== 'null' && strlen($rec['category']) > 0) {
-        //   $category = $rec['category'];
-        //   $categoryTermId = Utility::getTermId('category', $deptId); // the term id of the actual string 'category' as defined in vocab department
-        //   $categoryId = Utility::getTermId($category, $categoryTermId);
-        //   if($categoryId > 0) {
-        //     error_log('term id found for category ' . $category . ': ' . $categoryId);
-        //     $d[$i]['category'] = $categoryId; // replace category string with id in dataset
-        //   } else {
-        //     error_log('term id not found for category ' . $category . ', create');
-        //   }
-        // } else {
-        //   error_log('category is null or empty');
-        // }
-
-        // // replace the division
-        // if(isset($rec['division']) && $rec['division'] !== 'null' && strlen($rec['division']) > 0) {
-        //   $division = $rec['division'];
-        //   $divisionTermId = Utility::getTermId('division', $deptId);
-        //   $divisionId = Utility::getTermId($division, $divisionTermId);
-        //   if($divisionId > 0) {
-        //     error_log('term id found for division ' . $division . ': ' . $divisionId);
-        //     $d[$i]['division'] = $divisionId;
-        //   } else {
-        //     error_log('term id not found for division ' . $division . ', create');
-        //   }
-        // } else {
-        //   error_log('division is null or empty');
-        //   $d[$i]['division'] = '';
-        // }
-
-        // // replace the retention
-        // if(isset())
         foreach($rec as $key => $value) {
-          // error_log($value);
-          
           if(in_array($key, $entityRefKeys)) {
             $vocab = $key == 'retention' ? 'retention' : 'department';
-            // error_log('ImportScheduleForm: modifyData: find term id for ' . $key . ': ' . $value);
             if(isset($value) && $value !== 'null' && strlen($value) > 0) {
               $keyTermId = Utility::getTermId(strtolower($key), $vocab, $deptId);
               $values = array();
               if($vocab == 'retention') {
                 $keyTermId = 0;
                 $retentionArray = preg_split("/,(\s+)?/", $value);
-                // error_log('ImportScheduleForm: modifyData: retention array: ' . print_r($retentionArray, 1));
                 $values = $retentionArray;
               } else {
                 $values = [$value];
               }
-              // error_log('ImportScheduleForm: modifyData: $values: ' . print_r($values, 1));
               $valuesCount = count($values);
               for($j=0; $j<$valuesCount; $j++) {
                 $someValue = $values[$j];
                 $valueTermId = Utility::getTermId(strtolower($someValue), $vocab, $keyTermId);
                 if($valueTermId > 0) {
-                  // error_log('ImportScheduleForm: modifyData: ' . $key . ' term id found for [' . $someValue . '] in [' . $vocab . ']: [' . $valueTermId . ']');
                   if(is_array($d[$i][$key])) {
                     array_push($d[$i][$key], $valueTermId);
                   } else {
                     $d[$i][$key] = [$valueTermId];
                   }
                 } else {
-                  // error_log('ImportScheduleForm: modifyData: ' . $key . ' term id not found for [' . $someValue . '] in [' . $vocab . '], create');
                   $newTermId = null;
                   if($key == 'category') {
                     $newTermId = Utility::addTermToDeptChildTerm($deptId, 'category', [$someValue]);
@@ -236,10 +195,7 @@
                     $newTermId = Utility::addRetention($someValue);
                   }
                   if(isset($newTermId)) {
-                    // error_log('ImportScheduleForm: modifyData: ' . $key . ' created: ' . print_r($someValue, 1) . ' with newTermId: ' . $newTermId);
-                    // error_log('pre: ' . print_r($d[$i][$key], 1));
                     is_array($d[$i][$key]) ? array_push($d[$i][$key], $newTermId) : $d[$i][$key] = $newTermId;
-                    // error_log('post: ' . print_r($d[$i][$key], 1));
                   }
                 }
               }
@@ -259,100 +215,8 @@
     }
 
     public function submitForm(array &$form, FormStateInterface $form_state) {
-      // $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
-
-
-      // error_log('what');
-      // error_log(print_r($user, 1));
-
-/*
-      foreach ($form_state->getValues() as $key => $value) {
-        drupal_set_message($key . ': ' . $value);
-      }
-      $file = \Drupal::entityTypeManager()->getStorage('file')->load($form_state->getValue('schedule_file')[0]);
-      $data = file_get_contents($file->getFileUri());
-      drupal_set_message('ok');
-
-
-      // error_log(print_r($data, 1));
-
-      $handle = fopen($file->getFileUri(), 'r');
-      $header = NULL;
-      $d = array();
-      while(($row = fgetcsv($handle, 1000, ',')) !== FALSE) {
-        if(!$header) {
-          $header = $row;
-        } else {
-          $d[] = array_combine($header, $row);
-        }
-      }
-      fclose($handle);
-
-      error_log(print_r($d, 1));
-
-      $form['#attached']['drupalSettings']['itr']['importSchedule']['data'] = json_encode($d);
-*?
-
-      /*
-        type: [{ target_id: 'record' }],
-        title: [{ value: 'Example record title' }],
-        field_department: [{
-          target_id: 25
-        }],
-        field_category: [{ 
-          target_id: 90 
-        }],
-        field_retention: [{ 
-          target_id: 21
-        }]
-      */
-
-      // $host = \Drupal::request()->getSchemeAndHttpHost();
-      // $baseUrl = \Drupal::request()->getBaseUrl();
-      // $contentRestPath = '/entity/node?_format=json';
-
-      // $contentPostUrl = $host . $baseUrl . $contentRestPath;
-      // $sessionTokenUrl = $host . $baseUrl . '/session/token';
-
-      // $jar = new CookieJar();
-
-      // $client = new Client([
-      //   'base_url' => $host . $baseUrl,
-      //   'cookies' => true,
-      //   'allow_redirects' => true,
-      //   'debug' => true,
-      // ]);
-
-      // $token = $client->get($sessionTokenUrl, [
-      //   'cookies' => $jar,
-      // ])->getBody();
-
-      // error_log($token);
-
-      // $serialized_entity = json_encode([
-      //   'title' => [['value' => 'Example record title']],
-      //   'type' => [['target_id' => 'record']],
-      //   'field_department' => [['target_id' => 25]],
-      //   'field_category' => [['target_id' => 90]],
-      //   'field_retention' => [['target_id' => 21 ]],
-      // ]);
-
-      // // $response = \Drupal::httpClient()->get($host.$baseUrl.'/session/token');
-      // // $token = $response->getBody();
-      
-      // \Drupal::httpClient()->post($contentPostUrl, [
-      //   'body' => $serialized_entity,
-      //   'headers' => [
-      //     'Content-Type' => 'application/json',
-      //     'X-CSRF-Token' => $token,
-      //     'cookies' => $jar,
-      //   ],
-      // ]);
-
 
     }
-
-
   }
 
 ?>

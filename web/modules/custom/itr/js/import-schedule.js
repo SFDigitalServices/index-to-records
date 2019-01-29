@@ -1,5 +1,4 @@
 $ = jQuery;
-console.log('import-schedule');
 $(window).on('load', function() {
   Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, status) {
     var schedule = response.data.schedule;
@@ -8,7 +7,6 @@ $(window).on('load', function() {
     var entityCreateUrl = drupalSettings.path.baseUrl + 'entity/node';
     var scheduleRetrieveUrl = drupalSettings.path.baseUrl + 'itr_rest_view/schedules/' + dept + '?_format=json';
     var deleteUrl = drupalSettings.path.baseUrl + 'itr_rest/schedule/delete?_format=json';
-    // console.log('record count: ' + schedule.length);
     var recCount = schedule.length;
 
     $('#edit-import-schedule-fields').addClass('disabled');
@@ -19,7 +17,6 @@ $(window).on('load', function() {
 
     var progressHtml = '';
     progressHtml =  '<div id="import-progress-wrap">';
-    // progressHtml += '  <div id="import-progress"></div>';
     progressHtml += '</div>';
     progressHtml += '<div id="import-progress-msg"></div>';
     progressHtml += '<div id="import-progress-log"></div>';
@@ -36,9 +33,6 @@ $(window).on('load', function() {
 
     var updateProgressBar = function(increment, msg) {
       $('#import-progress').css({width: (increment*100) + '%'});
-      // if(msg.length > 0) {
-      //   $('#import-progress').html('<div>' + msg + '</div>');
-      // }
     }
 
     var updateProgressBar2 = function(recCount, success) {
@@ -48,7 +42,6 @@ $(window).on('load', function() {
       var elemClass = success ? 'import-progress-indicator-success' : 'import-progress-indicator-error';
       var elem = '<div style="width:' + (elemSize - (elemMargin * 2)) + '%; margin: 0 ' + elemMargin + '%" class="' + elemClass + '"></div>';
       $(progressBarWrap).append(elem);
-      // console.log($(elem));
       window.getComputedStyle($(elem)[0]).width;
     }
 
@@ -111,11 +104,20 @@ $(window).on('load', function() {
 
                   var processRecord = function(rec, index) {
                     var defer = $.Deferred();
-                    if(!rec.category || !rec.retention || !rec.title) {
-                      updateProgressLog('<span class="import-error-msg">Skipped: ' + rec.title + '.  Missing title, category, or retention</span>');
+                    var errorMsg = '';
+                    if(!rec.title) {
+                      errorMsg += 'Missing title.  ';
+                    }
+                    if(!rec.retention) {
+                      errorMsg += 'Missing retention.  ';
+                    }
+                    if(!rec.category) {
+                      errorMsg += 'Missing category.  ';
+                    }
+                    if(errorMsg.length > 0) {
+                      updateProgressLog('<span class="import-error-msg">Skipped record at index ' + index + '.  ' + rec.title + '.' + errorMsg + '</span>');
                       updateProgressBar2(schedule.length, false);
                       failCount = failCount + 1;
-                      // console.log(failCount + ':fail: ' + rec.title);
                       defer.resolve();
                     } else {
 
@@ -192,9 +194,6 @@ $(window).on('load', function() {
 
                   // all things done
                   deferred.done(function() {
-                    console.log('all things complete');
-                    console.log('success: ' + successCount);
-                    console.log('fail: ' + failCount);
                     var finishedMsg = '<div class="import-stats"><p class="import-success-msg">Imported ' + successCount + ' record(s) successfully.</p>';
                     finishedMsg += '<p class="import-error-msg">Could not import ' + failCount + ' record(s)</p></div>';
                     var finishedLinks = '<a href="' + drupalSettings.path.baseUrl + 'schedules/' + dept + '">View imported schedule</a><a href="#" id="view-log-link">View log</a>';
