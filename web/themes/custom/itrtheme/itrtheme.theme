@@ -1,8 +1,34 @@
 <?php
 
+use Drupal\itr\Utility\Utility;
+
+$module_handler = Drupal::service('module_handler');
+$devel_path = $module_handler->getModule('devel')->getPath();
+require_once($devel_path.'/kint/kint/Kint.class.php');
+Kint::$maxLevels = 4;
+
 function itrtheme_preprocess_block(&$variables) {
   if($variables['attributes']['id'] == 'block-itrtheme-search') {
     $variables['title_suffix'] = 'Use agency names, record titles, keywords';
+  }
+}
+
+function itrtheme_preprocess_page(&$variables) {
+  $content_type = array_key_exists('node', $variables) ? $variables['node']->getType() : null;
+  if($content_type && $content_type == 'department_information') {
+    $deptInfoTargetId = $variables['node']->get('field_department_name')->getValue()[0]['target_id'];
+    $userDepts = Utility::getDepartmentsForUser();
+    $count = count($userDepts);
+    $userHasDept = false;
+    for($i = 0; $i < $count; $i++) {
+      if($userDepts[$i]['id'] == $deptInfoTargetId) {
+        $userHasDept = true;
+        break;
+      }
+    }
+    $variables['user_depts'] = $userDepts;
+    $variables['dept_info_target_id'] = $deptInfoTargetId;
+    $variables['user_has_dept'] = $userHasDept;
   }
 }
 
