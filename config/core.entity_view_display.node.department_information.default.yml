@@ -7,10 +7,12 @@ dependencies:
     - field.field.node.department_information.field_department_contact_name
     - field.field.node.department_information.field_department_contact_phone_n
     - field.field.node.department_information.field_department_name
+    - field.field.node.department_information.field_department_retention_polic
     - field.field.node.department_information.field_department_website
     - field.field.node.department_information.field_schedule_ratified_date
     - node.type.department_information
   module:
+    - file
     - link
     - telephone
     - user
@@ -49,6 +51,14 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
+  field_department_retention_polic:
+    weight: 111
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
     region: content
   field_department_website:
     weight: 108

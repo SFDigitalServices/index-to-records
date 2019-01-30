@@ -7,10 +7,12 @@ dependencies:
     - field.field.node.department_information.field_department_contact_name
     - field.field.node.department_information.field_department_contact_phone_n
     - field.field.node.department_information.field_department_name
+    - field.field.node.department_information.field_department_retention_polic
     - field.field.node.department_information.field_department_website
     - field.field.node.department_information.field_schedule_ratified_date
     - node.type.department_information
   module:
+    - file
     - link
     - telephone
 id: node.department_information.default
@@ -47,6 +49,13 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
+  field_department_retention_polic:
+    weight: 6
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: file_generic
+    region: content
   field_department_website:
     weight: 5
     settings:
@@ -56,7 +65,7 @@ content:
     type: link_default
     region: content
   field_schedule_ratified_date:
-    weight: 6
+    weight: 7
     settings:
       size: 60
       placeholder: ''

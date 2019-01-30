@@ -8,10 +8,12 @@ dependencies:
     - field.field.node.department_information.field_department_contact_name
     - field.field.node.department_information.field_department_contact_phone_n
     - field.field.node.department_information.field_department_name
+    - field.field.node.department_information.field_department_retention_polic
     - field.field.node.department_information.field_department_website
     - field.field.node.department_information.field_schedule_ratified_date
     - node.type.department_information
   module:
+    - file
     - link
     - telephone
     - user
@@ -22,13 +24,13 @@ mode: full
 content:
   field_department_contact_email:
     type: basic_string
-    weight: 2
+    weight: 3
     region: content
     label: above
     settings: {  }
     third_party_settings: {  }
   field_department_contact_name:
-    weight: 1
+    weight: 2
     label: above
     settings:
       link_to_entity: false
@@ -37,7 +39,7 @@ content:
     region: content
   field_department_contact_phone_n:
     type: telephone_link
-    weight: 3
+    weight: 4
     region: content
     label: above
     settings:
@@ -45,11 +47,19 @@ content:
     third_party_settings: {  }
   field_department_name:
     type: entity_reference_label
-    weight: 4
+    weight: 1
     region: content
     label: above
     settings:
       link: true
+    third_party_settings: {  }
+  field_department_retention_polic:
+    type: file_default
+    weight: 6
+    region: content
+    label: above
+    settings:
+      use_description_as_link_text: true
     third_party_settings: {  }
   field_department_website:
     type: link
@@ -65,7 +75,7 @@ content:
     third_party_settings: {  }
   field_schedule_ratified_date:
     type: string
-    weight: 6
+    weight: 7
     region: content
     label: above
     settings:

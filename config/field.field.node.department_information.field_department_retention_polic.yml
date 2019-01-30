@@ -1,0 +1,27 @@
+uuid: edd38a65-93c0-4bee-bb06-b29d459429df
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_department_retention_polic
+    - node.type.department_information
+  module:
+    - file
+id: node.department_information.field_department_retention_polic
+field_name: field_department_retention_polic
+entity_type: node
+bundle: department_information
+label: 'Department Retention Policy'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'txt doc docx pdf'
+  max_filesize: '5 MB'
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file
