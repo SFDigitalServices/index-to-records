@@ -6,33 +6,74 @@ dependencies:
     - core.entity_view_mode.node.full
     - field.field.node.department_information.field_department_contact_email
     - field.field.node.department_information.field_department_contact_name
+    - field.field.node.department_information.field_department_contact_phone_n
     - field.field.node.department_information.field_department_name
     - field.field.node.department_information.field_department_website
     - field.field.node.department_information.field_schedule_ratified_date
     - node.type.department_information
   module:
+    - link
+    - telephone
     - user
 id: node.department_information.full
 targetEntityType: node
 bundle: department_information
 mode: full
 content:
+  field_department_contact_email:
+    type: basic_string
+    weight: 2
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
   field_department_contact_name:
-    weight: 102
+    weight: 1
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: content
+  field_department_contact_phone_n:
+    type: telephone_link
+    weight: 3
+    region: content
+    label: above
+    settings:
+      title: ''
+    third_party_settings: {  }
+  field_department_name:
+    type: entity_reference_label
+    weight: 4
+    region: content
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_department_website:
+    type: link
+    weight: 5
+    region: content
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+  field_schedule_ratified_date:
+    type: string
+    weight: 6
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
   links:
-    weight: 100
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden:
-  field_department_contact_email: true
-  field_department_contact_phone_n: true
-  field_department_name: true
-  field_department_website: true
-  field_schedule_ratified_date: true
+hidden: {  }
