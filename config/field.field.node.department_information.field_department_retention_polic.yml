@@ -11,7 +11,7 @@ id: node.department_information.field_department_retention_polic
 field_name: field_department_retention_polic
 entity_type: node
 bundle: department_information
-label: 'Department Retention Policy'
+label: 'Department’s Record Retention Policy'
 description: ''
 required: false
 translatable: false
