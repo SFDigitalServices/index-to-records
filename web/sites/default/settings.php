@@ -36,3 +36,23 @@ if (file_exists($local_settings)) {
  * modifying settings.php.
  */
 $settings['install_profile'] = 'standard';
+
+if (isset($_ENV['PANTHEON_ENVIRONMENT']) && $_ENV['PANTHEON_ENVIRONMENT'] != 'lando') {
+  // from: https://pantheon.io/docs/redirects/
+  // Require HTTPS across all Pantheon environments
+  // Check if Drupal or WordPress is running via command line
+  if (isset($_SERVER['PANTHEON_ENVIRONMENT']) && ($_SERVER['HTTPS'] === 'OFF') && (php_sapi_name() != "cli")) {
+    if (!isset($_SERVER['HTTP_USER_AGENT_HTTPS']) || (isset($_SERVER['HTTP_USER_AGENT_HTTPS']) && $_SERVER['HTTP_USER_AGENT_HTTPS'] != 'ON')) {
+
+      header('HTTP/1.0 301 Moved Permanently');
+      header('Location: https://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+
+      # Name transaction "redirect" in New Relic for improved reporting (optional)
+      if (extension_loaded('newrelic')) {
+        newrelic_name_transaction("redirect");
+      }
+
+      exit();
+    }
+  }
+}
