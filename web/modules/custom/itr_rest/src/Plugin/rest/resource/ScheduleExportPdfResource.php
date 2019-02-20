@@ -152,58 +152,52 @@ class ScheduleExportPdfResource extends ResourceBase {
 
     $sigHtml .= '<div id="signature-page">' . "\n" .
                 '  <h2>Records and Retention Destruction Policy and Schedule Signature Page</h2>' . "\n" .
-                '  <p>Submit your Policy with the Schedule and signature page attached at the end.  Secure the signatures below, as appropriate, and deliver to:<br/>Office of the City Administrator, City Hall Room 362, Attention: Index to Records.</p>' . "\n" .
+                '  <p>Submit your Schedule and Policy with the signature page below attached at the end.  Secure the signatures below, as appropriate, scan the document, and email it to <a href="mailto:indextorecords@sfgov.org">indextorecords@sfgov.org</a>.  If you have questions on this process, contact the Office of the City Administrator.</p>' . "\n" .
                 '  <div id="dept-name">' . "\n" .
                 '    <div class="label">Name of Department:</div><div class="value">' . $deptName . '</div>' . "\n" .
                 '  </div>' . "\n" .
                 '  <div id="dept-board-commission">' . "\n" .
                 '    <div class="dept-board-commission-section">' . "\n" .
                 '      <div class="dept-board-commission-text">For departments that do not have a board or commission:</div>' . "\n" .
-                '      <div class="signature-name-title text-below">Sean Elsbernd, Mayor\'s Chief of Staff</div>' . "\n" .
-                '      <div class="signature-date-approved text-below">Date Approved</div>' . "\n" .
+                '      <div class="name-signature-container">' . "\n" .
+                '        <div class="signature-name-title text-below">Mayor\'s Chief of Staff Signature</div>' . "\n" .
+                '        <div class="signature-name-title text-below">Mayor\'s Chief of Staff Name (please print)</div>' . "\n" .
+                '      </div>' . "\n" .
+                '      <div class="date-container">' . "\n" .
+                '        <div class="signature-date-approved text-below">Date Approved</div>' . "\n" .
+                '      </div>' . "\n" .
                 '    </div>' .
                 '    <div class="dept-board-commission-section">' . "\n" .
                 '      <div class="dept-board-commission-text">For departments that have a board or commission:</div>' . "\n" .
-                '      <div class="signature-name-title text-below">Commission Secretary name and signature</div>' . "\n" .
-                '      <div class="signature-date-approved text-below">Date Approved</div>' . "\n" .
+                '      <div class="name-signature-container">' . "\n" .
+                '        <div class="signature-name-title text-below">Commission Secretary Signature</div>' . "\n" .
+                '        <div class="signature-name-title text-below">Commission Secretary Signature Name (please print)</div>' . "\n" .
+                '      </div>' . "\n" .
+                '      <div class="date-container">' . "\n" .
+                '        <div class="signature-date-approved text-below">Date Approved</div>' . "\n" .
+                '      </div>' . "\n" .
                 '    </div>' . "\n" .
                 '  </div>' . "\n" .
-                '  <h3>All Departments</h3>' . "\n" .
-                '  <div id="all-departments">' . "\n" .
-                '    <div class="section dept-head-sig">' . "\n" .
-                '      <div class="label">Department Head Name and Signature:</div><div class="line"></div>' . "\n" .
-                '    </div>' . "\n" .
-                '    <div class="section">' . "\n" .
-                '      <div class="label">Date Approved:</div><div class="line"></div>' . "\n" .
-                '    </div>' . "\n" .
-                '  </div>' . "\n" .
+                '  <h2>For all Departments</h2>' . "\n" .
                 '  <div id="other-approvals">' . "\n" .
                 '    <div class="other-approval-section">' . "\n" .
-                '      <h3>Approval as to Records relating to financial matters:</h3>' . "\n" .
+                '      <h3>Approval as to records relating to financial matters:</h3>' . "\n" .
                 '      <div class="approver-section">' . "\n" .
-                '        <div class="approver text-below">Ben Rosenfield, Controller</div>' . "\n" .
-                '        <div class="approve-date text-below">Date Approved</div>' . "\n" .
-                '      </div>' . "\n" .
-                '      <div class="approver-section">' . "\n" .
-                '        <div class="approver text-below">Controller Staff (print and sign)</div>' . "\n" .
+                '        <div class="approver text-below">Controller or designee (print and sign)</div>' . "\n" .
                 '        <div class="approve-date text-below">Date Approved</div>' . "\n" .
                 '      </div>' . "\n" .
                 '    </div>' . "\n" .
                 '    <div class="other-approval-section">' . "\n" .
-                '      <h3>Approval as to Records of legal significance:</h3>' . "\n" .
+                '      <h3>Approval as to records of legal significance:</h3>' . "\n" .
                 '      <div class="approver-section">' . "\n" .
-                '        <div class="approver text-below">Dennis J. Herrera, City Attorney</div>' . "\n" .
-                '        <div class="approve-date text-below">Date Approved</div>' . "\n" .
-                '      </div>' . "\n" .
-                '      <div class="approver-section">' . "\n" .
-                '        <div class="approver text-below">City Deputy Attorney (print and sign)</div>' . "\n" .
+                '        <div class="approver text-below">City Attorney or designee (print and sign)</div>' . "\n" .
                 '        <div class="approve-date text-below">Date Approved</div>' . "\n" .
                 '      </div>' . "\n" .
                 '    </div>' . "\n" .
                 '    <div class="other-approval-section">' . "\n" .
-                '      <h3>Approval as to Records relating to payroll matters:</h3>' . "\n" .
+                '      <h3>Approval as to records relating to payroll matters:</h3>' . "\n" .
                 '      <div class="approver-section">' . "\n" .
-                '        <div class="approver text-below">Jay Huish, Executive Director - Retirement Board</div>' . "\n" .
+                '        <div class="approver text-below">Executive Director, Retirement Board or designee (print and sign)</div>' . "\n" .
                 '        <div class="approve-date text-below">Date Approved</div>' . "\n" .
                 '      </div>' . "\n" .
                 '    </div>' . "\n" .
@@ -215,7 +209,7 @@ class ScheduleExportPdfResource extends ResourceBase {
               '  @page { margin: 8px; }' . "\n" .
               '  body { margin: 8px; font-size: 12px; font-family: sans-serif; }' . "\n" .
               '  h1 { font-size: 1.25em; text-align: center; text-decoration: underline; margin: 15px 0; font-weight: normal; }' . "\n" .
-              '  h2 { font-size: 1.2em; text-align: center; }' . "\n" .
+              '  h2 { font-size: 1.2em; text-align: center; text-transform: uppercase; }' . "\n" .
               '  table#header-dept-info { border: 0; width: 100%; border-collapse: collapse; }' . "\n" .
               '  table#header-dept-info td { width: 33%; border: 0; padding: 2px 0; }' . "\n" .
               '  #header-table-container { margin-bottom: 15px }' . "\n" .
@@ -225,14 +219,17 @@ class ScheduleExportPdfResource extends ResourceBase {
               '  .text-below { border-top: 1px solid #000; font-size: .8em; }' . "\n" .
               '  #signature-page { page-break-before: always; }' . "\n" .
               '  #signature-page p { text-align: center; width: 75%; margin: 15px auto; }' . "\n" .
-              '  #signature-page #dept-name { padding: 20px 0 28px 0; border: 0; }' . "\n" .
+              '  #signature-page #dept-name { padding: 20px 0 28px 0; text-align: center; }' . "\n" .
               '  #signature-page #dept-name > div { display: inline-block; }' . "\n" .
               '  #signature-page #dept-name .value { border-bottom: 1px solid #000; width: 25%; margin-left: 5px; padding-left: 20px; }' . "\n" .
-              '  #signature-page #dept-board-commission .dept-board-commission-section { display: inline-block; width: 49%; }' . "\n" .
+              '  #signature-page #dept-board-commission { display: block; overflow: auto; }' . "\n" .
+              '  #signature-page #dept-board-commission .dept-board-commission-section { width: 49%; display:inline-block; vertical-align: top; }' . "\n" .
               '  #signature-page #dept-board-commission .dept-board-commission-section .dept-board-commission-text { display: block; margin: 20px 0 40px 0; }' . "\n" .
-              '  #signature-page #dept-board-commission .dept-board-commission-section .signature-name-title { display: inline-block; width: 60%; margin-right: 10px; }' . "\n" .
-              '  #signature-page #dept-board-commission .dept-board-commission-section .signature-date-approved { display: inline-block; width: 35%; }' . "\n" .
-              '  #signature-page h3 { display: block; text-transform: uppercase; text-align: center; }' . "\n" .
+              '  #signature-page #dept-board-commission .dept-board-commission-section .signature-name-title { display: block; margin-right: 10px; margin-bottom: 40px; }' . "\n" .
+              '  #signature-page #dept-board-commission .dept-board-commission-section .signature-date-approved { display: block; }' . "\n" .
+  '  #signature-page #dept-board-commission .dept-board-commission-section .name-signature-container { display: inline-block; width: 60%; vertical-align: top; }' . "\n" .
+'  #signature-page #dept-board-commission .dept-board-commission-section .date-container { display: inline-block; width: 38%; vertical-align: top;  }' . "\n" .
+              '  #signature-page h3 { display: block; text-align: center; }' . "\n" .
               '  #signature-page #all-departments { width: 80%; margin: 0 auto; padding: 25px 0 0 0; }' . "\n" .
               '  #signature-page #all-departments .section { display: inline-block; width: 38%; }' . "\n" .
               '  #signature-page #all-departments .section.dept-head-sig { width: 60%; }' . "\n" .
@@ -240,7 +237,7 @@ class ScheduleExportPdfResource extends ResourceBase {
               '  #signature-page #all-departments .section .line { border-bottom: 1px solid #000; width: 70%; }' . "\n" .
               '  #signature-page #all-departments .section.dept-head-sig .line { width: 55%; }' . "\n" .
               '  #signature-page #other-approvals { display: block; width: 70%; margin: 0 auto; }' . "\n" .
-              '  #signature-page #other-approvals h3 { display: block; text-align: center; text-transform: capitalize; text-align: left; font-weight: normal; margin-top: 0; }' . "\n" .
+              '  #signature-page #other-approvals h3 { display: block; text-align: center; text-align: left; font-weight: normal; margin-top: 0; }' . "\n" .
               '  #signature-page #other-approvals .other-approval-section { margin-top: 30px; }' . "\n" .
               '  #signature-page #other-approvals .other-approval-section .approver-section { margin-top: 40px; }' . "\n" .
               '  #signature-page #other-approvals .other-approval-section .text-below { display: inline-block; width: 48%; margin-right: 5px; }' . "\n" .
