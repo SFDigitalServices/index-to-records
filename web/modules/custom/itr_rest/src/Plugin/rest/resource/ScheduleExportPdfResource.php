@@ -151,7 +151,7 @@ class ScheduleExportPdfResource extends ResourceBase {
     $scheduleHtml .= '</table>' . "\n";
 
     $sigHtml .= '<div id="signature-page">' . "\n" .
-                '  <h2>Records and Retention Destruction Policy and Schedule Signature Page</h2>' . "\n" .
+                '  <h2>Records Retention and Destruction Policy and Schedule Signature Page</h2>' . "\n" .
                 '  <p>Submit your Schedule and Policy with the signature page below attached at the end.  Secure the signatures below, as appropriate, scan the document, and email it to <a href="mailto:indextorecords@sfgov.org">indextorecords@sfgov.org</a>.  If you have questions on this process, contact the Office of the City Administrator.</p>' . "\n" .
                 '  <div id="dept-name">' . "\n" .
                 '    <div class="label">Name of Department:</div><div class="value">' . $deptName . '</div>' . "\n" .
