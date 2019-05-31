@@ -13,9 +13,6 @@
 
   use Drupal\itr\Utility\Utility;
 
-  // require_once('modules/devel/kint/kint/Kint.class.php');
-  // \Kint::$maxLevels = 4;  
-
   class ImportScheduleForm extends FormBase {
 
     /**
@@ -69,7 +66,6 @@
         '#name' => 'schedule_file',
         '#title' => t('Schedule File'),
         '#size' => 20,
-        // '#description' => t('CSV format only'),
         '#upload_validators' => $validators,
       );
 
@@ -108,12 +104,13 @@
           $elemCount = count($row);
           $bomRemoved = [];
           for($i=0; $i<$elemCount; $i++) {
-            $bomRemoved[] = $this->remove_utf8_bom($row[$i]);
+            $bomRemoved[] = preg_replace('/[^A-Za-z0-9\.\r\n -_]/', '', $this->remove_utf8_bom($row[$i]));
           }
           if(!$header) {
             $header = $bomRemoved;
           } else {
-            $d[] = array_combine($header, $bomRemoved);
+            $item = array_combine($header, $bomRemoved);
+            $d[] = $item;
             $count++;
           }
         }
@@ -129,11 +126,6 @@
 
         $deptId = $form_state->getValue('schedule_department');
         $finalData = $this->modifyData($d, $deptId);
-
-        error_log('final data');
-        error_log(print_r($finalData, 1));
-
-        // $form['#attached']['drupalSettings']['itr']['importSchedule']['data'] = json_encode($d);
         $response->addCommand(new ImportScheduleCommand($finalData)); // execute custom ajax command which renders json array with data $d
       } else {
         $response->addCommand(new ImportScheduleCommand(['message' => 'no file uploaded']));
@@ -204,7 +196,6 @@
             }
           }
         }
-        // error_log('-----ImportScheduleForm: recNum: ' . $recNum . '-----');
         $recNum++;
       }
       return ['department' => $deptId, 'schedule' => $d];
