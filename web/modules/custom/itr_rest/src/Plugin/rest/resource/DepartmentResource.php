@@ -26,13 +26,6 @@ class DepartmentResource extends ResourceBase {
     $vid = 'department';
     $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
     foreach($terms as $term) {
-      // if(strtolower($term->name) != 'category') {
-      //   $categories[] = array(
-      //     'id' => $term->tid,
-      //     'name' =>$term->name
-      //   );
-      // }
-      // error_log(print_r($term, 1));
       if(in_array(0, $term->parents)) {
         $departments[] = array(
           'id' => $term->tid,

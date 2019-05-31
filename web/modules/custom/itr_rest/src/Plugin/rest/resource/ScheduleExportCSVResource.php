@@ -22,22 +22,12 @@ use Drupal\itr\Utility\Utility;
 class ScheduleExportCsvResource extends ResourceBase {
 
   public function post($data) {
-    $response = ['exists' => false, 'delete_ids' => []];
-    // error_log('ScheduleExportCSVResource: ' . print_r($data, 1));
-    // if(isset($data) && count($data) > 0) {
-    //   $controller = \Drupal::entityTypeManager()->getStorage('node');
-    //   $entities = $controller->loadMultiple($data);
-    //   $controller->delete($entities);
-    //   $response = ['exists' => true, 'delete_ids' => $data];
-    // }
     $response = $this->createCSV($data['data'], $data['dept']);
     return new ResourceResponse($response);
   }
 
   function createCSV(array $data, $deptId = null) {
-    // error_log(count($data));
     $fileName = isset($deptId) ? str_replace(' ', '-', strtolower(Utility::getTermNameByTid($deptId))) : 'no-filename';
-    // error_log(print_r($data[0], 1));
 
     $file = File::create([
       'filename' => $fileName . '.csv',
@@ -53,9 +43,7 @@ class ScheduleExportCsvResource extends ResourceBase {
 
     $csvHeaderRow = 'title,link,division,division_contact,on_site,off_site,total,category,retention,remarks'."\n";
     fwrite($fp, $csvHeaderRow);
-    // $csvRow = 'title,link,division,division_contact,on_site,off_site,total,category,retention,remarks';
     foreach($data as $item) {
-      // error_log(print_r($item,1));
       $title = $item['field_record_title'][0]['value'];
       $link = $item['field_link'][0]['value'];
       $division = count($item['field_division']) > 0 ? Utility::getTermNameByTid($item['field_division'][0]['target_id']) : '';
@@ -76,17 +64,10 @@ class ScheduleExportCsvResource extends ResourceBase {
       }
 
       $remarks = $item['field_remarks'][0]['value'];
-      // $csvRow .= "\n" . '"' . $title . '","' . $link . '","' . $division . '","' . $division_contact . '","' . $on_site . '","' . $off_site . '","' . $total . '","' . $category . '","' . addslashes($retention) . '","' . addslashes($remarks) . '"';
       $csvArray = array($title, $link, $division, $division_contact, $on_site, $off_site, $total, $category, $retention, $remarks);
-      // error_log(print_r($csvArray, 1));
       fputcsv($fp, $csvArray);
     }
-
-    // file_put_contents($file->getFileUri(), $csvRow);
     $file->save();
-    // error_log(drupal_realpath($file->getFileUri()));
-    // error_log($file->url());
-    // error_log($csvRow);
     fclose($fp);
     $returnArray = array(
       array(

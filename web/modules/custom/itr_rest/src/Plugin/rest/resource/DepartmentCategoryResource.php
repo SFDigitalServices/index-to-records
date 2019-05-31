@@ -26,7 +26,7 @@ class DepartmentCategoryResource extends ResourceBase {
   * @return \Drupal\rest\ResourceResponse
   */
   public function get($deptId) {
-    $response = ['message' => 'Hello, this is a rest service'];
+    $response = ['message' => 'no dept categories'];
     $build = array(
       '#cache' => array(
         'max-age' => 0,
@@ -70,31 +70,6 @@ class DepartmentCategoryResource extends ResourceBase {
     }
     return new ResourceResponse($response);
   }
-
-  // public function post($data) {
-  //   try {
-  //     $categoryId = $this->getCategoryTermId($data['deptId']);
-  //     $categories = $data['categories'];
-  //     if(isset($categories) && isset($categoryId)) {
-  //       $catCount = count($categories);
-  //       for($i = 0; $i < $catCount; $i++) {
-  //         $term = Term::create([
-  //           'vid' => 'department',
-  //           'name' => $categories[$i],
-  //           'parent' => $categoryId
-  //         ]);
-  //         $term->save();
-  //       }
-  //     }
-  //     $response = ['message' => 'save success'];
-  //   } catch (Exception $e) {
-  //     error_log('Exception in DepartmentCategoryResource POST: ');
-  //     error_log($e->getMessage());
-  //     $response = ['message' => 'save fail.  check logs'];
-  //   }
-
-  //   return new ResourceResponse($response);
-  // }
 
   private function getCategoryTermId($deptId) {
     $deptTermChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('department', $deptId);
