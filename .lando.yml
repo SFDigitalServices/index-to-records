@@ -10,10 +10,9 @@ config:
 services:
   appserver:
     overrides:
-      services:
-        environment:
-          BEHAT_PARAMS: >-
-            { "extensions": { "Behat\\MinkExtension": { "base_url": "http://indextorecords.lndo.site", "goutte": { "guzzle_parameters": { "verify": false } } }, "Drupal\\DrupalExtension": { "drush": { "root": "/app/web" } } } }
+      environment:
+        BEHAT_PARAMS: >-
+          { "extensions": { "Behat\\MinkExtension": { "base_url": "http://indextorecords.lndo.site", "goutte": { "guzzle_parameters": { "verify": false } } }, "Drupal\\DrupalExtension": { "drush": { "root": "/app/web" } } } }
 
 tooling:
   behat:
