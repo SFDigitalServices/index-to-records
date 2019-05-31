@@ -26,14 +26,6 @@ require DRUPAL_ROOT . '/../vendor/autoload.php';
 class ScheduleExportPdfResource extends ResourceBase {
 
   public function post($data) {
-    $response = ['exists' => false, 'delete_ids' => []];
-    // error_log('ScheduleExportCSVResource: ' . print_r($data, 1));
-    // if(isset($data) && count($data) > 0) {
-    //   $controller = \Drupal::entityTypeManager()->getStorage('node');
-    //   $entities = $controller->loadMultiple($data);
-    //   $controller->delete($entities);
-    //   $response = ['exists' => true, 'delete_ids' => $data];
-    // }
     $response = $this->createPdf($data['data'], $data['dept']);
     return new ResourceResponse($response);
   }
@@ -41,7 +33,6 @@ class ScheduleExportPdfResource extends ResourceBase {
   function deptInfo($deptId) {
     global $base_url;
     $request = \Drupal::httpClient()->get($base_url . '/itr_rest_view/dept/info/' . $deptId . '?_format=json'); // this path is a rest route defined in view Department Info
-    // error_log('itr_rest:ScheduleExportPdfResource:deptInfo:deptId:' . $deptId);
     $deptInfoData = json_decode($request->getBody(), true);
     $deptData = null;
     if(count($deptInfoData) > 0) {
@@ -54,15 +45,10 @@ class ScheduleExportPdfResource extends ResourceBase {
         'field_schedule_ratified_date' => count($deptInfoData[0]['field_schedule_ratified_date']) > 0 ? $deptInfoData[0]['field_schedule_ratified_date'][0]['value'] : 'no ratified date',
       )];
     }
-    // error_log(print_r($deptInfoData[0]['field_department_website'][0],1));
-    // error_log(print_r($deptInfoData, 1));
-    // error_log($deptName);
-    // error_log($deptContactName);
     return $deptData;
   }
 
   function createPdf(array $data, $deptId) {
-    error_log('itr_rest:ScheduleExportResource.php:createPdf');
     if(!isset($deptId)) {
       return null;
     }
@@ -70,7 +56,6 @@ class ScheduleExportPdfResource extends ResourceBase {
     $fileName = str_replace(' ', '-', strtolower($deptName)) . '.pdf';
 
     $deptInfo = $this->deptInfo($deptId);
-    // error_log(print_r($deptInfo, 1));
     if(count($deptInfo) > 0) {
       $deptContact = $deptInfo[0]['field_department_contact_name'];
       $deptContactPhone = $deptInfo[0]['field_department_contact_phone_n'];
@@ -110,11 +95,9 @@ class ScheduleExportPdfResource extends ResourceBase {
 
     $i = 0;
 
-    error_log('itr_rest:ScheduleExportResource.php:createPdf:iterate record collection');
     foreach($data as $item) {
       $cssRowClass = $i % 2 == 0 ? 'even' : 'odd';
-      // error_log(print_r($item,1));
-      $title = $item['field_record_title'][0]['value'];
+      $title = preg_replace('/\r|\n/', '<br/>', $item['field_record_title'][0]['value']);
       $link = $item['field_link'][0]['value'];
       $division = count($item['field_division']) > 0 ? Utility::getTermNameByTid($item['field_division'][0]['target_id']) : '';
       $division_contact = $item['field_division_contact'][0]['value'];
@@ -146,7 +129,6 @@ class ScheduleExportPdfResource extends ResourceBase {
                         '</tr>' . "\n";
       $i++;
     }
-    error_log('itr_rest:ScheduleExportResource.php:createPdf:completed iterating record collection');
 
     $scheduleHtml .= '</table>' . "\n";
 
@@ -244,12 +226,10 @@ class ScheduleExportPdfResource extends ResourceBase {
               '</style>' . "\n";
 
     $html = $headerHtml . $scheduleHtml . $sigHtml . $style;
-    error_log('itr_rest:ScheduleExportResource.php:createPdf:html stored, pass off to dompdf');
     $dompdf = new Dompdf();
     $dompdf->setPaper('A3', 'landscape');
     $dompdf->set_option('isHtml5ParserEnabled', true);
     $dompdf->loadHtml($html);
-    error_log('itr_rest:ScheduleExportResource.php:createPdf:html loaded to dompdf, render');
     $dompdf->render();
     $output = $dompdf->output();
 
