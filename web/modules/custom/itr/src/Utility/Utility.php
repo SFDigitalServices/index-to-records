@@ -100,7 +100,7 @@
     // check if the current user has a specific dept id
     public static function userHasDept($deptId) {
       $user = User::load(\Drupal::currentUser()->id());
-      $userDepts = getDepartmentsForUser();
+      $userDepts = self::getDepartmentsForUser();
       $c = count($userDepts);
       for($i=0; $i<$c; $i++) {
         if($userDepts[$i]['id'] == $deptId)

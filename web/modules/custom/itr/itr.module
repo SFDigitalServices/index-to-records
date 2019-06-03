@@ -13,56 +13,13 @@
   use Drupal\views\ViewExecutable;
   use Drupal\views\Plugin\views\query\QueryPluginBase;
 
-  use Drupal\itr\Utility\Utility;
-
   use Drupal\Core\Url;
   use Drupal\node\NodeInterface;
   use \Drupal\Core\Session\AccountInterface;
   use Drupal\Core\Access\AccessResult;
   use Symfony\Component\HttpFoundation\RedirectResponse;
 
-  function selectDepartmentForUser() {
-    $user = User::load(\Drupal::currentUser()->id());
-    $depts = $user->get('field_department')->getValue();
-    return $depts[0]['target_id'];
-  }
-
-  // get top level department terms from department vocab
-  function getDepartments() {
-    $vid = 'department';
-    $depts = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, 0, 1);
-    foreach($depts as $key => $row) {
-      $id[$key] = $row->id;
-      $name[$key] = $row->name;
-    }
-    array_multisort($name, SORT_ASC, $depts);
-    return $depts;
-  }
-
-  function getTermId(string $idStr, $parentId = 0) {
-    $vid = 'department';
-    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $parentId);
-    $tid = -1;
-    foreach($terms as $term) {
-      if(strtolower($term->name) == strtolower($idStr)) {
-        $tid = $term->tid;
-        break;
-      }
-    }
-    return $tid;
-  }
-
-  // check if the current user has a specific dept id
-  function userHasDept($deptId) {
-    $user = User::load(\Drupal::currentUser()->id());
-    $userDepts = Utility::getDepartmentsForUser();
-    $c = count($userDepts);
-    for($i=0; $i<$c; $i++) {
-      if($userDepts[$i]['id'] == $deptId)
-        return true;
-    }
-    return false;
-  }
+  use Drupal\itr\Utility\Utility;
 
   // alter add record form
   function itr_form_node_record_form_alter(&$form, FormStateInterface $form_state, $form_id) {
@@ -97,10 +54,6 @@
       }  
     }
   }
-
-  // function _itrDepartmentChangeAjax(array $form, FormStateInterface $form_state) {
-  //   return $form['field_department'];
-  // }
 
   // alter edit record form
   function itr_form_node_record_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
@@ -221,7 +174,7 @@
       $form['#attached']['drupalSettings']['itr']['schedule']['deptId'] = $deptId;
       $form['#attached']['drupalSettings']['itr']['user']['admin'] = Utility::userIsAdmin();
 
-      if(userHasDept($deptId) || Utility::userIsAdmin()) {
+      if(Utility::userHasDept($deptId) || Utility::userIsAdmin()) {
         $currentOptions = $form['field_department_target_id']['#options']; // get current options
         $newOptions = array(
           'All' => $currentOptions['All']
