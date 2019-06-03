@@ -90,11 +90,5 @@
     public function submitForm(array &$form, FormStateInterface $form_state) {
       
     }
-
-    public function exportSubmitPDF(array &$form, FormStateInterface $form_state) {
-      
-    }
-
-
   }
-?>
+  

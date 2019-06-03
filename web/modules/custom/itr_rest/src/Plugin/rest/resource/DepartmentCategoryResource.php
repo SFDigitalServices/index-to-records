@@ -60,7 +60,6 @@ class DepartmentCategoryResource extends ResourceBase {
   */
 
   public function post($data) {
-    // error_log('itr_rest:DepartmentCategoryResource:post:data:' . print_r($data, 1));
     $response = ['message' => 'category create failed'];
     $deptId = $data['deptId'];
     $categories = $data['categories'];
@@ -81,5 +80,3 @@ class DepartmentCategoryResource extends ResourceBase {
     return null;
   }
 }
-
-?>

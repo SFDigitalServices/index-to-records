@@ -79,5 +79,3 @@ class DepartmentDivisionResource extends ResourceBase {
     return null;
   }
 }
-
-?>

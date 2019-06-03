@@ -11,22 +11,14 @@
     private function retrieveDepartmentInfo() {
       global $base_url;
       $depts = Utility::getDepartmentsForUser();
-      // error_log('EditDepartmentController:count:' . count($depts) . ':contents:' . print_r($depts, 1));
       if(count($depts) > 0) {
         $deptId = $depts[0]['id'];
-        // error_log('EditDepartmentController:deptId:' . $deptId);
-        // error_log('EditDepartmentController:base_url:' . $base_url);
         $client = \Drupal::httpClient();
         $request = $client->get($base_url . '/itr_rest_view/dept/info/' . $deptId . '/?_format=json'); // this path is a rest route defined in view Department Information
         $response = json_decode($request->getBody(), true);
         if(count($response) > 0) {
-          // error_log('EditDepartmentController:has data, go to edit');
-          // error_log(print_r($response, 1));
           $nid = $response[0]['nid'][0]['value'];
-          // error_log('EditDepartmentController:nid:' . $nid);
           return $nid;
-        } else {
-          // error_log('EditDepartmentController:no data, redirect to create');
         }
         return null;
       }

@@ -9,8 +9,6 @@
   use Drupal\Core\Ajax\HtmlCommand;
   use Drupal\Core\Ajax\InsertCommand;
 
-  use Drupal\itr\Ajax\DemoTestJsCommand;
-
   // for views alter
   use Drupal\views\ViewExecutable;
   use Drupal\views\Plugin\views\query\QueryPluginBase;
@@ -22,79 +20,6 @@
   use \Drupal\Core\Session\AccountInterface;
   use Drupal\Core\Access\AccessResult;
   use Symfony\Component\HttpFoundation\RedirectResponse;
-
-  // $module_handler = Drupal::service('module_handler');
-  // $devel_path = $module_handler->getModule('devel')->getPath();
-  // require_once($devel_path.'/kint/kint/Kint.class.php');
-  // Kint::$maxLevels = 4;
-
-  /*
-  * get categories for a specific department for the current user
-  */
-  function getCategoriesForUser() {
-    $user = User::load(\Drupal::currentUser()->id());
-    $depts = $user->get('field_department')->getValue();
-
-    $deptCount = count($depts);
-    $vid = Term::load($depts[0]['target_id'])->getVocabularyId();
-
-    echo 'form_id: ' . $form_id . '<br/>';
-    echo 'depts count: ' . count($depts) . '<br/>';
-    echo 'vocab id: ' . $vid;
-
-    $categories = array();
-    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
-    $categoryData['_none'] = '- None - ';
-    for($i = 0; $i < $deptCount; $i++) {
-      $tid = $depts[$i]['target_id'];
-      $parentTerm = Term::load($tid)->getName();
-
-      foreach($terms as $term) {
-        if($term->parents[0] == $tid) {
-          print_r($terms->$children, 1);
-          // $categoryData[] = array(
-          //   'id' => $term->tid,
-          //   'name' => $term->name,
-          // );
-
-          $categoryTermId = $term->tid;
-          $categoryChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $categoryTermId);
-          if($deptCount > 1) {
-            $categoryData[$tid] = 'Categories for ' . $parentTerm;
-          }
-          foreach($categoryChildren as $categoryChildTerm) {
-            $indicator = $deptCount > 1 ? '-' : '';
-            $categoryData[$categoryChildTerm->tid] = $indicator . $categoryChildTerm->name;
-          }
-        }
-      }
-    }
-
-    // $categoryChildren = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, 13);
-
-    // error_log(print_r($categoryData,1));
-
-    // error_log(print_r($categoryChildren,1));
-
-    
-    // error_log(print_r($terms, 1));
-    // foreach($terms as $term) {
-    //   $term_data[] = array(
-    //     'id' => $term->tid,
-    //     'name' => $term->name,
-    //     'parent_id' => $term->parents[0],
-    //   );
-    // }
-
-    // error_log(print_r($term_data, 1));
-
-    // $term = Term::load($depts[0]['target_id']);
-    // $name = $term->getName();
-
-    // error_log(print_r($depts,1));
-
-    return $categoryData;
-  }
 
   function selectDepartmentForUser() {
     $user = User::load(\Drupal::currentUser()->id());
@@ -115,13 +40,10 @@
   }
 
   function getTermId(string $idStr, $parentId = 0) {
-    // error_log('get term id for [' . $idStr . '] with parentId: [' . $parentId . ']');
     $vid = 'department';
     $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $parentId);
     $tid = -1;
-    // error_log($parentId);
     foreach($terms as $term) {
-      // error_log(strtolower($term->name) . '==?' . $idStr);
       if(strtolower($term->name) == strtolower($idStr)) {
         $tid = $term->tid;
         break;
@@ -135,7 +57,6 @@
     $user = User::load(\Drupal::currentUser()->id());
     $userDepts = Utility::getDepartmentsForUser();
     $c = count($userDepts);
-    // error_log(print_r($userDepts, 1));
     for($i=0; $i<$c; $i++) {
       if($userDepts[$i]['id'] == $deptId)
         return true;
@@ -143,47 +64,16 @@
     return false;
   }
 
-  // check if the current user has the admin role
-  // function userIsAdmin() {
-  //   $user = User::load(\Drupal::currentUser()->id());
-  //   return in_array('administrator', $user->getRoles());
-  // }
-
   // alter add record form
   function itr_form_node_record_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-    // error_log('itr.module: itr_form_node_record_form_alter: $form_id: ' . $form_id);
     $form['#attributes']['class'][] = 'itr-form';
-    // Kint::dump($form);
-
-    // error_log(print_r(getDepartmentCategories('25'), 1));
-
-
     $depts = Utility::getDepartmentsForUser();
-    // error_log(print_r($depts, 1));
-    // $deptId = selectDepartmentForUser();
-    // error_log('deptId: ' . $deptId);
-    // error_log(print_r($form['field_category'], 1));
-    // error_log(print_r($form['field_department']['widget'], 1));
-    // $form['field_department']['widget']['#default_value'] = $deptId;
-    // $form['field_category']['widget']['#options'] = getCategoriesForUser();
-    // $form['field_category']['widget']['#options'] = array();
-    // error_log(print_r($form['field_category']['widget']['#options'], 1));
-
-    // $form['field_category']['#validated'] = TRUE;
-    // $form_state->setRebuild(TRUE);
-
-    // error_log(print_r($form['field_category']['widget']['#options'], 1));
 
     $deptOptions = array();
     $deptOptions['_none'] = '- None -';
     foreach($depts as $dept) {
       $deptOptions[$dept['id']] = $dept['name'];
     }
-
-    // error_log(print_r($deptOptions, 1));
-
-    // $form['field_category']['widget']['#options'] = $deptOptions;
-
     $form['field_department']['widget']['#options'] = $deptOptions;
     $form['#attached']['library'][] = 'itr/add-record';
     $form['#attached']['drupalSettings']['itr']['addRecord']['foo'] = 'bar';
@@ -208,13 +98,12 @@
     }
   }
 
-  function _itrDepartmentChangeAjax(array $form, FormStateInterface $form_state) {
-    return $form['field_department'];
-  }
+  // function _itrDepartmentChangeAjax(array $form, FormStateInterface $form_state) {
+  //   return $form['field_department'];
+  // }
 
   // alter edit record form
   function itr_form_node_record_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-    // Kint::dump($form);
     $form['#attributes']['class'][] = 'node-record-form';
     $form['#attributes']['class'][] = 'itr-form';
     $form['#attached']['library'][] = 'itr/add-record';
@@ -240,27 +129,12 @@
 
     // disable to the department
     $form['field_department']['widget']['#attributes']['disabled'] = 'disabled';
-
-    // error_log(print_r($form['field_department'], 1));
-    // error_log($deptId);
-
-    // $form['field_department']['widget']['#ajax'] = array(
-    //   'callback' => 'itrDepartmentChangeAjax',
-    //   'event' => 'change',
-    //   'progress' => array(
-    //     'type' => 'throbber',
-    //     'message' => NULL,
-    //   ),
-    // );
-    // Kint::dump($form);
     $form['actions']['submit']['#attributes']['class'][] = 'blue-btn btn-lg';
     
   }
 
   // ajax callback when department is changed to update category and division options
   function itrDepartmentChangeAjax(array &$form, FormStateInterface $form_state) {
-    // error_log('itr.module:itrDepartmentChangeAjax:');
-    // error_log(print_r($form['field_department']['widget']['#value'], 1));
     $deptId = $form['field_department']['widget']['#value'];
 
     $categories = Utility::getDepartmentCategories($deptId);
@@ -278,55 +152,17 @@
     $response = new AjaxResponse();
     $response->addCommand(new HtmlCommand('#edit-field-category', $categoryOptionHtml));
     $response->addCommand(new HtmlCommand('#edit-field-division', $divisionOptionHtml));
-    $response->addCommand(new DemoTestJsCommand());
     return $response;
   }
-
-  // function itr_page_attachments_alter(&$build) {
-  //   $build['#attached']['library'][] = 'itr/add-record';
-  //   $build['#attached']['drupalSettings']['itr']['addRecord']['foo'] = 'bar';
-  // }
 
   // increase the length of the site slogan
   function itr_form_system_site_information_settings_alter(&$form, FormStateInterface $form_state, $form_id) {
     $form['site_information']['site_slogan']['#maxlength'] = 500;
   }
 
-  // alter the view for admin vs. non-admin
-  // function itr_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
-  //   $user = User::load(\Drupal::currentUser()->id());
-  //   $viewId = $view->id();
-  //   error_log('view alter');
-  //   error_log($viewId);
-  //   error_log(print_r($user->getRoles(), 1));
-  //   $isAdmin = in_array('administrator', $user->getRoles());
-  //   // error_log(print_r($query, 1));
-  //   if($viewId == 'content') {
-  //     error_log('this is the content view');
-  //     if(!$isAdmin) {
-  //       error_log('this is not an admin');
-  //       //INNER JOIN {users} users_field_data_node_field_data__users ON users_field_data_node_field_data.uid = users_field_data_node_field_data__users.uid
-  //       $configuration = [
-  //         'type' => 'INNER',
-  //         'table' => 'users',
-  //         'field' => 'uid',
-  //         'left_table' => 'users_field_data',
-  //         'left_field' => 'uid',
-  //         'operator' => '=',
-  //       ];
-  //       $join = \Drupal::service('plugin.manager.views.join')->createInstance('standard', $configuration);
-  //       // $query->addRelationship()
-  //     } else {
-  //       error_log('this is an admin');
-  //     }
-  //   }
-  // }
-
   // redirect user to content edit view part 1
   function itr_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-    // error_log('form_id: ' . $form_id);
     if($form_id == 'user_login_form') {
-      error_log('itr.module:itr_form_user_login_form_alter:' . $form_id);
       $form['#submit'][] = '_itr_form_redirect_callback';
     }
   }
@@ -336,15 +172,11 @@
   function _itr_form_redirect_callback($form, FormStateInterface $form_state) {
     $user = User::load(\Drupal::currentUser()->id());
     $userDepts = Utility::getDepartmentsForUser();
-    // error_log(print_r($userDepts, 1));
     $formId = $form['#form_id'];
     
-    // error_log('itr.module: _itr_form_redirect_callback: $formId: ' . $formId);
-
     if($formId == 'node_record_form') {
       if(isset($form['field_department'])) {
         $deptId = $form['field_department']['widget']['#value'];
-        // error_log('itr.module: _itr_form_redirect_callback: $deptId: ' . $deptId);
         $form_state->setRedirect('view.schedules.page_1', [
           'dept_id' => $deptId
         ]);
@@ -365,10 +197,6 @@
   // alter user (non-admin) view form
   function itr_form_views_form_content_page_user_view_alter(&$form, FormStateInterface $form_state, $form_id) {
     if($form_id == 'views_form_content_page_user_view') {
-      // error_log($form_id);
-      // error_log('this is the views_form_content_page_user_view_alter form hook');
-      // Kint::dump($form);
-      // error_log(print_r($form['header']['node_bulk_form']['action']['#options'], 1));
       $theOptions = $form['header']['node_bulk_form']['action']['#options'];
       foreach($theOptions as $key => $value) {
         if($key == 'node_delete_action') {
@@ -385,29 +213,20 @@
     if($form['#id'] == 'views-exposed-form-schedules-page-1' || $form['#id'] == 'views-exposed-form-schedules-page-2') {
       $form['#attached']['library'][] = 'itr/view-edit-schedule';
       $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
-      // error_log('itr.modules:itr_form_views_exposed_form_alter:id:' . $form['#id']);
-      // error_log('itr.module:itr_form_views_exposed_form_alter:$user->getRoles():' . print_r($user->getRoles(), 1));
-      // Kint::dump($user);
       $requestDeptId = \Drupal::routeMatch()->getParameter('dept_id'); // the requested dept_id from the route
-      // if the requested deptId (a contextual filter defined in drupal ui view "schedules") is a dept belonging to this user
-      // or the user is admin, display this view and alter the filter options to only show the user's departments (done through user settings via drupal ui)
-      // Kint::dump($form_state->get('view'));
 
       $view = $form_state->get('view');
       $deptId = count($view->getExposedInput()) > 0 ? $view->getExposedInput()['field_department_target_id'] : $view->args[0]; // this contextual filter could be coming from two different places
-      // error_log('itr_form_views_exposed_form_alter:id:' . $form['#id'] . ':getExposedInput():' . print_r($view->getExposedInput(), 1));
-      // error_log('itr_form_views_exposed_form_alter:id:' . $form['#id'] . ':deptId:' . $deptId);
+
       $form['#attached']['drupalSettings']['itr']['schedule']['deptId'] = $deptId;
       $form['#attached']['drupalSettings']['itr']['user']['admin'] = Utility::userIsAdmin();
 
       if(userHasDept($deptId) || Utility::userIsAdmin()) {
         $currentOptions = $form['field_department_target_id']['#options']; // get current options
-        // error_log(print_r($currentOptions, 1));
         $newOptions = array(
           'All' => $currentOptions['All']
         ); // grab All key from current options and assign to new options
         $depts = Utility::getDepartmentsForUser(); // get departments only (no child terms)
-        // error_log(print_r($depts, 1));
         $deptCount = count($depts);
         for($i=0; $i<$deptCount; $i++) { // loop through depts and create new stdClass object for use in new options
           $obj = new stdClass();
@@ -418,18 +237,12 @@
         }
         $form['field_department_target_id']['#options'] = $newOptions; // set new options
       } else { // requested dept does not belong to this user, throw access denied exception
-        // error_log('itr.module:itr_form_views_exposed_form_alter:access denied');
         throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
       }
     } 
   }
 
-  function _itr_form_schedule_filter_submit($form, FormStateInterface $form_state) {
-    error_log('_itr_form_schedule_filter_submit');
-  }
-
   function itr_node_access(NodeInterface $node, $op, AccountInterface $account) {
-    // error_log('itr.module:itr_node_access:'.$op);
     $content_type = $node->bundle();
     if($content_type == 'record') {
       if(!Utility::userIsAdmin() && $node->isPublished()) { // non admin users cannot mess with published records
@@ -440,93 +253,25 @@
     }
   }
 
-  // function itr_form_views_form_schedules_page_1_alter(&$form, FormStateInterface $form_state, $form_id) {
-  //   error_log('itr.module:itr_form_views_form_schedules_page_1_alter:' . $form_id);
-  //   $form['#attached']['library'][] = 'itr/view-edit-schedule';
-  //   Kint::dump($form_state->getStorage());
-  //   $view = $form_state->get('view');
-  //   // error_log('itr.module:itr_form_views_form_schedules_page_1_alter:$view->id():' . $view->id());
-  //   // send along the department info node id if it exists
-  //   // $request = \Drupal::httpClient()->get($base_url . '/itr_rest_view/dept/info/' . $deptId . '?_format=json'); // this path is a rest route defined in view Department Info
-  //   // $deptInfoData = json_decode($request->getBody(), true);
-  //   // error_log(print_r($deptInfoData, 1));
-  //   // $form['#submit'][] = '_itr_form_views_form_schedules_page_1_all_submit_callback';
-  //   // Kint::dump($form);
-  //   // Kint::dump($form);
-  // }
-
-  // function itr_form_views_form_schedules_page_1_alter(&$form, FormStateInterface $form_state, $form_id) {
-  //   error_log('itr.module:itr_form_views_form_schedules_page_1_alter:' . $form_id);
-  // }
-
-
-  // function _itr_form_views_form_schedules_page_1_all_submit_callback($form, FormStateInterface $form_state) {
-  //   // Kint::dump($form_state);
-  //   error_log(print_r($form_state, 1));
-  //   $form['#attached']['drupalSettings']['itr']['scheduleAction']['publish'] = true;
-  //   error_log('itr.module:_itr_form_views_form_schedules_page_1_all_submit_callback:here');
-  // }
-
   // do some stuff with views before render
   function itr_views_pre_render(\Drupal\views\ViewExecutable $view) {
-    // error_log($view->id());
-    // Kint::dump($view->field['node_bulk_form']);
-    // Kint::dump($view);
-    // error_log(print_r($view->field['node_bulk_form']->options['selected_actions'], 1));
     $viewId = $view->id();
-    // $deptIdContextualFilter = $view->args[0];
-
-
-
-    // error_log('itr.module:itr_views_pre_render:viewId:' . $viewId);
-    // error_log('itr.module:itr_views_pre_render:deptIdContextualFilter:' . $deptIdContextualFilter);
-
-    // error_log(print_r($view->args, 1));
-
     if($viewId == 'schedules') { // the schedules view
-      // $view->element['#attached']['library'][] = 'itr/export-schedule';
-      // $view->element['#attached']['drupalSettings']['itr']['exportSchedule']['id'] = $deptIdContextualFilter;
-
-      // error_log(print_r($view->field['field_department_target_id'], 1));
-      // Kint::dump($view->field)
-
       if(!Utility::userIsAdmin()) { // if user is not admin, only allow delete action
         if($view->field['node_bulk_form']) {
           $view->field['node_bulk_form']->options['selected_actions'] = ['node_delete_action'];
-          // $results = $view->result;
-          // Kint::dump($results);
-          // foreach($results as $result) {
-          //   Kint::dump($result->_entity->getFields());
-          // }
         }
       }
     }
   }
 
   function itr_link_alter(&$variables) {
-
-    // Kint::dump($variables);
-    // error_log('itr.module:itr_link_alter');
     $url = $variables['url'];
     if($url->isRouted() && ($url->getRouteName() == 'view.schedules.page_1' || $url->getRouteName() == 'view.schedules.page_2')) {
-      // $menuTree = \Drupal::menuTree()->load('account', new \Drupal\Core\Menu\MenuTreeParameters());
-      // foreach($menuTree as $item) {
-      //   error_log($item->link->getTitle());
-      //   if($item->hasChildren) {
-      //     $subtree = $item->subtree;
-      //     foreach($subtree as $subtreeItem) {
-      //       error_log('-' . $subtreeItem->link->getTitle());
-      //     }
-      //   }
-      // }
-      // if(!userIsAdmin()) {
-        $depts = Utility::getDepartmentsForUser();
-        if(count($depts) > 0) {
-          $url->setRouteParameter('dept_id', $depts[0]['id']);
-        }  
-      // }
-      
-      // Kint::dump($variables);
+      $depts = Utility::getDepartmentsForUser();
+      if(count($depts) > 0) {
+        $url->setRouteParameter('dept_id', $depts[0]['id']);
+      }  
     }
   }
 
@@ -546,8 +291,6 @@
   function itr_entity_insert(EntityInterface $entity) {
     if ($entity instanceof \Drupal\node\NodeInterface){
       if($entity->bundle() == 'department_information') {
-        // error_log('itr.module:itr_entity_insert');
-        // error_log('itr.module:itr_entity_insert:bundle:' . $entity->bundle());
         $id = $entity->id();
         $url = Url::fromRoute('entity.node.edit_form', ['node' => $id])->toString();
         // Redirecting to edit after department information created
@@ -558,11 +301,8 @@
   }
 
   function departmentInformationFormAlter(&$form, FormStateInterface $form_state, $form_id) {
-    // Kint::dump($form);
-    // error_log('itr.module:departmentInformationFormAlter:$form_id:' . $form_id);
     $form['#attributes']['class'][] = 'itr-form';
     $depts = Utility::getDepartmentsForUser();
-    // error_log('itr.module:departmentInformationFormAlter:user has ' . count($depts) . ' depts');
     $deptOptions = array();
     $deptOptions['_none'] = '- None -';
     foreach($depts as $dept) {
@@ -578,23 +318,8 @@
     $form['actions']['submit']['#attributes']['class'][] = 'blue-btn btn-lg';
 
     if(!Utility::userIsAdmin()) { // user is not admin, disable select
-    //   // Kint::$maxLevels = 5;
-    //   // Kint::dump($form['field_schedule_ratified_date']);
-    //   error_log('itr.module:departmentInformationFormAlter:user is not admin');
-    //   // disable schedule ratified date
       $form['field_schedule_ratified_date']['widget'][0]['value']['#attributes']['readonly'] = TRUE;
     }
-
-    // if(count($depts) == 1 || $form_state->getFormObject()->getOperation() == 'edit') {
-    //   $form['field_department_name']['widget']['#attributes']['disabled'] = 'disabled';
-    // }
-
-    // $url = Url::fromRoute('node.edit_form', ['node' => 5530]);
-    // $current_path = \Drupal::service('path.current')->getPath();
-    // $route_name = Url::fromUserInput($current_path)->getRouteName();
-    // error_log('itr.module:departmentInformationFormAlter:url:' . $route_name);
-    // $form_state->setRedirect('entity.node.edit_form', ['node' => 5530]);
-
 
     foreach(array_keys($form['actions']) as $action) {
       if($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type']==='submit') {
@@ -604,25 +329,12 @@
   }
 
   function _itr_form_manage_dept_callback($form, FormStateInterface $form_state) {
-    // error_log('_itr_form_manage_dept_callback');
     $node = \Drupal::routeMatch()->getParameter('node');
     if ($node instanceof \Drupal\node\NodeInterface) {
       // You can get nid and anything else you need from the node object.
       $nid = $node->id();
-      // error_log($nid);
       $routeName = 'entity.node.edit_form';
       $routeParameters = ['node'=>$nid];
       $form_state->setRedirect($routeName, $routeParameters);
     }
   }
-
-  // function itr_views_pre_view(ViewExecutable $view, $display_id, &$args) {
-  //   error_log('itr.module:itr_views_pre_view');
-  //   error_log($view->id());
-  //   if($view->id() == 'schedules') {
-  //     // error_log(print_r($args, 1));
-  //     // $args[0] = '10';
-  //   }
-  // }
-
-?>

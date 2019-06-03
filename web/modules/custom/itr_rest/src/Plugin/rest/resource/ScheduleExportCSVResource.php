@@ -79,5 +79,3 @@ class ScheduleExportCsvResource extends ResourceBase {
   }
 
 }
-
-?>

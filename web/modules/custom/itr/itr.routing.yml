@@ -1,11 +1,3 @@
-hello_world.content:
-  path: '/itr'
-  defaults:
-    _controller:
-      '\Drupal\itr\Controller\HelloController::content'
-    _title: 'Hello World'
-  requirements:
-    _permission: 'access content'
 admin.content:
   path: '/admin/content'
 admin.content.user:
@@ -18,14 +10,10 @@ import.form:
   requirements:
     _role: 'authenticated'
 schedule.export:
-  # path: '/schedule/export/{deptId}'
   path: '/schedule/export'
   defaults:
     _title: 'Schedule Export'
     _form: '\Drupal\itr\Form\ExportScheduleForm'
-    # _controller:
-    #   '\Drupal\itr\Controller\ExportScheduleController::content'
-    # deptId: 'all'
   requirements:
     _role: 'authenticated'
 department.edit:

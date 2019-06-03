@@ -33,10 +33,6 @@ class DepartmentResource extends ResourceBase {
         );
       }
     }
-
-    $response = ['message' => 'Hello, this is a rest service'];
     return new ResourceResponse($departments);
   }
 }
-
-?>

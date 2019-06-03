@@ -1,74 +1,70 @@
-$ = jQuery;
-$(window).on('load', function() {
-  Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, status) {
-    var schedule = response.data.schedule;
-    var dept = response.data.department; // dept taxonomy id
-    var sessionUrl = drupalSettings.path.baseUrl + 'session/token';
-    var entityCreateUrl = drupalSettings.path.baseUrl + 'entity/node';
-    var scheduleRetrieveUrl = drupalSettings.path.baseUrl + 'itr_rest_view/schedules/' + dept + '?_format=json';
-    var deleteUrl = drupalSettings.path.baseUrl + 'itr_rest/schedule/delete?_format=json';
-    var recCount = schedule.length;
-
-    $('#edit-import-schedule-fields').addClass('disabled');
-    $('#import-schedule-form input').attr('disabled', true);
-    $('#import-schedule-form select').attr('disabled', true);
-    $('#import-schedule-form #edit-submit').val('Importing...');
-    $('#import-schedule-form #edit-submit').toggle();
-
-    var progressHtml = '';
-    progressHtml =  '<div id="import-progress-wrap">';
-    progressHtml += '</div>';
-    progressHtml += '<div id="import-progress-msg"></div>';
-    progressHtml += '<div id="import-progress-log"></div>';
-    
-    $('#import-form-wrapper').after(progressHtml);
-
-    var updateProgressLog = function(msg, flag) {
-      if(flag) $('#import-progress-msg').html(msg);
-      if(!flag) {
-        $('#import-progress-log').html($('#import-progress-log').html() + msg + '<br/>');
-        $('#import-progress-msg').html(msg);
+(function($) {
+  $(document).ready(function() {
+    Drupal.AjaxCommands.prototype.importScheduleCommand = function(ajax, response, status) {
+      var schedule = response.data.schedule;
+      var dept = response.data.department; // dept taxonomy id
+      var sessionUrl = drupalSettings.path.baseUrl + 'session/token';
+      var entityCreateUrl = drupalSettings.path.baseUrl + 'entity/node';
+      var scheduleRetrieveUrl = drupalSettings.path.baseUrl + 'itr_rest_view/schedules/' + dept + '?_format=json';
+      var deleteUrl = drupalSettings.path.baseUrl + 'itr_rest/schedule/delete?_format=json';
+      var recCount = schedule.length;
+  
+      $('#edit-import-schedule-fields').addClass('disabled');
+      $('#import-schedule-form input').attr('disabled', true);
+      $('#import-schedule-form select').attr('disabled', true);
+      $('#import-schedule-form #edit-submit').val('Importing...');
+      $('#import-schedule-form #edit-submit').toggle();
+  
+      var progressHtml = '';
+      progressHtml =  '<div id="import-progress-wrap">';
+      progressHtml += '</div>';
+      progressHtml += '<div id="import-progress-msg"></div>';
+      progressHtml += '<div id="import-progress-log"></div>';
+      
+      $('#import-form-wrapper').after(progressHtml);
+  
+      var updateProgressLog = function(msg, flag) {
+        if(flag) $('#import-progress-msg').html(msg);
+        if(!flag) {
+          $('#import-progress-log').html($('#import-progress-log').html() + msg + '<br/>');
+          $('#import-progress-msg').html(msg);
+        }
+      };
+  
+      var updateProgressBar = function(recCount, success) {
+        var progressBarWrap = $('#import-progress-wrap');
+        var elemSize = 100/recCount;
+        var elemMargin = 0;
+        var elemClass = success ? 'import-progress-indicator-success' : 'import-progress-indicator-error';
+        var elem = '<div style="width:' + (elemSize - (elemMargin * 2)) + '%; margin: 0 ' + elemMargin + '%" class="' + elemClass + '"></div>';
+        $(progressBarWrap).append(elem);
+        window.getComputedStyle($(elem)[0]).width;
       }
-    };
-
-    var updateProgressBar = function(increment, msg) {
-      $('#import-progress').css({width: (increment*100) + '%'});
-    }
-
-    var updateProgressBar2 = function(recCount, success) {
-      var progressBarWrap = $('#import-progress-wrap');
-      var elemSize = 100/recCount;
-      var elemMargin = 0;
-      var elemClass = success ? 'import-progress-indicator-success' : 'import-progress-indicator-error';
-      var elem = '<div style="width:' + (elemSize - (elemMargin * 2)) + '%; margin: 0 ' + elemMargin + '%" class="' + elemClass + '"></div>';
-      $(progressBarWrap).append(elem);
-      window.getComputedStyle($(elem)[0]).width;
-    }
-
-    var deptName = $('#edit-schedule-department')[0].options[$('#edit-schedule-department')[0].selectedIndex].innerHTML;
-
-    // first retrieve auth token
-    $.ajax({
-      type: 'GET',
-      url: sessionUrl,
-      success: function(token) {
-        // token retrieved
-        // now delete all records for dept
-        updateProgressLog('Retrieving records for ' + deptName + ' for deletion');
-        // get records for deletion
-        $.ajax({
-          type: 'GET',
-          url: scheduleRetrieveUrl,
-          success: function(resp) {
-            updateProgressLog('Records for deletion for ' + deptName + ' retrieved');
-            var deptRecords = resp;
-            var deleteIds = [];
-            for(var i=0; i<deptRecords.length; i++) {
-              deleteIds.push(deptRecords[i].nid[0].value);
-            }
-
-            // now delete them
-            $.ajax({
+  
+      var deptName = $('#edit-schedule-department')[0].options[$('#edit-schedule-department')[0].selectedIndex].innerHTML;
+  
+      // first retrieve auth token
+      $.ajax({
+        type: 'GET',
+        url: sessionUrl,
+        success: function(token) {
+          // token retrieved
+          // now delete all records for dept
+          updateProgressLog('Retrieving records for ' + deptName + ' for deletion');
+          // get records for deletion
+          $.ajax({
+            type: 'GET',
+            url: scheduleRetrieveUrl,
+            success: function(resp) {
+              updateProgressLog('Records for deletion for ' + deptName + ' retrieved');
+              var deptRecords = resp;
+              var deleteIds = [];
+              for(var i=0; i<deptRecords.length; i++) {
+                deleteIds.push(deptRecords[i].nid[0].value);
+              }
+  
+              // now delete them
+              $.ajax({
                 method: 'POST',
                 url: deleteUrl,
                 headers: {
@@ -116,7 +112,7 @@ $(window).on('load', function() {
                     }
                     if(errorMsg.length > 0) {
                       updateProgressLog('<span class="import-error-msg">Skipped record at index ' + index + '.  ' + rec.title + '.' + errorMsg + '</span>');
-                      updateProgressBar2(schedule.length, false);
+                      updateProgressBar(schedule.length, false);
                       failCount = failCount + 1;
                       defer.resolve();
                     } else {
@@ -168,15 +164,13 @@ $(window).on('load', function() {
                         success: function(node) {
                           successCount++;
                           updateProgressLog('Imported: ' + node.title[0].value);
-                          updateProgressBar2(recCount, true);
+                          updateProgressBar(recCount, true);
                           defer.resolve();
                         },
                         error: function(resp) {
-                          console.log('error: ', nodeJson);
                           defer.resolve();
                         },
                         fail: function(resp) {
-                          console.log('fail: ', nodeJson);
                           defer.resolve();
                         }
                       });
@@ -206,14 +200,23 @@ $(window).on('load', function() {
                     });
                   });
                 },
+                error: function(resp) {
+                  alert('Error deleting records');
+                },
                 fail: function(resp) {
-                  console.log('failed to delete existing records');
-                  console.log(resp);
+                  alert('Failure deleting records');
                 }
-            });
-          }
-        });
-      }
-    });
-  };
-});
+              });
+            },
+            error: function(resp) {
+              alert('Error retrieving records');
+            },
+            fail: function(resp) {
+              alert('Failure retrieving records');
+            }
+          });
+        }
+      });
+    };
+  });
+})(jQuery);

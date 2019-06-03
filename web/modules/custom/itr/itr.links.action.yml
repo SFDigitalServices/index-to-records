@@ -6,10 +6,3 @@ itr.add_record:
   appears_on:
     - admin.content
     - admin.content.user
-# itr.add_record:
-#   route_name: node.add
-#   title: 'Add Record'
-#   route_parameters:
-#     node_type: 'record'
-#   appears_on:
-#     - admin.content.user

@@ -254,5 +254,3 @@ class ScheduleExportPdfResource extends ResourceBase {
     return $returnArray;
   }
 }
-
-?>

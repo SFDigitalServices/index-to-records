@@ -32,5 +32,3 @@ class ScheduleDeleteResource extends ResourceBase {
   }
 
 }
-
-?>
