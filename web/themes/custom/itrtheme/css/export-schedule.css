@@ -14,10 +14,6 @@
   border-bottom: 1px solid #ccc;
 }
 
-#export-schedule-form .form-item {
-
-}
-
 #export-schedule-form #edit-export-csv-link {
   border-right: 1px solid #ccc;
 }
@@ -33,10 +29,6 @@
   padding: 20px;
   margin: 0;
   line-height: 1.5em;
-}
-
-#export-schedule-form .download-link {
-  
 }
 
 #export-schedule-form #csv-export-status,

@@ -40,13 +40,6 @@
 }
 
 #import-progress {
-/*  background: repeating-linear-gradient(
-    45deg,
-    #0a8aea,
-    #0a8aea 10px,
-    #465298 10px,
-    #465298 20px
-  );*/
   background: #00cc66;
   width: 0px;
   height: inherit;
@@ -78,9 +71,6 @@
 }
 
 #view-log-link {
-/*  font-family: 'verdana';
-  font-size: 0.8em;
-  margin-left: 5px;*/
   display: block;
 }
 

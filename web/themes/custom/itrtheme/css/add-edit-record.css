@@ -19,15 +19,12 @@
 }
 
 #record-template-browser {
-  /*display: none;*/
   opacity: 0;
   position: absolute;
-  /*top: -100%;*/
   left: -100%;
   margin-left: -485px;
   width: 950px;
   overflow-y: scroll;
-  /*border-radius: 5px;*/
   background: #fff;
   padding: 10px;
   -webkit-transition: all 0.4s;
@@ -42,7 +39,6 @@
   display: block;
   opacity: 1;
   left: 50%;
-  /*top: 0;*/
 }
 
 #record-template-browser h4 {
