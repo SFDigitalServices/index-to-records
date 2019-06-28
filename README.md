@@ -1,8 +1,8 @@
 # Example Drops 8 Composer
 
-[![CircleCI](https://circleci.com/gh/pantheon-systems/example-drops-8-composer.svg?style=shield)](https://circleci.com/gh/pantheon-systems/example-drops-8-composer)
-[![Pantheon example-drops-8-composer](https://img.shields.io/badge/dashboard-drops_8-yellow.svg)](https://dashboard.pantheon.io/sites/c401fd14-f745-4e51-9af2-f30b45146a0c#dev/code) 
-[![Dev Site example-drops-8-composer](https://img.shields.io/badge/site-drops_8-blue.svg)](http://dev-example-drops-8-composer.pantheonsite.io/)
+[![CircleCI](https://circleci.com/gh/SFDigitalServices/index-to-records.svg?style=svg)](https://circleci.com/gh/SFDigitalServices/index-to-records)
+[![Dashboard index-to-records](https://img.shields.io/badge/dashboard-indextorecords-yellow.svg)](https://dashboard.pantheon.io/sites/d8404382-ee59-443c-94c3-1ba439cfbe46#dev/code)
+[![Dev Site index-to-records](https://img.shields.io/badge/site-indextorecords-blue.svg)](http://dev-index-to-records.pantheonsite.io/)
 
 This repository is a start state for a Composer-based Drupal workflow with Pantheon. It is meant to be copied by the the [Terminus Build Tools Plugin](https://github.com/pantheon-systems/terminus-build-tools-plugin) which will set up for you a brand new
 
@@ -69,10 +69,29 @@ So that CircleCI will have some test to run, this repository includes a configur
 
 When using this repository to manage your Drupal site, you will no longer use the Pantheon dashboard to update your Drupal version. Instead, you will manage your updates using Composer. Ensure your site is in Git mode, clone it locally, and then run composer commands from there.  Commit and push your files back up to Pantheon as usual.
 
+## Local Behat Tests
+For additonal context, refer to config in .lando.yml.
 
+```
+$ lando behat --config=/app/tests/behat-pantheon.yml --tags sfgov
+```
 
+## Updating core with composer
+Can sometimes cause php out of memory issues.  Do this:
 
+```
+$ php -d memory_limit=-1 `which composer` update drupal/core --with-dependencies
+```
 
+## Issues with lando/drush (7/26/2019)
+Pantheon required a `drush` update to `8.2.3`.  Updating site-local drush to this version resulted in a failed attempt to `lando pull` the db from pantheon, with the following error
 
+```
+Class 'Drush\Commands\DrushCommands' not found
+/etc/drush/drupal-8-drush-commandfiles/Commands/site-audit-tool/SiteAuditCommands.php:18
+```
 
+Temp workaround is to use lando's helper script to import db.  Refer to `.lando.yml` file, under the `tooling` section.
+
+In short, do `lando getdb` to import the db from pantheon `dev` environment.
 

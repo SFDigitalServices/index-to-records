@@ -4,17 +4,30 @@ config:
   framework: drupal8
   site: index-to-records
   id: d8404382-ee59-443c-94c3-1ba439cfbe46
-  webroot: web
-  drush: global:8.1.16
-
+  webroot: web`
 services:
   appserver:
+    run:
+      - mkdir -p /var/www/logs
     overrides:
       environment:
         BEHAT_PARAMS: >-
-          { "extensions": { "Behat\\MinkExtension": { "base_url": "http://indextorecords.lndo.site", "goutte": { "guzzle_parameters": { "verify": false } } }, "Drupal\\DrupalExtension": { "drush": { "root": "/app/web" } } } }
+          { "extensions": { "Behat\\MinkExtension": { "base_url":
+          "http://sfgov.lndo.site", "goutte": { "guzzle_parameters": { "verify":
+          false } } }, "Drupal\\DrupalExtension": { "drush": { "root":
+          "/app/web" } } } }
 
 tooling:
   behat:
     service: appserver
     cmd: /app/vendor/bin/behat
+  drush:
+    service: appserver
+    cmd: /app/vendor/bin/drush
+  getdb:
+    description: Supplement to `lando pull` when it fails because of drush issues
+    cmd:
+      - appserver: rm -f /app/web/database.sql.gz
+      - appserver: terminus backup:create index-to-records.dev --element=db
+      - appserver: terminus backup:get index-to-records.dev --element=db --to=/app/web/database.sql.gz
+      - database: /helpers/sql-import.sh web/database.sql.gz
