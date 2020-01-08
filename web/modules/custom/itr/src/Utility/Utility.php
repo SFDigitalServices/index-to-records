@@ -67,7 +67,7 @@
       if(!isset($deptId)) return array();
       $vid = 'department';
       $categories = array();
-      $categoryTermId = getTermId('category', $deptId);
+      $categoryTermId = self::getTermId('category', 'department', $deptId);
       if($categoryTermId >= 0) {
         $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $categoryTermId);
         foreach($terms as $term) {
@@ -84,7 +84,7 @@
       if(!isset($deptId)) return array();
       $vid = 'department';
       $divisions = array();
-      $divisionTermId = getTermId('division', $deptId);
+      $divisionTermId = self::getTermId('division', 'department', $deptId);
       if($divisionTermId >= 0) {
         $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, $divisionTermId);
         foreach($terms as $term) {
