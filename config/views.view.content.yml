@@ -46,7 +46,6 @@ description: 'Find and manage content.'
 tag: default
 base_table: node_field_data
 base_field: nid
-core: 8.x
 display:
   default:
     display_options:
@@ -727,6 +726,9 @@ display:
           plugin_id: node_status
           group: 1
           entity_type: node
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
       sorts: {  }
       title: Content
       empty:
@@ -805,6 +807,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: true
           group_info:
             label: 'Published status'
@@ -837,6 +841,9 @@ display:
           plugin_id: node_status
           group: 1
           entity_type: node
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
         type:
           id: type
           table: node_field_data
@@ -862,6 +869,8 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -904,6 +913,8 @@ display:
               administrator: '0'
               schedule_administrator: '0'
             placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -1499,6 +1510,9 @@ display:
           plugin_id: node_status
           group: 1
           entity_type: node
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
         type:
           id: type
           table: node_field_data
@@ -1524,6 +1538,8 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -2866,6 +2882,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: true
           group_info:
             label: 'Published status'
@@ -2898,6 +2916,9 @@ display:
           plugin_id: node_status
           group: 1
           entity_type: node
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
         type:
           id: type
           table: node_field_data
@@ -2925,6 +2946,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -2966,6 +2989,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -3014,6 +3039,8 @@ display:
               administrator: '0'
               schedule_administrator: '0'
             placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -3093,6 +3120,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -3132,6 +3161,8 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -3172,6 +3203,8 @@ display:
               authenticated: authenticated
               anonymous: '0'
               administrator: '0'
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -3213,6 +3246,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -3288,6 +3323,8 @@ display:
               anonymous: '0'
               administrator: '0'
             placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -3326,6 +3363,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: true
           group_info:
             label: 'Published status'
@@ -3358,6 +3397,9 @@ display:
           plugin_id: node_status
           group: 1
           entity_type: node
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
         uid_current:
           id: uid_current
           table: users
@@ -3381,6 +3423,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''

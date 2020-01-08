@@ -20,6 +20,7 @@ settings:
   label: 'Search for a Record'
   provider: search
   label_display: visible
+  page_id: ''
 visibility:
   request_path:
     id: request_path
