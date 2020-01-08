@@ -5,5 +5,4 @@ dependencies: {  }
 name: Retention
 vid: retention
 description: 'Record retention options'
-hierarchy: 0
 weight: 0
