@@ -4,6 +4,8 @@
   use Drupal\taxonomy\Entity\Term;
   use Drupal\user\Entity\User;
   use Drupal\file\Entity\File;
+  use Drupal\views\ViewExecutable;
+  use Drupal\views\Views;
 
   class Utility {
     
@@ -43,7 +45,6 @@
       $vid = 'department';
       $depts = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, 0, 1);
       foreach($depts as $key => $row) {
-        $id[$key] = $row->id;
         $name[$key] = $row->name;
       }
       array_multisort($name, SORT_ASC, $depts);
@@ -221,16 +222,33 @@
       return null;
     }
 
-    public static function createCSV(array $data, $deptId = null) {
-      $fileName = isset($deptId) ? str_replace(' ', '-', strtolower(self::getTermNameByTid($deptId))) : 'no-filename';
+    public static function getView($viewId, $displayId, $arguments) {
+      $result = false;
+      $view = Views::getView($viewId);
+  
+      if (is_object($view)) {
+        $view->setDisplay($displayId);
+        $view->setArguments($arguments);
+        $view->preExecute();
+        $view->execute();
+
+        // Render the view
+        $result = \Drupal::service('renderer')->render($view->render());
+      }
+      return $result;
+    }
+
+    public static function createCSV(array $data, $deptId = null, $filepath = null) {
+      $fileName = isset($deptId) ? str_replace(' ', '-', str_replace("/", '-', strtolower(self::getTermNameByTid($deptId)))) : 'no-filename';
   
       $file = File::create([
         'filename' => $fileName . '.csv',
-        'uri' => 'public://schedule/export/csv/' . $fileName . '.csv',
+        'uri' => $filepath ? $filepath . $fileName . '.csv' : 'public://schedule/export/csv/' . $fileName . '.csv',
         'status' => 1,
       ]);
       $file->save();
       $dir = dirname($file->getFileUri());
+      chmod($dir, 0777);
       if(!file_exists($dir)) {
         mkdir($dir, 0770, TRUE);
       }

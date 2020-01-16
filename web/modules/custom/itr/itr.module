@@ -21,6 +21,8 @@
 
   use Drupal\itr\Utility\Utility;
 
+  use Drupal\Core\File\FileSystem;
+
   // alter add record form
   function itr_form_node_record_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     $form['#attributes']['class'][] = 'itr-form';
@@ -290,4 +292,38 @@
       $routeParameters = ['node'=>$nid];
       $form_state->setRedirect($routeName, $routeParameters);
     }
+  }
+
+  function itr_cron() {
+    $pathdir = 'public://schedule/backup/';
+    $depts = Utility::getDepartments();
+    $batch_num = 5;
+    $batch = array_chunk($depts, $batch_num);
+    foreach($batch as $b) {
+      foreach($b as $dept) {
+        $deptId = $dept->tid;
+        $arg = [$dept->tid];
+        $result = Utility::getView('schedules', 'rest_export_1', $arg);
+        if(is_object($result)) {
+          $data = json_decode($result, true);
+          Utility::createCSV($data, $dept->tid, $pathdir);
+        }
+      }
+      sleep (5);
+    }
+    $zip_path = \Drupal::service('file_system')->realpath($pathdir);
+    $zip_file_name = $zip_path.'/backup.'.date('m.d.y').'.zip';
+    $zip = new ZipArchive;
+    if($zip -> open($zip_file_name, ZipArchive::CREATE ) === TRUE) { 
+      $dir = opendir($zip_path);
+      while($file = readdir($dir)) {
+        if(is_file($zip_path.'/'.$file)) {
+          $info = pathinfo($file);
+          if($info['extension'] == "csv") $zip->addFile($zip_path.'/'.$file, $file);
+        }
+      }
+      $zip->close();
+      array_map('unlink', glob($zip_path."/*.csv"));
+    }
+    error_log('cron complete');
   }
