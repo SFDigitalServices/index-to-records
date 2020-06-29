@@ -1,0 +1,106 @@
+uuid: d0dedd60-59e4-4785-bf8f-672db04b1f6d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.department.body
+    - field.field.node.department.field_department_contact_name
+    - field.field.node.department.field_department_email
+    - field.field.node.department.field_department_phone_number
+    - field.field.node.department.field_department_retention_polic
+    - field.field.node.department.field_department_website
+    - field.field.node.department.field_description
+    - field.field.node.department.field_records
+    - field.field.node.department.field_schedule_ratified_date
+    - node.type.department
+  module:
+    - entity_reference_revisions
+    - file
+    - link
+    - text
+    - user
+id: node.department.default
+targetEntityType: node
+bundle: department
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_department_contact_name:
+    weight: 109
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_department_email:
+    weight: 102
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_department_phone_number:
+    weight: 103
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_department_retention_polic:
+    weight: 105
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+  field_department_website:
+    weight: 104
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_description:
+    weight: 108
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_records:
+    type: entity_reference_revisions_entity_view
+    weight: 107
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  field_schedule_ratified_date:
+    weight: 106
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

@@ -1,0 +1,22 @@
+uuid: 13547405-05e6-4840-a6e7-b79499d33452
+langcode: en
+status: false
+dependencies:
+  module:
+    - help
+  theme:
+    - itr_admin
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: itr_admin_help
+theme: itr_admin
+region: content
+weight: -2
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

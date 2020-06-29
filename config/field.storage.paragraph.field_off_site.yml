@@ -1,0 +1,19 @@
+uuid: ff27df4a-dd71-4635-8509-db27f578d783
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_off_site
+field_name: field_off_site
+entity_type: paragraph
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

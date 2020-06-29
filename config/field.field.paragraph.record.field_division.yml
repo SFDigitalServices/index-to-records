@@ -1,0 +1,29 @@
+uuid: 3f9a9c6b-db23-45fa-8e0c-b781bc5fff55
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_division
+    - paragraphs.paragraphs_type.record
+    - taxonomy.vocabulary.divisions
+id: paragraph.record.field_division
+field_name: field_division
+entity_type: paragraph
+bundle: record
+label: Division
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      divisions: divisions
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

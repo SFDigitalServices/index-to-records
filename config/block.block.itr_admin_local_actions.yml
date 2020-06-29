@@ -1,0 +1,20 @@
+uuid: 5d2931e4-799e-4726-9111-4a60bf3186b3
+langcode: en
+status: true
+dependencies:
+  theme:
+    - itr_admin
+_core:
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+id: itr_admin_local_actions
+theme: itr_admin
+region: content
+weight: -8
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

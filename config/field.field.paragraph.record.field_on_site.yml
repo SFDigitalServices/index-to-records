@@ -1,0 +1,19 @@
+uuid: d0670a99-17e7-4683-a3dd-fb72e9a520b8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_on_site
+    - paragraphs.paragraphs_type.record
+id: paragraph.record.field_on_site
+field_name: field_on_site
+entity_type: paragraph
+bundle: record
+label: On-site
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

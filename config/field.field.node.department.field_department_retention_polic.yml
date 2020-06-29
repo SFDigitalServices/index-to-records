@@ -1,0 +1,27 @@
+uuid: bd0252ae-f3e4-4192-a3ce-6e0c8a12ca70
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_department_retention_polic
+    - node.type.department
+  module:
+    - file
+id: node.department.field_department_retention_polic
+field_name: field_department_retention_polic
+entity_type: node
+bundle: department
+label: 'Department’s record retention policy'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'txt doc pdf xls'
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

@@ -1,0 +1,31 @@
+uuid: 0bde06fa-ecab-42ce-b5e9-f6412578af67
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:ed7a1d53-f2d9-4643-b6b8-bc6b68bf25ed'
+  module:
+    - block_content
+    - system
+  theme:
+    - itr_admin
+id: itr_admin_frontpagedepartmentlistheader
+theme: itr_admin
+region: content
+weight: -4
+provider: null
+plugin: 'block_content:ed7a1d53-f2d9-4643-b6b8-bc6b68bf25ed'
+settings:
+  id: 'block_content:ed7a1d53-f2d9-4643-b6b8-bc6b68bf25ed'
+  label: 'Front Page Department List Header'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

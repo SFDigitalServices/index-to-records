@@ -1,0 +1,19 @@
+uuid: 93f8de2b-7889-4c30-b777-3b89f1822cc1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_remarks
+    - paragraphs.paragraphs_type.record
+id: paragraph.record.field_remarks
+field_name: field_remarks
+entity_type: paragraph
+bundle: record
+label: Remarks
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

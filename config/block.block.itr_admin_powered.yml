@@ -1,0 +1,22 @@
+uuid: c635a99c-3941-4376-8d01-e3af1c59d73f
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - itr_admin
+_core:
+  default_config_hash: jQQUUWN2Uxr5qZtc9zcJKBCxpKY8orN1u2HPqYYRQDI
+id: itr_admin_powered
+theme: itr_admin
+region: header
+weight: -4
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

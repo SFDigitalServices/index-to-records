@@ -1,0 +1,31 @@
+uuid: 3e32b305-54fc-4c21-bf5e-699dbbc06cf3
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:31ee1f8d-adaa-4967-88e2-1e8966aff940'
+  module:
+    - block_content
+    - system
+  theme:
+    - itr_admin
+id: itr_admin_departmentscheduleviewheadercontentappearsbeforetitle
+theme: itr_admin
+region: content
+weight: -10
+provider: null
+plugin: 'block_content:31ee1f8d-adaa-4967-88e2-1e8966aff940'
+settings:
+  id: 'block_content:31ee1f8d-adaa-4967-88e2-1e8966aff940'
+  label: 'Department Schedule View Header Content (appears before title)'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: '/taxonomy/term/*'
+    negate: false
+    context_mapping: {  }

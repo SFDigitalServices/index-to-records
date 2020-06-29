@@ -1,0 +1,31 @@
+uuid: 73275cde-f899-4ae7-8123-d9639eba9164
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:06e3e3e5-2ebf-473b-a127-63bb754eb2f9'
+  module:
+    - block_content
+    - system
+  theme:
+    - itr_admin
+id: itr_admin_frontpageheadersubtext
+theme: itr_admin
+region: header
+weight: -5
+provider: null
+plugin: 'block_content:06e3e3e5-2ebf-473b-a127-63bb754eb2f9'
+settings:
+  id: 'block_content:06e3e3e5-2ebf-473b-a127-63bb754eb2f9'
+  label: 'Front Page Header Sub Text'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

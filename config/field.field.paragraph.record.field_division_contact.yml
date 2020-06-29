@@ -1,0 +1,19 @@
+uuid: 4ca7cff3-040a-471a-a96e-2530acc04c67
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_division_contact
+    - paragraphs.paragraphs_type.record
+id: paragraph.record.field_division_contact
+field_name: field_division_contact
+entity_type: paragraph
+bundle: record
+label: 'Division contact'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

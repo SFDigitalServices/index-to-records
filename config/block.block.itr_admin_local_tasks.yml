@@ -1,13 +1,13 @@
-uuid: 6a3e7cee-f31a-4ecf-bb38-07716a215f9b
+uuid: 7d78b3f7-b0f2-4e33-b977-b82d034a6a5c
 langcode: en
-status: true
+status: false
 dependencies:
   theme:
-    - itrtheme
+    - itr_admin
 _core:
   default_config_hash: X9I1OB0W3WlWtrK-CNcg6hNWwa8wficanpH8pYnDZDE
-id: itrtheme_local_tasks
-theme: itrtheme
+id: itr_admin_local_tasks
+theme: itr_admin
 region: content
 weight: -1
 provider: null

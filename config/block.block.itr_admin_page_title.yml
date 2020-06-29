@@ -1,0 +1,27 @@
+uuid: d28d63e8-9476-45e6-b41f-878230b45a9e
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - itr_admin
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: itr_admin_page_title
+theme: itr_admin
+region: content
+weight: -9
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: "<front>\r\n/taxonomy/term/*\r\n/schedule/import\r\n/node/add/department_information"
+    negate: true
+    context_mapping: {  }

@@ -1,0 +1,29 @@
+uuid: 4c80a4df-84e6-4a48-b752-49daa3e93b1e
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+    - system
+  theme:
+    - itr_admin
+_core:
+  default_config_hash: za-39d5WDUg6XvbyqSnuVYEeq6QM4qKJxW8MnoAha5A
+id: itr_admin_search
+theme: itr_admin
+region: content
+weight: -7
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Search for a Record'
+  provider: search
+  label_display: visible
+  page_id: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

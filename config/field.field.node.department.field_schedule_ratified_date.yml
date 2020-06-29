@@ -1,0 +1,19 @@
+uuid: 6cf09770-63f4-419e-8b4a-b2a83eec2bc2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_schedule_ratified_date
+    - node.type.department
+id: node.department.field_schedule_ratified_date
+field_name: field_schedule_ratified_date
+entity_type: node
+bundle: department
+label: 'Schedule ratified date'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
