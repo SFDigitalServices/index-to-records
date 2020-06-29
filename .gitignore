@@ -118,4 +118,4 @@ app
 web/themes/custom/build/node_modules
 
 # ignore theme compiled assets
-web/themes/itr_admin/dist
+web/themes/custom/itr_admin/dist
