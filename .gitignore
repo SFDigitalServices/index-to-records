@@ -116,3 +116,6 @@ app
 
 # ignore node_modules for themes
 web/themes/custom/build/node_modules
+
+# ignore theme compiled assets
+web/themes/itr_admin/dist

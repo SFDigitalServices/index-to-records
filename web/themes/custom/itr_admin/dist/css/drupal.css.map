@@ -1,1 +1,0 @@
-{"version":3,"sources":["_department.scss","drupal.css"],"names":[],"mappings":"AAAA;EAEI,aAAa;ACAjB","file":"drupal.css","sourcesContent":[".field--name-field-department-retention-polic {\n  .description {\n    display: none;\n  }\n}\n",".field--name-field-department-retention-polic .description {\n  display: none;\n}\n"]}
