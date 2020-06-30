@@ -1,0 +1,10 @@
+uuid: 780342c8-35d8-454a-b375-6361eb4afaa7
+langcode: en
+status: true
+dependencies: {  }
+id: record
+label: Record
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

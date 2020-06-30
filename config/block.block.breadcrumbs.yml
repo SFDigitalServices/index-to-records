@@ -1,0 +1,20 @@
+uuid: 182200d9-cae2-47eb-8289-0cf5c21670da
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - itr_admin
+id: breadcrumbs
+theme: itr_admin
+region: breadcrumb
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility: {  }

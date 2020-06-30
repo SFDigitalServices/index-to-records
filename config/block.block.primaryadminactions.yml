@@ -1,0 +1,18 @@
+uuid: 0d54f48b-0020-4392-a5a6-002d46b5d28e
+langcode: en
+status: true
+dependencies:
+  theme:
+    - itr_admin
+id: primaryadminactions
+theme: itr_admin
+region: content
+weight: -3
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

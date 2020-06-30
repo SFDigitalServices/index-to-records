@@ -1,0 +1,21 @@
+name: Index to records admin
+description: Index to record theme based on the Seven theme
+core: 8.x
+type: theme
+base theme: seven
+
+libraries:
+  - itr_admin/itr-admin-styles
+
+regions:
+  header: 'Header'
+  pre_content: 'Pre-content'
+  breadcrumb: Breadcrumb
+  highlighted: Highlighted
+  help: Help
+  content: Content
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  sidebar_first: 'First sidebar'
+regions_hidden:
+  - sidebar_first

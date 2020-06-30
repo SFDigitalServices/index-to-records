@@ -1,0 +1,134 @@
+uuid: 56c0e616-457a-4958-aadd-150d5c2aea71
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.department.body
+    - field.field.node.department.field_department_contact_name
+    - field.field.node.department.field_department_email
+    - field.field.node.department.field_department_phone_number
+    - field.field.node.department.field_department_retention_polic
+    - field.field.node.department.field_department_website
+    - field.field.node.department.field_description
+    - field.field.node.department.field_records
+    - field.field.node.department.field_schedule_ratified_date
+    - node.type.department
+  module:
+    - file
+    - link
+    - paragraphs
+id: node.department.default
+targetEntityType: node
+bundle: department
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_department_contact_name:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_department_email:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_department_phone_number:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_department_retention_polic:
+    weight: 3
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: file_generic
+    region: content
+  field_department_website:
+    weight: 2
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_description:
+    weight: 1
+    settings:
+      rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_records:
+    type: paragraphs
+    weight: 7
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed
+      closed_mode: preview
+      autocollapse: all
+      closed_mode_threshold: 0
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: _none
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
+    third_party_settings: {  }
+    region: content
+  field_schedule_ratified_date:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 9
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 10
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    region: content
+    third_party_settings: {  }
+hidden:
+  body: true
+  path: true
+  promote: true
+  sticky: true

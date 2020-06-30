@@ -1,0 +1,19 @@
+uuid: a3c693e1-e474-4835-986d-4a94cda66c1b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_department_phone_number
+    - node.type.department
+id: node.department.field_department_phone_number
+field_name: field_department_phone_number
+entity_type: node
+bundle: department
+label: 'Department contact phone number'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

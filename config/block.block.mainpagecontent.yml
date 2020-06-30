@@ -1,0 +1,20 @@
+uuid: ed30057e-9e43-4938-a8c9-55cf9b8ed595
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - itr_admin
+id: mainpagecontent
+theme: itr_admin
+region: content
+weight: -1
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }

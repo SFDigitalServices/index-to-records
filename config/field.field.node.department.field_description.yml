@@ -1,0 +1,19 @@
+uuid: 50449f32-5b66-490c-80a3-0e509bfe4812
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_description
+    - node.type.department
+id: node.department.field_description
+field_name: field_description
+entity_type: node
+bundle: department
+label: Description
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

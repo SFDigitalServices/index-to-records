@@ -1,0 +1,18 @@
+uuid: 9a6abdc7-6920-40ff-909a-66845dc7d644
+langcode: en
+status: true
+dependencies:
+  theme:
+    - itr_admin
+id: pagetitle
+theme: itr_admin
+region: header
+weight: 0
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }

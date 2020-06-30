@@ -1,0 +1,19 @@
+uuid: 19a38d98-08dd-4c2d-8ca7-e8e6fddb8798
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_off_site
+    - paragraphs.paragraphs_type.record
+id: paragraph.record.field_off_site
+field_name: field_off_site
+entity_type: paragraph
+bundle: record
+label: Off-site
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,19 @@
+uuid: 9e193f3f-dab5-4159-abf5-ee2b9f026ea2
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_total
+field_name: field_total
+entity_type: paragraph
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

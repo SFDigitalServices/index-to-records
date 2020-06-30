@@ -1,0 +1,12 @@
+<?php
+
+use Drupal\node\Entity\Node;
+
+drupal_set_installed_schema_version('itr_updb', 8901);
+
+/**
+ * This is an update test
+ */
+function itr_updb_update_8902() {
+  echo "-----update-----";
+}

@@ -113,3 +113,9 @@ Thumbs.db
 
 # ignore app directory created by lando
 app
+
+# ignore node_modules for themes
+web/themes/custom/build/node_modules
+
+# ignore theme compiled assets
+web/themes/custom/itr_admin/dist

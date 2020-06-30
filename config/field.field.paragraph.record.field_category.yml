@@ -1,0 +1,29 @@
+uuid: 4cd8ad25-051c-4b7f-9fd7-47275edb98c6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_category
+    - paragraphs.paragraphs_type.record
+    - taxonomy.vocabulary.categories
+id: paragraph.record.field_category
+field_name: field_category
+entity_type: paragraph
+bundle: record
+label: Category
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      categories: categories
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

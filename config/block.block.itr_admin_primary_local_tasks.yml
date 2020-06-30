@@ -1,0 +1,22 @@
+uuid: fb28e4a6-a7e6-44a5-af18-ed9c9b24ef96
+langcode: en
+status: true
+dependencies:
+  theme:
+    - itr_admin
+_core:
+  default_config_hash: Tk1LPe-RNIFQdmG654OxrtpeM8h1ad_6hpcQ4NjZaBw
+id: itr_admin_primary_local_tasks
+theme: itr_admin
+region: header
+weight: 0
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Primary tabs'
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: false
+visibility: {  }

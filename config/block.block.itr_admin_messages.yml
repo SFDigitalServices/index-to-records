@@ -1,0 +1,22 @@
+uuid: 54e996e6-d09c-4489-8c6d-53f3d1957841
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - itr_admin
+_core:
+  default_config_hash: Mgasx91XVMCGyzpegYz-d8_qVBOAKDfKgtfGfGRIKks
+id: itr_admin_messages
+theme: itr_admin
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

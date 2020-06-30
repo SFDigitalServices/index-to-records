@@ -1,0 +1,5 @@
+name: Index to records updb
+description: Specifically for hook_update_n
+package: Custom
+type: module
+core: 8.x
