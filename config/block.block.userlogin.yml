@@ -1,0 +1,20 @@
+uuid: 87793196-f94a-471b-9e5b-dbdc6cb9b88d
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+  theme:
+    - itr_admin
+id: userlogin
+theme: itr_admin
+region: content
+weight: -2
+provider: null
+plugin: user_login_block
+settings:
+  id: user_login_block
+  label: 'User login'
+  provider: user
+  label_display: visible
+visibility: {  }

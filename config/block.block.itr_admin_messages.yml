@@ -1,4 +1,4 @@
-uuid: 8fffba68-524d-47d7-ba84-935e38f4ecf4
+uuid: 54e996e6-d09c-4489-8c6d-53f3d1957841
 langcode: en
 status: true
 dependencies:
@@ -7,7 +7,7 @@ dependencies:
   theme:
     - itr_admin
 _core:
-  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+  default_config_hash: Mgasx91XVMCGyzpegYz-d8_qVBOAKDfKgtfGfGRIKks
 id: itr_admin_messages
 theme: itr_admin
 region: highlighted

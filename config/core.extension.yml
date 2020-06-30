@@ -22,7 +22,6 @@ module:
   help: 0
   history: 0
   image: 0
-  itr: 0
   itr_rest: 0
   itr_updb: 0
   link: 0
@@ -57,7 +56,6 @@ theme:
   classy: 0
   bartik: 0
   seven: 0
-  itrtheme: 0
   claro: 0
   itr_admin: 0
 profile: standard

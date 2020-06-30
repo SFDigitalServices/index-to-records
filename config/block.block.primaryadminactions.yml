@@ -1,15 +1,13 @@
-uuid: 5d2931e4-799e-4726-9111-4a60bf3186b3
+uuid: 0d54f48b-0020-4392-a5a6-002d46b5d28e
 langcode: en
 status: true
 dependencies:
   theme:
     - itr_admin
-_core:
-  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
-id: itr_admin_local_actions
+id: primaryadminactions
 theme: itr_admin
 region: content
-weight: -8
+weight: -3
 provider: null
 plugin: local_actions_block
 settings:

@@ -1,8 +1,9 @@
-uuid: d0dedd60-59e4-4785-bf8f-672db04b1f6d
+uuid: 5c4b8bd5-6ef1-4a03-837e-a60b217ed582
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.full
     - field.field.node.department.body
     - field.field.node.department.field_department_contact_name
     - field.field.node.department.field_department_email
@@ -19,10 +20,10 @@ dependencies:
     - link
     - text
     - user
-id: node.department.default
+id: node.department.full
 targetEntityType: node
 bundle: department
-mode: default
+mode: full
 content:
   body:
     label: hidden
@@ -100,7 +101,7 @@ content:
     region: content
   links:
     weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden: {  }

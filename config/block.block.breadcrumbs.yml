@@ -1,14 +1,12 @@
-uuid: 476d1df7-c23d-4710-88a4-1369af315b08
+uuid: 182200d9-cae2-47eb-8289-0cf5c21670da
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - system
   theme:
     - itr_admin
-_core:
-  default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
-id: itr_admin_breadcrumbs
+id: breadcrumbs
 theme: itr_admin
 region: breadcrumb
 weight: 0

@@ -1,17 +1,15 @@
-uuid: a84acd2c-bd88-427f-8ebc-fc2c79df5310
+uuid: ed30057e-9e43-4938-a8c9-55cf9b8ed595
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - itrtheme
-_core:
-  default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
-id: itrtheme_content
-theme: itrtheme
+    - itr_admin
+id: mainpagecontent
+theme: itr_admin
 region: content
-weight: -5
+weight: -1
 provider: null
 plugin: system_main_block
 settings:
