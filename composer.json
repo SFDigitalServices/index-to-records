@@ -14,11 +14,11 @@
         "composer/installers": "^1.0.20",
         "cweagans/composer-patches": "^1.0",
         "dompdf/dompdf": "^0.8.2",
-        "drupal-composer/drupal-scaffold": "^2.0.1",
         "drupal/config_direct_save": "^1.0",
         "drupal/config_installer": "^1.0",
         "drupal/console": "^1",
         "drupal/core": "^8",
+        "drupal/core-composer-scaffold": "^8.9",
         "drupal/restui": "^1.15",
         "drupal/simple_block": "^1.0@beta",
         "drush-ops/behat-drush-endpoint": "^0.0.5",
@@ -104,7 +104,10 @@
                 ".eslintrc.json",
                 ".htaccess",
                 "web.config"
-            ]
+            ],
+            "locations": {
+                "web-root": "./web"
+            }
         }
     },
     "config": {
