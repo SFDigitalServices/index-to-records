@@ -15,10 +15,10 @@
         "cweagans/composer-patches": "^1.7",
         "dompdf/dompdf": "^0.8.2",
         "drupal/config_direct_save": "^1.0",
-        "drupal/config_installer": "^1.0",
         "drupal/console": "^1",
-        "drupal/core": "^8",
-        "drupal/core-composer-scaffold": "^8.9",
+        "drupal/core-composer-scaffold": "^9",
+        "drupal/core-project-message": "^9",
+        "drupal/core-recommended": "^9",
         "drupal/devel": "^4",
         "drupal/restui": "^1.15",
         "drupal/simple_block": "^1.0@beta",
@@ -26,21 +26,21 @@
         "drush-ops/behat-drush-endpoint": "^0.0.5",
         "drush/drush": "^10",
         "pantheon-systems/quicksilver-pushback": "~1",
-        "rvtraveller/qs-composer-installer": "^1.1",
-        "webflo/drupal-core-strict": "^8"
+        "rvtraveller/qs-composer-installer": "^1.1"
     },
     "require-dev": {
-        "behat/behat": "3.*",
+        "behat/behat": "^3",
         "behat/mink": "^1.7",
         "behat/mink-extension": "^2.2",
         "behat/mink-goutte-driver": "^1.2",
-        "drupal/drupal-extension": "^3.1",
+        "drupal/core-dev": "^9",
+        "drupal/drupal-extension": "^4",
         "jcalderonzumba/gastonjs": "^1.0.2",
         "jcalderonzumba/mink-phantomjs-driver": "^0.3.1",
         "mikey179/vfsstream": "^1.2",
         "phpstan/phpstan": "^0.12.65",
-        "phpunit/phpunit": "^8 | ^9 | ^10",
-        "symfony/css-selector": "^2.8"
+        "phpunit/phpunit": "^7|^8|^9",
+        "symfony/css-selector": "^4.4"
     },
     "conflict": {
             "drupal/drupal": "*"
@@ -55,7 +55,7 @@
     "scripts": {
         "build-assets": [
             "@prepare-for-pantheon",
-            "composer install --optimize-autoloader"
+            "composer install --optimize-autoloader --no-dev"
         ],
         "lint": "find web/modules/custom web/themes/custom -name '*.php' -exec php -l {} \\;",
         "code-sniff": "echo 'No code sniff step defined.'",
