@@ -2,4 +2,4 @@ name: Index to Records
 type: module
 description: A custom Index to Records module
 package: Custom
-core: 8.x
+core_version_requirement: ^8 || ^9

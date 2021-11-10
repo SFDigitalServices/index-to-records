@@ -2,6 +2,7 @@
   namespace Drupal\itr\Controller;
 
   use Drupal\Core\Controller\ControllerBase;
+  use Drupal\Core\Url;
   use Symfony\Component\HttpFoundation\RedirectResponse;
 
   use Drupal\itr\Utility\Utility;
@@ -40,10 +41,10 @@
         $routeName = 'node.add';
         $routeParameters = ['node_type'=>'department_information'];
       }
-      $url = \Drupal::url($routeName, $routeParameters);
+      $url = Url::fromRoute($routeName, $routeParameters);
 
       if($routeName) {
-        return new RedirectResponse($url);
+        return new RedirectResponse($url->toString());
       }
 
       return array(

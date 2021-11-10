@@ -10,7 +10,7 @@
  * @see template_preprocess_form()
  */
 #}
-{# Content type: {{ content_type }} #}
+
 {% if content_type == 'record' %}
   <div id="overlay"></div>
   <div id="record-template-browser">
@@ -28,5 +28,3 @@
 <form{{ attributes.addClass(classes) }}>
   {{ children }}
 </form>
-
-{# {{ kint() }} #}

@@ -2,4 +2,4 @@ name: Index to Records REST API
 description: A (hopefully) helpful REST resource
 package: Custom
 type: module
-core: 8.x
+core_version_requirement: ^8 || ^9

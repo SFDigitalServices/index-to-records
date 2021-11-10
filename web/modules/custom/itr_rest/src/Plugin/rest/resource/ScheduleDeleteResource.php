@@ -12,8 +12,8 @@ use Drupal\rest\ResourceResponse;
 *   id = "schedule_delete",
 *   label = @Translation("Schedule Delete"),
 *   uri_paths = {
-*     "canonical" = "/itr_rest/schedule/{deptId}",
-*     "https://www.drupal.org/link-relations/create" = "/itr_rest/schedule/delete"
+*     "canonical" = "/itr_rest/schedule/delete",
+*     "create" = "/itr_rest/schedule/delete"
 *   }
 * )
 */

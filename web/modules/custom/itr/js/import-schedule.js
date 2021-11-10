@@ -4,7 +4,7 @@
       var schedule = response.data.schedule;
       var dept = response.data.department; // dept taxonomy id
       var sessionUrl = drupalSettings.path.baseUrl + 'session/token';
-      var entityCreateUrl = drupalSettings.path.baseUrl + 'entity/node';
+      var entityCreateUrl = drupalSettings.path.baseUrl + 'node';
       var scheduleRetrieveUrl = drupalSettings.path.baseUrl + 'itr_rest_view/schedules/' + dept + '?_format=json';
       var deleteUrl = drupalSettings.path.baseUrl + 'itr_rest/schedule/delete?_format=json';
       var recCount = schedule.length;

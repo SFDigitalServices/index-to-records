@@ -1,7 +1,7 @@
 name: Index to Records
 type: theme
 description: 'A theme for the Index to Records application'
-core: 8.x
+core_version_requirement: ^8 || ^9
 base theme: classy
 libraries:
   - itrtheme/global-css

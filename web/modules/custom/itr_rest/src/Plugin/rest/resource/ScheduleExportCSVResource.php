@@ -13,7 +13,8 @@ use Drupal\itr\Utility\Utility;
 *   id = "schedule_export_csv",
 *   label = @Translation("Schedule Export CSV"),
 *   uri_paths = {
-*     "https://www.drupal.org/link-relations/create" = "/itr_rest/schedule/export/csv"
+*     "canonical" = "/itr_rest/schedule/export/csv",
+*     "create" = "/itr_rest/schedule/export/csv"
 *   }
 * )
 */

@@ -115,10 +115,6 @@ jobs:
                 command: composer install
 
             - run:
-                name: run functional tests with Behat
-                command: ./tests/scripts/run-behat
-
-            - run:
                 name: post-test actions
                 command: ./.circleci/scripts/pantheon/03-post-test
 
@@ -129,6 +125,10 @@ jobs:
             - run:
                 name: remove transient test fixtures
                 command: ./.circleci/scripts/pantheon/09-cleanup-fixtures
+            
+            - run:
+                name: run e2e ghost inspector suite
+                command: ./.circleci/scripts/tests/run-gi-suite
 
 workflows:
   version: 2
