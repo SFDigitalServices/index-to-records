@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -eo pipefail
+
+MULTIDEV="https://$TERMINUS_ENV-$TERMINUS_SITE.pantheonsite.io"
+
+curl -X POST \
+    -H "Content-Type: application/json" \
+    -H "X-GitHub-Event: push" \
+    -d '{"payload": "{\"repository\": {\"statuses_url\": \"https://api.github.com/repos/'$GITHUB_ORG'/'$CIRCLE_PROJECT_REPONAME'/statuses/'$CIRCLE_SHA1'\"},\"sha\": \"'$CIRCLE_SHA1'\"}"}' \
+    "https://api.ghostinspector.com/v1/tests/$GI_SUITE_ID/execute/?apiKey=$GI_API_KEY&startURL=$MULTIDEV&immediate=1"

@@ -125,6 +125,10 @@ jobs:
             - run:
                 name: remove transient test fixtures
                 command: ./.circleci/scripts/pantheon/09-cleanup-fixtures
+            
+            - run:
+                name: run e2e ghost inspector suite
+                command: ./.circleci/scripts/tests/run-gi-suite
 
 workflows:
   version: 2
