@@ -18,7 +18,8 @@ require DRUPAL_ROOT . '/../vendor/autoload.php';
 *   id = "schedule_export_pdf",
 *   label = @Translation("Schedule Export PDF"),
 *   uri_paths = {
-*     "https://www.drupal.org/link-relations/create" = "/itr_rest/schedule/export/pdf"
+*     "canonical" = "/itr_rest/schedule/export/pdf",
+*     "create" = "/itr_rest/schedule/export/pdf"
 *   }
 * )
 */
@@ -248,7 +249,7 @@ class ScheduleExportPdfResource extends ResourceBase {
     $returnArray = array(
       array(
         'filename' => $fileName,
-        'url' => $file->url() . '?t=' . time(),
+        'url' => $file->createFileUrl() . '?t=' . time(),
       )
     );
     return $returnArray;

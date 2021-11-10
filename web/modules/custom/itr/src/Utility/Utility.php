@@ -15,7 +15,7 @@
         $assignedDepts = $user->get('field_department')->getValue();
         $count = count($assignedDepts);
         if($count > 0 && !empty(Term::load($assignedDepts[0]['target_id']))) {
-          $vid = Term::load($assignedDepts[0]['target_id'])->getVocabularyId();
+          $vid = Term::load($assignedDepts[0]['target_id'])->bundle();
           $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
           $depts = array();
           for($i = 0; $i < $count; $i++) {
@@ -285,7 +285,7 @@
       $returnArray = array(
         array(
           'filename' => $fileName . '.csv',
-          'url' => $file->url(),
+          'url' => $file->createFileUrl(),
         )
       );
       return $returnArray;

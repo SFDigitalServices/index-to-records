@@ -1,6 +1,12 @@
 (function($) {
   var _catSelect = '_none';
 
+  if($('#overlay').length === 0) {
+    var overlayDiv = document.createElement('div');
+    overlayDiv.id = 'overlay';
+    document.body.appendChild(overlayDiv);
+  }
+
   $('#node-record-form #edit-field-category, #node-record-form #edit-field-division').html('<option value="_none"> - Select Department First - </option>');
   $('#edit-field-record-title-0-value').on('keyup', function() {
     var val = $(this).val().length <= 255 ? $(this).val() : $(this).val().substring(0, 255);
@@ -151,7 +157,7 @@
           html += '    <th class="template-cell template-remarks">Remarks</th></tr>';
           for(var i=0; i<data.length; i++) {
             var r = data[i];
-            html += '<tr id="rec-index_"' + i + ' class="record-template-row" onclick="templates.use(' + i + ')">';
+            html += '<tr id="rec-index_' + i + '" class="record-template-row">';
             html += '  <td class="template-cell template-category">' + r.field_template_category + '</td>';
             html += '  <td class="template-cell template-title">' + checkValue(r.field_template_title) + '</td>';
             html += '  <td class="template-cell template-link">' + checkValue(r.field_template_link) + '</td>';
@@ -166,6 +172,10 @@
           $(recordTemplateBrowserContent).html(html);
           $(overlay).toggle();
           $(recordTemplateBrowser).addClass('show');
+          $('.record-template-row').click(function() {
+            var idx = $(this).attr('id').split("_")[1];
+            templates.use(idx);
+          })
         }
       });
     } else {

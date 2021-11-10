@@ -15,7 +15,7 @@ use Drupal\itr\Utility\Utility;
 *   label = @Translation("Department Division"),
 *   uri_paths = {
 *     "canonical" = "/itr_rest/department/{deptId}/division",
-*     "https://www.drupal.org/link-relations/create" = "/itr_rest/department/division/add"
+*     "create" = "/itr_rest/department/division/add"
 *   }
 * )
 */
