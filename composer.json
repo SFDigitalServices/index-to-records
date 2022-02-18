@@ -25,6 +25,7 @@
         "drupal/upgrade_status": "^3.11",
         "drush-ops/behat-drush-endpoint": "^0.0.5",
         "drush/drush": "^10",
+        "joachim-n/composer-manifest": "^1.1",
         "pantheon-systems/quicksilver-pushback": "~1",
         "rvtraveller/qs-composer-installer": "^1.1"
     },
@@ -118,6 +119,16 @@
         "sort-packages": true,
         "platform": {
             "php": "7.4"
+        },
+        "allow-plugins": {
+            "cweagans/composer-patches": true,
+            "composer/installers": true,
+            "drupal/core-composer-scaffold": true,
+            "drupal/core-project-message": true,
+            "drupal/console-extend-plugin": true,
+            "joachim-n/composer-manifest": true,
+            "rvtraveller/qs-composer-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }
