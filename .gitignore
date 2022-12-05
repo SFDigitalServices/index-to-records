@@ -127,3 +127,5 @@ app
 /robots.txt
 /update.php
 /web.config
+
+web/sites/settings.local.php
