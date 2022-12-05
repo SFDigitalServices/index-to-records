@@ -15,14 +15,14 @@ plugin: 'block_content:4a423193-2b39-4670-8bab-a3a6ff2dd58d'
 settings:
   id: 'block_content:4a423193-2b39-4670-8bab-a3a6ff2dd58d'
   label: 'Import Schedule Description Block'
-  provider: block_content
   label_display: '0'
+  provider: block_content
   status: true
   info: ''
   view_mode: full
 visibility:
   request_path:
     id: request_path
-    pages: /schedule/import
     negate: false
     context_mapping: {  }
+    pages: /schedule/import

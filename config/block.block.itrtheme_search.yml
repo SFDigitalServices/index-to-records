@@ -18,12 +18,12 @@ plugin: search_form_block
 settings:
   id: search_form_block
   label: 'Search for a Record'
-  provider: search
   label_display: visible
+  provider: search
   page_id: ''
 visibility:
   request_path:
     id: request_path
-    pages: '<front>'
     negate: false
     context_mapping: {  }
+    pages: '<front>'

@@ -23,10 +23,10 @@ bundle: record_template
 mode: teaser
 content:
   links:
-    weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   field_template_category: true
   field_template_division: true

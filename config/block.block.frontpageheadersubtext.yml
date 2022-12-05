@@ -18,14 +18,14 @@ plugin: 'block_content:06e3e3e5-2ebf-473b-a127-63bb754eb2f9'
 settings:
   id: 'block_content:06e3e3e5-2ebf-473b-a127-63bb754eb2f9'
   label: 'Front Page Header Sub Text'
-  provider: block_content
   label_display: '0'
+  provider: block_content
   status: true
   info: ''
   view_mode: full
 visibility:
   request_path:
     id: request_path
-    pages: '<front>'
     negate: false
     context_mapping: {  }
+    pages: '<front>'

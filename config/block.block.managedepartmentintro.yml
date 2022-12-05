@@ -18,16 +18,16 @@ plugin: 'block_content:1cc901c4-a7e3-4877-a6ef-6ad200209a6c'
 settings:
   id: 'block_content:1cc901c4-a7e3-4877-a6ef-6ad200209a6c'
   label: 'Manage Department'
-  provider: block_content
   label_display: visible
+  provider: block_content
   status: true
   info: ''
   view_mode: full
 visibility:
   node_type:
     id: node_type
-    bundles:
-      department_information: department_information
     negate: false
     context_mapping:
       node: '@node.node_route_context:node'
+    bundles:
+      department_information: department_information

@@ -18,14 +18,14 @@ plugin: 'block_content:ed7a1d53-f2d9-4643-b6b8-bc6b68bf25ed'
 settings:
   id: 'block_content:ed7a1d53-f2d9-4643-b6b8-bc6b68bf25ed'
   label: 'Front Page Department List Header'
-  provider: block_content
   label_display: '0'
+  provider: block_content
   status: true
   info: ''
   view_mode: full
 visibility:
   request_path:
     id: request_path
-    pages: '<front>'
     negate: false
     context_mapping: {  }
+    pages: '<front>'

@@ -18,14 +18,15 @@ bundle: department_information
 mode: teaser
 content:
   links:
-    weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   field_department_contact_email: true
   field_department_contact_name: true
   field_department_contact_phone_n: true
   field_department_name: true
+  field_department_retention_polic: true
   field_department_website: true
   field_schedule_ratified_date: true

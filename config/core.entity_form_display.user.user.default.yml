@@ -24,11 +24,11 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_department:
+    type: options_buttons
     weight: 7
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_buttons
-    region: content
   language:
     weight: 0
     region: content
